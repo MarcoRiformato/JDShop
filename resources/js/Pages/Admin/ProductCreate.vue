@@ -8,8 +8,8 @@
                     </svg>
                     Back to Dashboard
                 </Link>
-                <h1 class="text-3xl font-bold text-gray-900 mt-4">List New Equipment</h1>
-                <p class="text-gray-600 mt-1">Add event equipment, props, or furniture to your inventory</p>
+                <h1 class="text-3xl font-bold text-gray-900 mt-4">Create Product</h1>
+                <p class="text-gray-600 mt-1">Add a new product to your shop</p>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">

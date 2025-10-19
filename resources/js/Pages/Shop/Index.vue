@@ -3,9 +3,9 @@
         <!-- Hero section -->
         <div class="bg-gradient-to-br from-blue-600 to-purple-600 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Event Equipment Warehouse Sale</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to JD Shop</h1>
                 <p class="text-xl text-blue-100 max-w-2xl">
-                    Professional lighting, furniture, props, and equipment from our past events. Quality gear at great prices!
+                    Discover our curated collection of premium products
                 </p>
             </div>
         </div>

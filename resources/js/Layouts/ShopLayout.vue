@@ -6,7 +6,7 @@
                 <div class="flex justify-between items-center h-16">
                     <Link :href="route('shop.index')" class="flex items-center">
                         <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                            JD Events Equipment
+                            JD Shop
                         </h1>
                     </Link>
 
@@ -57,8 +57,7 @@
         <footer class="bg-white border-t border-gray-200 mt-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="text-center text-gray-500 text-sm">
-                    <p>&copy; {{ new Date().getFullYear() }} JD Events Equipment. All rights reserved.</p>
-                    <p class="mt-2">Professional event equipment from our warehouse. Contact us for bulk pricing.</p>
+                    <p>&copy; {{ new Date().getFullYear() }} JD Shop. All rights reserved.</p>
                 </div>
             </div>
         </footer>

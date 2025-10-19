@@ -4,9 +4,9 @@
             <div class="bg-white rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        JD Events Equipment
+                        JD Shop
                     </h1>
-                    <p class="text-gray-600 mt-2">Admin Portal - Sign in to manage inventory</p>
+                    <p class="text-gray-600 mt-2">Sign in to your account</p>
                 </div>
 
                 <form @submit.prevent="submit">

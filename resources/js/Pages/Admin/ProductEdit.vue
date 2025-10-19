@@ -8,8 +8,8 @@
                     </svg>
                     Back to Dashboard
                 </Link>
-                <h1 class="text-3xl font-bold text-gray-900 mt-4">Edit Equipment</h1>
-                <p class="text-gray-600 mt-1">Update item details and manage photos</p>
+                <h1 class="text-3xl font-bold text-gray-900 mt-4">Edit Product</h1>
+                <p class="text-gray-600 mt-1">Update product information and manage images</p>
             </div>
 
             <!-- Success message -->
@@ -20,7 +20,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Product form -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Equipment Details</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Product Details</h2>
                     <form @submit.prevent="submit">
                         <div class="space-y-4">
                             <!-- Title -->
@@ -125,7 +125,7 @@
 
                 <!-- Image management -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Equipment Photos</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Product Images</h2>
                     
                     <!-- Image uploader -->
                     <ImageUploader 
