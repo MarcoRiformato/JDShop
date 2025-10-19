@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             ['email' => 'admin@jdshop.com'],
             [
                 'name' => 'Super Admin',
-                'password' => Hash::make('password'),
+                'password' => 'admin',
                 'role_id' => $superAdminRole?->id,
             ]
         );
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             ['email' => 'manager@jdshop.com'],
             [
                 'name' => 'Manager',
-                'password' => Hash::make('password'),
+                'password' => 'admin',
                 'role_id' => $adminRole?->id,
             ]
         );
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             ['email' => 'editor@jdshop.com'],
             [
                 'name' => 'Editor',
-                'password' => Hash::make('password'),
+                'password' => 'admin',
                 'role_id' => $editorRole?->id,
             ]
         );

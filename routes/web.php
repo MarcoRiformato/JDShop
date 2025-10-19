@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
 // Admin routes (protected by auth and admin middleware)
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('admin.dashboard');
-    Route::resource('products', ProductController::class)->except(['show']);
+    Route::resource('products', ProductController::class);
     Route::post('products/{product}/images', [ProductController::class, 'uploadImage'])->name('products.images.upload');
     Route::delete('images/{image}', [ProductController::class, 'deleteImage'])->name('images.delete');
     Route::patch('images/{image}/set-cover', [ProductController::class, 'setCoverImage'])->name('images.set-cover');

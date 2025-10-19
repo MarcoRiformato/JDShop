@@ -174,5 +174,30 @@ class ProductController extends Controller
             'message' => 'Cover image updated successfully!',
         ]);
     }
+
+    /**
+     * Get product details for preview (JSON API endpoint).
+     */
+    public function show(Product $product)
+    {
+        $product->load('images');
+
+        return response()->json([
+            'product' => [
+                'id' => $product->id,
+                'title' => $product->title,
+                'description' => $product->description,
+                'tags' => $product->tags,
+                'price' => $product->price,
+                'sold_out' => $product->sold_out,
+                'images' => $product->images->map(fn($image) => [
+                    'id' => $image->id,
+                    'url' => $image->url,
+                    'thumbnail_url' => $image->thumbnail_url,
+                    'is_cover' => $image->is_cover,
+                ]),
+            ],
+        ]);
+    }
 }
 
