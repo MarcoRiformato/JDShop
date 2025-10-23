@@ -4,7 +4,7 @@
             <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
                 <div class="text-center mb-8">
                     <h1 class="text-5xl font-bold text-gray-900 mb-4">
-                        Welcome to JD Shop
+                        Welcome to JDOutlet
                     </h1>
                     <p class="text-xl text-gray-600">
                         Laravel {{ laravelVersion }} + Vue 3 + Inertia.js + Tailwind CSS

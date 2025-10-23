@@ -3,7 +3,7 @@
         <!-- Mobile menu button -->
         <div class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
             <div class="flex items-center justify-between p-4">
-                <h1 class="text-xl font-bold text-gray-900">JD Eventi Admin</h1>
+                <h1 class="text-xl font-bold text-gray-900">JDOutlet Admin</h1>
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 rounded-md hover:bg-gray-100">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -18,7 +18,7 @@
         >
             <div class="flex flex-col h-full">
                 <div class="flex items-center justify-center h-20 shadow-md">
-                    <h1 class="text-2xl font-bold text-blue-600">JD Eventi Admin</h1>
+                    <h1 class="text-2xl font-bold text-blue-600">JDOutlet Admin</h1>
                 </div>
 
                 <nav class="flex-1 px-4 py-6 overflow-y-auto">

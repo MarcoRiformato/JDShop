@@ -75,40 +75,93 @@
                     </div>
 
                     <!-- Action buttons -->
-                    <div class="mt-auto pt-6 border-t border-gray-200">
+                    <div class="mt-auto pt-6 border-t border-gray-200 space-y-4">
+                        <button 
+                            @click="showContactModal = true"
+                            type="button"
+                            class="w-full flex items-center justify-center px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+                        >
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            Chiedi maggiori informazioni
+                        </button>
                         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
                             <p class="text-sm text-blue-900">
                                 <svg class="inline w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Contattaci per informazioni sull'acquisto e per maggiori dettagli su questo prodotto.
+                                Clicca il pulsante sopra per inviarci una richiesta. Ti risponderemo il prima possibile!
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Related products section (placeholder) -->
-            <div class="mt-16">
+            <!-- Related products section -->
+            <div v-if="relatedProducts.length > 0" class="mt-16">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Potrebbero interessarti anche</h2>
-                <div class="text-center py-8 text-gray-500">
-                    <p>Altri prodotti in arrivo presto!</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <Link
+                        v-for="related in relatedProducts"
+                        :key="related.id"
+                        :href="route('shop.show', related.id)"
+                        class="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all"
+                    >
+                        <div class="aspect-square overflow-hidden bg-gray-200">
+                            <img 
+                                v-if="related.cover_image_url"
+                                :src="related.cover_image_url" 
+                                :alt="related.title"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            >
+                            <img 
+                                v-else
+                                :src="`https://picsum.photos/seed/${related.id}/400/400`" 
+                                :alt="related.title"
+                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            >
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
+                                {{ related.title }}
+                            </h3>
+                            <p class="text-lg font-bold text-gray-900">
+                                €{{ related.price }}
+                            </p>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>
+
+        <!-- Contact Modal -->
+        <ContactModal 
+            :show="showContactModal" 
+            :product="product"
+            @close="showContactModal = false"
+        />
     </ShopLayout>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import ShopLayout from '@/Layouts/ShopLayout.vue';
 import ProductGallery from '@/Components/Shop/ProductGallery.vue';
+import ContactModal from '@/Components/Shop/ContactModal.vue';
 
-defineProps({
+const props = defineProps({
     product: {
         type: Object,
         required: true,
     },
+    relatedProducts: {
+        type: Array,
+        default: () => [],
+    },
 });
+
+const showContactModal = ref(false);
 </script>
 

@@ -4,7 +4,7 @@
             <div class="bg-white rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        JD Eventi
+                        JDOutlet
                     </h1>
                     <p class="text-gray-600 mt-2">Accedi al tuo account</p>
                 </div>

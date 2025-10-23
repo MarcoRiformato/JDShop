@@ -3,7 +3,7 @@
         <!-- Hero section -->
         <div class="bg-gradient-to-br from-blue-600 to-purple-600 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Benvenuto su JD Eventi</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Benvenuto su JDOutlet</h1>
                 <p class="text-xl text-blue-100 max-w-2xl">
                     Scopri la nostra collezione di materiali per eventi: audio, arredi, scenografie e molto altro
                 </p>

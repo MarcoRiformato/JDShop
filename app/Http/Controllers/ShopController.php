@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -70,6 +72,38 @@ class ShopController extends Controller
     {
         $product->load('images');
 
+        // Get related products based on similar tags
+        $relatedProducts = collect();
+        if ($product->tags) {
+            $productTags = explode(',', $product->tags);
+            $productTags = array_map('trim', $productTags);
+            
+            // Find products that share at least one tag
+            $relatedProducts = Product::where('id', '!=', $product->id)
+                ->where('sold_out', false)
+                ->get()
+                ->filter(function($p) use ($productTags) {
+                    if (!$p->tags) return false;
+                    $pTags = array_map('trim', explode(',', $p->tags));
+                    return count(array_intersect($productTags, $pTags)) > 0;
+                })
+                ->sortByDesc(function($p) use ($productTags) {
+                    // Sort by number of matching tags
+                    $pTags = array_map('trim', explode(',', $p->tags));
+                    return count(array_intersect($productTags, $pTags));
+                })
+                ->take(4)
+                ->map(function($p) {
+                    return [
+                        'id' => $p->id,
+                        'title' => $p->title,
+                        'price' => $p->price,
+                        'cover_image_url' => $p->cover_image_url,
+                    ];
+                })
+                ->values();
+        }
+
         return Inertia::render('Shop/Show', [
             'product' => [
                 'id' => $product->id,
@@ -85,7 +119,40 @@ class ShopController extends Controller
                     'is_cover' => $image->is_cover,
                 ]),
             ],
+            'relatedProducts' => $relatedProducts,
         ]);
+    }
+
+    /**
+     * Send contact email for a product inquiry.
+     */
+    public function sendContactEmail(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:50',
+            'message' => 'required|string|max:2000',
+            'product_id' => 'required|exists:products,id',
+            'product_title' => 'required|string',
+            'product_price' => 'required|numeric',
+        ]);
+
+        // Log the contact request
+        Log::info('Contact form submission', [
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'product' => $validated['product_title'],
+            'message' => $validated['message'],
+        ]);
+
+        // TODO: Send actual email when mail is configured
+        // For now, we just log it and return success
+        // In production, you would use:
+        // Mail::to('info@jdoutlet.com')->send(new ContactInquiry($validated));
+
+        return back()->with('success', 'Messaggio inviato con successo!');
     }
 }
 

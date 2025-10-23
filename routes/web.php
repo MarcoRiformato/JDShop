@@ -13,6 +13,7 @@ Route::get('/', function () {
 // Public shop routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/{product}', [ShopController::class, 'show'])->name('shop.show');
+Route::post('/contact', [ShopController::class, 'sendContactEmail'])->name('contact.send');
 
 // Authentication routes
 Route::middleware('guest')->group(function () {
