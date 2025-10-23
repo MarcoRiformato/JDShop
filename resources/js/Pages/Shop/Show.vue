@@ -1,4 +1,17 @@
 <template>
+    <Head :title="product.title">
+        <meta name="description" :content="product.description || `${product.title} - Disponibile su JDOutlet al prezzo di €${product.price}`">
+        <meta property="og:title" :content="`${product.title} - JDOutlet`">
+        <meta property="og:description" :content="product.description || `${product.title} disponibile al prezzo di €${product.price}`">
+        <meta property="og:image" :content="product.images.length > 0 ? product.images.find(img => img.is_cover)?.url || product.images[0].url : `https://picsum.photos/seed/${product.id}/1200/630`">
+        <meta property="og:url" :content="route('shop.show', product.id)">
+        <meta property="og:type" content="product">
+        <meta property="product:price:amount" :content="product.price">
+        <meta property="product:price:currency" content="EUR">
+        <meta name="twitter:title" :content="`${product.title} - JDOutlet`">
+        <meta name="twitter:description" :content="product.description || `${product.title} disponibile al prezzo di €${product.price}`">
+        <meta name="twitter:image" :content="product.images.length > 0 ? product.images.find(img => img.is_cover)?.url || product.images[0].url : `https://picsum.photos/seed/${product.id}/1200/630`">
+    </Head>
     <ShopLayout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Breadcrumb -->
@@ -146,7 +159,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import ShopLayout from '@/Layouts/ShopLayout.vue';
 import ProductGallery from '@/Components/Shop/ProductGallery.vue';
 import ContactModal from '@/Components/Shop/ContactModal.vue';

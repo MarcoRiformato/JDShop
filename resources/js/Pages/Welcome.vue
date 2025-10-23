@@ -1,4 +1,9 @@
 <template>
+    <Head title="JDOutlet">
+        <meta name="description" content="JDOutlet - Vendita materiali per eventi: audio professionale, arredi vintage, scenografie e molto altro.">
+        <meta property="og:title" content="JDOutlet - Materiali per Eventi">
+        <meta property="og:description" content="Vendita materiali per eventi: audio professionale, arredi vintage, scenografie e molto altro.">
+    </Head>
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
         <div class="max-w-2xl w-full">
             <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
@@ -64,6 +69,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { Head } from '@inertiajs/vue3';
 
 defineProps({
     laravelVersion: String,

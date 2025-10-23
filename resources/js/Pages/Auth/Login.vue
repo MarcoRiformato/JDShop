@@ -1,4 +1,10 @@
 <template>
+    <Head title="Accedi">
+        <meta name="description" content="Accedi al pannello di amministrazione di JDOutlet per gestire i tuoi prodotti.">
+        <meta property="og:title" content="Accedi - JDOutlet">
+        <meta property="og:description" content="Accedi al pannello di amministrazione di JDOutlet.">
+        <meta name="robots" content="noindex, nofollow">
+    </Head>
     <div class="min-h-screen bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center p-4">
         <div class="max-w-md w-full">
             <div class="bg-white rounded-2xl shadow-xl p-8">
@@ -96,7 +102,7 @@
 </template>
 
 <script setup>
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm, Link, Head } from '@inertiajs/vue3';
 
 const form = useForm({
     email: '',

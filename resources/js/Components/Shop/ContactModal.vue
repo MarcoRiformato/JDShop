@@ -207,14 +207,23 @@ const emit = defineEmits(['close']);
 
 const submitted = ref(false);
 
-// Generate dynamic pre-filled message based on product
+// Generate dynamic pre-filled message based on product being viewed
 const generateDefaultMessage = () => {
+    const status = props.product.sold_out 
+        ? 'Venduto (vorrei sapere se tornerà disponibile)' 
+        : 'Disponibile';
+    
     return `Salve,
 
-Sono interessato/a al seguente prodotto:
+Sono interessato/a al seguente prodotto dal vostro catalogo:
 
-Titolo: ${props.product.title}
-Prezzo: €${props.product.price}`;
+Prodotto: ${props.product.title}
+Prezzo: €${props.product.price}
+Stato: ${status}
+
+Vorrei ricevere maggiori informazioni e dettagli sull'acquisto di questo articolo.
+
+Cordiali saluti`;
 };
 
 const form = useForm({

@@ -1,4 +1,12 @@
 <template>
+    <Head title="Catalogo Prodotti">
+        <meta name="description" content="Scopri la nostra collezione di materiali per eventi: audio professionale, arredi vintage, scenografie, specchi e molto altro per i tuoi eventi.">
+        <meta property="og:title" content="JDOutlet - Catalogo Prodotti">
+        <meta property="og:description" content="Scopri la nostra collezione di materiali per eventi: audio professionale, arredi vintage, scenografie, specchi e molto altro.">
+        <meta property="og:url" content="{{ route('shop.index') }}">
+        <meta name="twitter:title" content="JDOutlet - Catalogo Prodotti">
+        <meta name="twitter:description" content="Scopri la nostra collezione di materiali per eventi: audio professionale, arredi vintage, scenografie e molto altro.">
+    </Head>
     <ShopLayout>
         <!-- Hero section -->
         <div class="bg-gradient-to-br from-blue-600 to-purple-600 text-white">
@@ -82,7 +90,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { router, Head } from '@inertiajs/vue3';
 import ShopLayout from '@/Layouts/ShopLayout.vue';
 import ProductCard from '@/Components/Shop/ProductCard.vue';
 

@@ -1,4 +1,7 @@
 <template>
+    <Head title="Crea Prodotto">
+        <meta name="robots" content="noindex, nofollow">
+    </Head>
     <AdminLayout>
         <div class="max-w-2xl mx-auto">
             <div class="mb-6">
@@ -137,7 +140,7 @@
 </template>
 
 <script setup>
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm, Link, Head } from '@inertiajs/vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 const form = useForm({

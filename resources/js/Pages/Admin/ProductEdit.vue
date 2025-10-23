@@ -1,4 +1,7 @@
 <template>
+    <Head :title="`Modifica: ${product.title}`">
+        <meta name="robots" content="noindex, nofollow">
+    </Head>
     <AdminLayout>
         <div class="max-w-4xl mx-auto">
             <div class="mb-6">
@@ -186,7 +189,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useForm, Link, router } from '@inertiajs/vue3';
+import { useForm, Link, router, Head } from '@inertiajs/vue3';
 import axios from 'axios';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import ImageUploader from '@/Components/Admin/ImageUploader.vue';

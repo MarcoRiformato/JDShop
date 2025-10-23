@@ -1,4 +1,7 @@
 <template>
+    <Head title="Dashboard Admin">
+        <meta name="robots" content="noindex, nofollow">
+    </Head>
     <AdminLayout>
         <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -118,7 +121,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { router, Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import ProductTable from '@/Components/Admin/ProductTable.vue';
