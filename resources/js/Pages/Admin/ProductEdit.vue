@@ -2,14 +2,29 @@
     <AdminLayout>
         <div class="max-w-4xl mx-auto">
             <div class="mb-6">
-                <Link :href="route('admin.dashboard')" class="text-blue-600 hover:text-blue-700 flex items-center">
-                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                    Back to Dashboard
-                </Link>
-                <h1 class="text-3xl font-bold text-gray-900 mt-4">Edit Product</h1>
-                <p class="text-gray-600 mt-1">Update product information and manage images</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <Link :href="route('admin.dashboard')" class="text-blue-600 hover:text-blue-700 flex items-center">
+                            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Torna alla Dashboard
+                        </Link>
+                        <h1 class="text-3xl font-bold text-gray-900 mt-4">Modifica Prodotto</h1>
+                        <p class="text-gray-600 mt-1">Aggiorna le informazioni del prodotto e gestisci le immagini</p>
+                    </div>
+                    <button
+                        @click="showPreview"
+                        type="button"
+                        class="ml-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-md flex items-center gap-2"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                        Anteprima
+                    </button>
+                </div>
             </div>
 
             <!-- Success message -->
@@ -20,13 +35,13 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Product form -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Product Details</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Dettagli Prodotto</h2>
                     <form @submit.prevent="submit">
                         <div class="space-y-4">
                             <!-- Title -->
                             <div>
                                 <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Title <span class="text-red-500">*</span>
+                                    Titolo <span class="text-red-500">*</span>
                                 </label>
                                 <input 
                                     id="title"
@@ -46,7 +61,7 @@
                             <!-- Description -->
                             <div>
                                 <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Description
+                                    Descrizione
                                 </label>
                                 <textarea 
                                     id="description"
@@ -61,27 +76,27 @@
                             <!-- Tags -->
                             <div>
                                 <label for="tags" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Tags
+                                    Categorie
                                 </label>
                                 <input 
                                     id="tags"
                                     v-model="form.tags" 
                                     type="text" 
-                                    placeholder="e.g., clothing,t-shirt,casual"
+                                    placeholder="es: arredamento,specchio,vintage"
                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                     :class="{ 'border-red-500': form.errors.tags }"
                                 >
-                                <p class="text-sm text-gray-500 mt-1">Separate tags with commas</p>
+                                <p class="text-sm text-gray-500 mt-1">Separa le categorie con virgole</p>
                                 <p v-if="form.errors.tags" class="text-sm text-red-600 mt-1">{{ form.errors.tags }}</p>
                             </div>
 
                             <!-- Price -->
                             <div>
                                 <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Price <span class="text-red-500">*</span>
+                                    Prezzo <span class="text-red-500">*</span>
                                 </label>
                                 <div class="relative">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">€</span>
                                     <input 
                                         id="price"
                                         v-model="form.price" 
@@ -105,7 +120,7 @@
                                     class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                 >
                                 <label for="sold_out" class="ml-3 text-sm font-medium text-gray-700">
-                                    Mark as sold out
+                                    Segna come venduto
                                 </label>
                             </div>
 
@@ -116,7 +131,7 @@
                                     :disabled="form.processing"
                                     class="w-full px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {{ form.processing ? 'Updating...' : 'Update Product' }}
+                                    {{ form.processing ? 'Aggiornamento...' : 'Aggiorna Prodotto' }}
                                 </button>
                             </div>
                         </div>
@@ -125,7 +140,7 @@
 
                 <!-- Image management -->
                 <div class="bg-white rounded-lg shadow-md p-6">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Product Images</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Immagini Prodotto</h2>
                     
                     <!-- Image uploader -->
                     <ImageUploader 
@@ -136,7 +151,7 @@
                     <!-- Existing images -->
                     <div v-if="images.length > 0" class="mt-6">
                         <h3 class="text-sm font-medium text-gray-700 mb-3">
-                            Current Images ({{ images.length }})
+                            Immagini Attuali ({{ images.length }})
                         </h3>
                         <div class="grid grid-cols-2 gap-4">
                             <ImagePreview
@@ -153,12 +168,19 @@
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <p class="mt-2 text-sm text-gray-500">No images yet</p>
-                        <p class="text-xs text-gray-400">Upload some images to get started</p>
+                        <p class="mt-2 text-sm text-gray-500">Nessuna immagine ancora</p>
+                        <p class="text-xs text-gray-400">Carica delle immagini per iniziare</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Product Preview Modal -->
+        <ProductPreviewModal 
+            :show="showPreviewModal" 
+            :product="previewProduct"
+            @close="closePreview"
+        />
     </AdminLayout>
 </template>
 
@@ -169,6 +191,7 @@ import axios from 'axios';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import ImageUploader from '@/Components/Admin/ImageUploader.vue';
 import ImagePreview from '@/Components/Admin/ImagePreview.vue';
+import ProductPreviewModal from '@/Components/Admin/ProductPreviewModal.vue';
 
 const props = defineProps({
     product: {
@@ -178,6 +201,17 @@ const props = defineProps({
 });
 
 const images = ref([...props.product.images]);
+
+const showPreviewModal = ref(false);
+const previewProduct = ref({
+    id: props.product.id,
+    title: props.product.title,
+    description: props.product.description,
+    tags: props.product.tags,
+    price: props.product.price,
+    sold_out: props.product.sold_out,
+    images: images.value,
+});
 
 const form = useForm({
     title: props.product.title,
@@ -196,13 +230,13 @@ const handleImageUploaded = (image) => {
 };
 
 const handleImageDelete = async (imageId) => {
-    if (!confirm('Are you sure you want to delete this image?')) return;
+    if (!confirm('Sei sicuro di voler eliminare questa immagine?')) return;
 
     try {
         await axios.delete(route('images.delete', imageId));
         images.value = images.value.filter(img => img.id !== imageId);
     } catch (error) {
-        alert('Failed to delete image: ' + (error.response?.data?.message || error.message));
+        alert('Impossibile eliminare l\'immagine: ' + (error.response?.data?.message || error.message));
     }
 };
 
@@ -214,8 +248,26 @@ const handleSetCover = async (imageId) => {
             is_cover: img.id === imageId,
         }));
     } catch (error) {
-        alert('Failed to set cover image: ' + (error.response?.data?.message || error.message));
+        alert('Impossibile impostare l\'immagine di copertina: ' + (error.response?.data?.message || error.message));
     }
+};
+
+const showPreview = () => {
+    // Update preview product with current form values
+    previewProduct.value = {
+        id: props.product.id,
+        title: form.title,
+        description: form.description,
+        tags: form.tags,
+        price: form.price,
+        sold_out: form.sold_out,
+        images: images.value,
+    };
+    showPreviewModal.value = true;
+};
+
+const closePreview = () => {
+    showPreviewModal.value = false;
 };
 </script>
 

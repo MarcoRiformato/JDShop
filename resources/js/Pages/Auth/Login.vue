@@ -4,9 +4,9 @@
             <div class="bg-white rounded-2xl shadow-xl p-8">
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        JD Shop
+                        JD Eventi
                     </h1>
-                    <p class="text-gray-600 mt-2">Sign in to your account</p>
+                    <p class="text-gray-600 mt-2">Accedi al tuo account</p>
                 </div>
 
                 <form @submit.prevent="submit">
@@ -57,7 +57,7 @@
                                 class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                             >
                             <label for="remember" class="ml-2 text-sm text-gray-700">
-                                Remember me
+                                Ricordami
                             </label>
                         </div>
 
@@ -67,7 +67,7 @@
                             :disabled="form.processing"
                             class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-lg"
                         >
-                            {{ form.processing ? 'Signing in...' : 'Sign in' }}
+                            {{ form.processing ? 'Accesso in corso...' : 'Accedi' }}
                         </button>
                     </div>
                 </form>
@@ -77,13 +77,13 @@
                         :href="route('shop.index')" 
                         class="text-sm text-blue-600 hover:text-blue-700"
                     >
-                        ← Back to shop
+                        ← Torna al catalogo
                     </Link>
                 </div>
 
                 <!-- Demo credentials -->
                 <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p class="text-xs font-semibold text-blue-900 mb-2">Demo Credentials:</p>
+                    <p class="text-xs font-semibold text-blue-900 mb-2">Credenziali Demo:</p>
                     <p class="text-xs text-blue-800">
                         <strong>Admin:</strong> admin@jdshop.com / password<br>
                         <strong>Manager:</strong> manager@jdshop.com / password<br>

@@ -59,7 +59,13 @@ class Product extends Model
     public function getCoverImageUrlAttribute(): ?string
     {
         $coverImage = $this->getCoverImage();
-        return $coverImage ? $coverImage->url : null;
+        
+        if ($coverImage) {
+            return $coverImage->url;
+        }
+        
+        // Return placeholder image from Lorem Picsum if no image exists
+        return "https://picsum.photos/seed/{$this->id}/800/800";
     }
 }
 

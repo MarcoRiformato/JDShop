@@ -11,7 +11,7 @@
             v-if="image.is_cover" 
             class="absolute top-2 left-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold"
         >
-            Cover
+            Copertina
         </div>
 
         <!-- Actions overlay -->
@@ -21,16 +21,16 @@
                     v-if="!image.is_cover"
                     @click="$emit('set-cover', image.id)"
                     class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
-                    title="Set as cover"
+                    title="Imposta come copertina"
                 >
-                    Set Cover
+                    Imposta Copertina
                 </button>
                 <button 
                     @click="$emit('delete', image.id)"
                     class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium"
-                    title="Delete image"
+                    title="Elimina immagine"
                 >
-                    Delete
+                    Elimina
                 </button>
             </div>
         </div>

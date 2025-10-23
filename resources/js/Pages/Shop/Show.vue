@@ -7,7 +7,7 @@
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
-                    Back to Shop
+                    Torna al Catalogo
                 </Link>
             </nav>
 
@@ -15,10 +15,12 @@
                 <!-- Image gallery -->
                 <div>
                     <ProductGallery v-if="product.images.length > 0" :images="product.images" />
-                    <div v-else class="aspect-square bg-gray-200 rounded-xl flex items-center justify-center">
-                        <svg class="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
+                    <div v-else class="aspect-square bg-gray-200 rounded-xl overflow-hidden">
+                        <img 
+                            :src="`https://picsum.photos/seed/${product.id}/800/800`" 
+                            :alt="product.title"
+                            class="w-full h-full object-cover"
+                        >
                     </div>
                 </div>
 
@@ -32,25 +34,25 @@
                         <!-- Price and status -->
                         <div class="flex items-center space-x-4 mb-6">
                             <span class="text-4xl font-bold text-gray-900">
-                                ${{ product.price }}
+                                €{{ product.price }}
                             </span>
                             <span 
                                 v-if="product.sold_out"
                                 class="px-4 py-2 bg-red-100 text-red-800 text-sm font-semibold rounded-full"
                             >
-                                Sold Out
+                                Venduto
                             </span>
                             <span 
                                 v-else
                                 class="px-4 py-2 bg-green-100 text-green-800 text-sm font-semibold rounded-full"
                             >
-                                Available
+                                Disponibile
                             </span>
                         </div>
 
                         <!-- Description -->
                         <div v-if="product.description" class="mb-6">
-                            <h2 class="text-lg font-semibold text-gray-900 mb-2">Description</h2>
+                            <h2 class="text-lg font-semibold text-gray-900 mb-2">Descrizione</h2>
                             <p class="text-gray-700 leading-relaxed whitespace-pre-line">
                                 {{ product.description }}
                             </p>
@@ -58,7 +60,7 @@
 
                         <!-- Tags -->
                         <div v-if="product.tags && product.tags.length > 0" class="mb-8">
-                            <h2 class="text-lg font-semibold text-gray-900 mb-3">Tags</h2>
+                            <h2 class="text-lg font-semibold text-gray-900 mb-3">Categorie</h2>
                             <div class="flex flex-wrap gap-2">
                                 <Link
                                     v-for="tag in product.tags"
@@ -79,7 +81,7 @@
                                 <svg class="inline w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Contact us for purchase inquiries and more information about this product.
+                                Contattaci per informazioni sull'acquisto e per maggiori dettagli su questo prodotto.
                             </p>
                         </div>
                     </div>
@@ -88,9 +90,9 @@
 
             <!-- Related products section (placeholder) -->
             <div class="mt-16">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">You might also like</h2>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Potrebbero interessarti anche</h2>
                 <div class="text-center py-8 text-gray-500">
-                    <p>More products coming soon!</p>
+                    <p>Altri prodotti in arrivo presto!</p>
                 </div>
             </div>
         </div>

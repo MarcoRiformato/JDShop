@@ -11,7 +11,7 @@
         >
             <div 
                 v-if="show"
-                class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 backdrop-blur-sm"
+                class="fixed inset-0 z-50 overflow-y-auto bg-white bg-opacity-10 backdrop-blur-md"
                 @click="closeModal"
             >
                 <!-- Modal Container -->
@@ -36,7 +36,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
-                                    <h2 class="text-xl font-bold text-white">Customer Preview</h2>
+                                    <h2 class="text-xl font-bold text-white">Anteprima Cliente</h2>
                                 </div>
                                 <button 
                                     @click="closeModal"
@@ -80,13 +80,12 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        <div v-else class="aspect-square bg-gray-200 rounded-xl flex items-center justify-center">
-                                            <div class="text-center">
-                                                <svg class="w-24 h-24 text-gray-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                                </svg>
-                                                <p class="text-gray-500 mt-2">No images</p>
-                                            </div>
+                                        <div v-else class="aspect-square bg-gray-200 rounded-xl overflow-hidden shadow-lg">
+                                            <img 
+                                                :src="`https://picsum.photos/seed/${product.id}/800/800`" 
+                                                :alt="product.title"
+                                                class="w-full h-full object-cover"
+                                            >
                                         </div>
                                     </div>
 
@@ -100,25 +99,25 @@
                                             <!-- Price and Status -->
                                             <div class="flex items-center space-x-4 mb-6">
                                                 <span class="text-4xl font-bold text-gray-900">
-                                                    ${{ product.price }}
+                                                    €{{ product.price }}
                                                 </span>
                                                 <span 
                                                     v-if="product.sold_out"
                                                     class="px-4 py-2 bg-red-100 text-red-800 text-sm font-semibold rounded-full"
                                                 >
-                                                    Sold Out
+                                                    Venduto
                                                 </span>
                                                 <span 
                                                     v-else
                                                     class="px-4 py-2 bg-green-100 text-green-800 text-sm font-semibold rounded-full"
                                                 >
-                                                    Available
+                                                    Disponibile
                                                 </span>
                                             </div>
 
                                             <!-- Description -->
                                             <div v-if="product.description" class="mb-6">
-                                                <h2 class="text-lg font-semibold text-gray-900 mb-2">Description</h2>
+                                                <h2 class="text-lg font-semibold text-gray-900 mb-2">Descrizione</h2>
                                                 <p class="text-gray-700 leading-relaxed whitespace-pre-line">
                                                     {{ product.description }}
                                                 </p>
@@ -126,7 +125,7 @@
 
                                             <!-- Tags -->
                                             <div v-if="product.tags" class="mb-8">
-                                                <h2 class="text-lg font-semibold text-gray-900 mb-3">Tags</h2>
+                                                <h2 class="text-lg font-semibold text-gray-900 mb-3">Categorie</h2>
                                                 <div class="flex flex-wrap gap-2">
                                                     <span
                                                         v-for="tag in getTags(product.tags)"
@@ -146,7 +145,7 @@
                                                     <svg class="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                     </svg>
-                                                    This is how customers will see this product in the shop.
+                                                    Così i clienti vedranno questo prodotto nel catalogo.
                                                 </p>
                                             </div>
                                             
@@ -158,7 +157,7 @@
                                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                                 </svg>
-                                                Edit Product
+                                                Modifica Prodotto
                                             </Link>
                                         </div>
                                     </div>

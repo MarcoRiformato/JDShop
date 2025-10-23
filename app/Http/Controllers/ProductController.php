@@ -59,7 +59,7 @@ class ProductController extends Controller
         $product = Product::create($request->validated());
 
         return redirect()->route('products.edit', $product)
-            ->with('success', 'Product created successfully! Now add some images.');
+            ->with('success', 'Prodotto creato con successo! Ora aggiungi delle immagini.');
     }
 
     /**
@@ -95,7 +95,7 @@ class ProductController extends Controller
         $product->update($request->validated());
 
         return redirect()->route('products.edit', $product)
-            ->with('success', 'Product updated successfully!');
+            ->with('success', 'Prodotto aggiornato con successo!');
     }
 
     /**
@@ -111,7 +111,7 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('admin.dashboard')
-            ->with('success', 'Product deleted successfully!');
+            ->with('success', 'Prodotto eliminato con successo!');
     }
 
     /**
@@ -154,7 +154,7 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Image deleted successfully!',
+            'message' => 'Immagine eliminata con successo!',
         ]);
     }
 
@@ -171,7 +171,7 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Cover image updated successfully!',
+            'message' => 'Immagine di copertina aggiornata con successo!',
         ]);
     }
 

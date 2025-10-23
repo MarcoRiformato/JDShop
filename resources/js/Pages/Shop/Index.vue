@@ -3,9 +3,9 @@
         <!-- Hero section -->
         <div class="bg-gradient-to-br from-blue-600 to-purple-600 text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to JD Shop</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Benvenuto su JD Eventi</h1>
                 <p class="text-xl text-blue-100 max-w-2xl">
-                    Discover our curated collection of premium products
+                    Scopri la nostra collezione di materiali per eventi: audio, arredi, scenografie e molto altro
                 </p>
             </div>
         </div>
@@ -21,7 +21,7 @@
                                 v-model="searchQuery"
                                 @input="handleSearch"
                                 type="text" 
-                                placeholder="Search products..."
+                                placeholder="Cerca prodotti..."
                                 class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                             >
                             <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +37,7 @@
                             @change="handleTagFilter"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         >
-                            <option value="">All Categories</option>
+                            <option value="">Tutte le Categorie</option>
                             <option v-for="tag in tags" :key="tag" :value="tag">
                                 {{ tag }}
                             </option>
@@ -50,7 +50,7 @@
                         @click="clearFilters"
                         class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
                     >
-                        Clear Filters
+                        Cancella Filtri
                     </button>
                 </div>
             </div>
@@ -71,9 +71,9 @@
                 <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                 </svg>
-                <h3 class="mt-4 text-lg font-medium text-gray-900">No products found</h3>
+                <h3 class="mt-4 text-lg font-medium text-gray-900">Nessun prodotto trovato</h3>
                 <p class="mt-2 text-gray-500">
-                    {{ filters.search || filters.tag ? 'Try adjusting your filters' : 'Check back soon for new items!' }}
+                    {{ filters.search || filters.tag ? 'Prova a modificare i filtri' : 'Torna presto per nuovi articoli!' }}
                 </p>
             </div>
         </div>

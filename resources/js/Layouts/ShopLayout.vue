@@ -6,7 +6,7 @@
                 <div class="flex justify-between items-center h-16">
                     <Link :href="route('shop.index')" class="flex items-center">
                         <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                            JD Shop
+                            JD Eventi
                         </h1>
                     </Link>
 
@@ -15,7 +15,7 @@
                             :href="route('shop.index')" 
                             class="text-gray-700 hover:text-blue-600 transition-colors"
                         >
-                            Shop
+                            Catalogo
                         </Link>
                         
                         <template v-if="$page.props.auth?.user">
@@ -24,7 +24,7 @@
                                 :href="route('admin.dashboard')" 
                                 class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
                             >
-                                Admin Panel
+                                Pannello Admin
                             </Link>
                             <Link 
                                 :href="route('logout')" 
@@ -32,7 +32,7 @@
                                 as="button"
                                 class="text-gray-700 hover:text-red-600 transition-colors"
                             >
-                                Logout
+                                Esci
                             </Link>
                         </template>
                         <template v-else>
@@ -40,7 +40,7 @@
                                 :href="route('login')" 
                                 class="text-gray-700 hover:text-blue-600 transition-colors"
                             >
-                                Login
+                                Accedi
                             </Link>
                         </template>
                     </nav>
@@ -57,7 +57,7 @@
         <footer class="bg-white border-t border-gray-200 mt-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="text-center text-gray-500 text-sm">
-                    <p>&copy; {{ new Date().getFullYear() }} JD Shop. All rights reserved.</p>
+                    <p>&copy; {{ new Date().getFullYear() }} JD Eventi. Tutti i diritti riservati.</p>
                 </div>
             </div>
         </footer>
