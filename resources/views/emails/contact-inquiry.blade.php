@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Richiesta Informazioni</title>
+    <title>JDOutlet - Richiesta Informazioni</title>
 </head>
 <body>
     <h1>Nuova Richiesta Informazioni</h1>
@@ -22,6 +22,6 @@
     
     <hr>
     <p><em>Questa email è stata inviata dal form di contatto del sito web.</em></p>
-    <p><em>Data: {{ date('d/m/Y H:i') }}</em></p>
+    <p><em>Data: {{ now()->format('d/m/Y H:i') }}</em></p>
 </body>
 </html>

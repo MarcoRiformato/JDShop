@@ -35,17 +35,15 @@ class ContactInquiry extends Mailable
      */
     public function build()
     {
-        $template = file_get_contents(resource_path('views/emails/contact-inquiry-simple.html'));
-        
-        $template = str_replace('[NAME]', $this->name, $template);
-        $template = str_replace('[EMAIL]', $this->email, $template);
-        $template = str_replace('[PHONE]', $this->phone, $template);
-        $template = str_replace('[PRODUCT_TITLE]', $this->productTitle, $template);
-        $template = str_replace('[PRODUCT_PRICE]', number_format($this->productPrice, 2, ',', '.'), $template);
-        $template = str_replace('[MESSAGE]', $this->message, $template);
-        $template = str_replace('[DATE]', date('d/m/Y H:i'), $template);
-        
         return $this->subject('Richiesta Informazioni - ' . $this->productTitle)
-                    ->html($template);
+                    ->view('emails.contact-inquiry')
+                    ->with([
+                        'name' => $this->name,
+                        'email' => $this->email,
+                        'phone' => $this->phone,
+                        'message' => $this->message,
+                        'productTitle' => $this->productTitle,
+                        'productPrice' => $this->productPrice,
+                    ]);
     }
 }
