@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This value represents the version of your application. Update it
+    | whenever you deploy new code to track deployments.
+    |
+    */
+
+    'version' => env('APP_VERSION', '0.3'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

@@ -55,6 +55,13 @@
                     </Link>
                 </nav>
 
+                <!-- Version Badge -->
+                <div class="px-4 py-3 border-t border-gray-200">
+                    <div class="text-xs text-gray-500 font-mono bg-gray-50 px-2 py-1 rounded border">
+                        v{{ $page.props.app_version || '0.2' }}
+                    </div>
+                </div>
+
                 <div class="p-4 border-t border-gray-200">
                     <div class="flex items-center mb-4">
                         <div class="flex-1">
