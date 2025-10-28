@@ -15,6 +15,16 @@
                 <p class="text-gray-600 mt-1">Aggiungi un nuovo prodotto al catalogo</p>
             </div>
 
+            <!-- Global Error Message -->
+            <div v-if="$page.props.flash?.error" class="mb-6 bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3 rounded-r-lg">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    {{ $page.props.flash.error }}
+                </div>
+            </div>
+
             <!-- Uploading message -->
             <div v-if="productCreated && uploadingImages" class="mb-6 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg">
                 <div class="flex items-center">
@@ -23,6 +33,23 @@
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
                     Caricamento immagini in corso...
+                </div>
+            </div>
+
+            <!-- Validation Errors Summary -->
+            <div v-if="Object.keys(form.errors).length > 0" class="mb-6 bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3 rounded-r-lg">
+                <div class="flex items-start">
+                    <svg class="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <p class="font-semibold">Per favore correggi i seguenti errori:</p>
+                        <ul class="mt-2 list-disc list-inside">
+                            <li v-for="(error, field) in form.errors" :key="field">
+                                <span class="font-medium capitalize">{{ field.replace('_', ' ') }}:</span> {{ error }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -177,7 +204,7 @@
                                             >
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                                </svg>
+                                </svg>
                                             </button>
                                             
                                             <!-- Cover badge -->

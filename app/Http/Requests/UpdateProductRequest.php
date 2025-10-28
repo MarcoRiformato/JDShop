@@ -29,5 +29,19 @@ class UpdateProductRequest extends FormRequest
             'sold_out' => ['boolean'],
         ];
     }
+
+    /**
+     * Get custom error messages.
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Il titolo è obbligatorio.',
+            'title.max' => 'Il titolo non può superare i 35 caratteri.',
+            'price.required' => 'Il prezzo è obbligatorio.',
+            'price.numeric' => 'Il prezzo deve essere un numero valido.',
+            'price.min' => 'Il prezzo non può essere negativo.',
+        ];
+    }
 }
 
