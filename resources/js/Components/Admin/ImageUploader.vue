@@ -14,8 +14,7 @@
             <input 
                 ref="fileInput"
                 type="file" 
-                accept="image/*" 
-                capture="environment"
+                accept="image/*"
                 multiple
                 @change="handleFileSelect"
                 class="hidden"
