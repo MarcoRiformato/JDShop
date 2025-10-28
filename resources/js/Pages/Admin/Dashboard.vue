@@ -93,7 +93,6 @@
             <ProductTable 
                 :products="products"
                 :view-mode="viewMode"
-                @delete="confirmDelete"
             />
 
             <!-- Empty state -->
@@ -147,11 +146,5 @@ onMounted(() => {
 watch(viewMode, (newMode) => {
     localStorage.setItem('admin_view_mode', newMode);
 });
-
-const confirmDelete = (productId) => {
-    if (confirm('Sei sicuro di voler eliminare questo prodotto? Questa azione non può essere annullata.')) {
-        router.delete(route('products.destroy', productId));
-    }
-};
 </script>
 

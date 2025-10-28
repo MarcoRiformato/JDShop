@@ -20,5 +20,15 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Handle 413 Payload Too Large errors specifically for file uploads
+        $exceptions->respond(function (\Illuminate\Http\Request $request, \Symfony\Component\HttpKernel\Exception\HttpException $exception) {
+            if ($exception->getStatusCode() === 413 && $request->is('admin/products/*/images')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Il file è troppo grande. Dimensione massima consentita: 2MB.',
+                    'error' => 'File too large'
+                ], 413);
+            }
+            return null;
+        });
     })->create();

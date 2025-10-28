@@ -59,7 +59,8 @@ class ProductController extends Controller
         $product = Product::create($request->validated());
 
         return redirect()->route('products.edit', $product)
-            ->with('success', 'Prodotto creato con successo! Ora aggiungi delle immagini.');
+            ->with('success', 'Prodotto creato con successo! Ora aggiungi delle immagini.')
+            ->with('product', $product);
     }
 
     /**
@@ -119,29 +120,47 @@ class ProductController extends Controller
      */
     public function uploadImage(Request $request, Product $product)
     {
-        $request->validate([
-            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
-        ]);
+        try {
+            $request->validate([
+                'image' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            ], [
+                'image.required' => 'Seleziona un file immagine.',
+                'image.image' => 'Il file deve essere un\'immagine.',
+                'image.mimes' => 'Formato non supportato. Usa: JPEG, PNG, JPG, o WebP.',
+                'image.max' => 'Il file è troppo grande. Dimensione massima: 2MB (2048 KB).',
+            ]);
 
-        $filename = $this->imageService->uploadProductImage($request->file('image'));
+            $filename = $this->imageService->uploadProductImage($request->file('image'));
 
-        // If this is the first image, make it the cover
-        $isCover = $product->images()->count() === 0;
+            // If this is the first image, make it the cover
+            $isCover = $product->images()->count() === 0;
 
-        $image = $product->images()->create([
-            'filename' => $filename,
-            'is_cover' => $isCover,
-        ]);
+            $image = $product->images()->create([
+                'filename' => $filename,
+                'is_cover' => $isCover,
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'image' => [
-                'id' => $image->id,
-                'url' => $image->url,
-                'thumbnail_url' => $image->thumbnail_url,
-                'is_cover' => $image->is_cover,
-            ],
-        ]);
+            return response()->json([
+                'success' => true,
+                'image' => [
+                    'id' => $image->id,
+                    'url' => $image->url,
+                    'thumbnail_url' => $image->thumbnail_url,
+                    'is_cover' => $image->is_cover,
+                ],
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Errore durante il caricamento dell\'immagine: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

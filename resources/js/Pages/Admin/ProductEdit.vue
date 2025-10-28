@@ -137,6 +137,27 @@
                                     {{ form.processing ? 'Aggiornamento...' : 'Aggiorna Prodotto' }}
                                 </button>
                             </div>
+                            
+                            <!-- Danger Zone -->
+                            <div class="mt-6 pt-6 border-t border-red-200">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                    <h3 class="text-sm font-semibold text-red-900">Zona Pericolosa</h3>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-4">Eliminando questo prodotto, sarai irrimediabilmente cancellato. Questa azione non può essere annullata.</p>
+                                <button 
+                                    @click="showDeleteModal = true"
+                                    type="button"
+                                    class="w-full px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center"
+                                >
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                    Elimina Prodotto
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -184,6 +205,46 @@
             :product="previewProduct"
             @close="closePreview"
         />
+
+        <!-- Delete Confirmation Modal -->
+        <div 
+            v-if="showDeleteModal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            @click.self="showDeleteModal = false"
+        >
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 bg-red-100 rounded-full">
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900">Conferma Eliminazione</h3>
+                </div>
+                
+                <p class="text-gray-700 mb-6">
+                    Sei sicuro di voler eliminare <strong>"{{ product.title }}"</strong>?
+                </p>
+                <p class="text-sm text-red-600 mb-6">
+                    Questa azione non può essere annullata. Tutte le immagini e i dati associati verranno eliminati definitivamente.
+                </p>
+                
+                <div class="flex gap-3">
+                    <button
+                        @click="showDeleteModal = false"
+                        class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                        Annulla
+                    </button>
+                    <button
+                        @click="deleteProduct"
+                        class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                    >
+                        Elimina Definitivamente
+                    </button>
+                </div>
+            </div>
+        </div>
     </AdminLayout>
 </template>
 
@@ -206,6 +267,7 @@ const props = defineProps({
 const images = ref([...props.product.images]);
 
 const showPreviewModal = ref(false);
+const showDeleteModal = ref(false);
 const previewProduct = ref({
     id: props.product.id,
     title: props.product.title,
@@ -271,6 +333,11 @@ const showPreview = () => {
 
 const closePreview = () => {
     showPreviewModal.value = false;
+};
+
+const deleteProduct = () => {
+    showDeleteModal.value = false;
+    router.delete(route('products.destroy', props.product.id));
 };
 </script>
 

@@ -1,6 +1,16 @@
 <template>
     <div class="space-y-4">
-        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors">
+        <div 
+            class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
+            :class="{
+                'border-blue-500 bg-blue-50': isDragOver,
+                'border-gray-300 hover:border-blue-500': !isDragOver
+            }"
+            @dragover.prevent="handleDragOver"
+            @dragenter.prevent="handleDragEnter"
+            @dragleave.prevent="handleDragLeave"
+            @drop.prevent="handleDrop"
+        >
             <input 
                 ref="fileInput"
                 type="file" 
@@ -23,6 +33,12 @@
             </button>
             <p class="text-sm text-gray-500 mt-2">
                 Oppure trascina e rilascia le immagini qui
+            </p>
+            <p class="text-xs text-gray-400 mt-1">
+                Dimensione massima: 2MB per immagine
+            </p>
+            <p v-if="isDragOver" class="text-sm text-blue-600 font-medium mt-2">
+                Rilascia qui per caricare
             </p>
         </div>
 
@@ -72,15 +88,69 @@ const fileInput = ref(null);
 const uploading = ref(false);
 const uploadProgress = ref([]);
 const errors = ref([]);
+const isDragOver = ref(false);
+
+// Drag and drop handlers
+const handleDragEnter = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    isDragOver.value = true;
+};
+
+const handleDragOver = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+};
+
+const handleDragLeave = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    isDragOver.value = false;
+};
+
+const handleDrop = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    isDragOver.value = false;
+
+    const files = Array.from(event.dataTransfer.files);
+    
+    if (files.length > 0) {
+        // Convert FileList to files array for processing
+        processFiles(files);
+    }
+};
 
 const handleFileSelect = async (event) => {
     const files = Array.from(event.target.files);
     
     if (files.length === 0) return;
 
+    await processFiles(files);
+};
+
+const processFiles = async (files) => {
     errors.value = [];
     uploading.value = true;
     uploadProgress.value = files.map(file => ({ name: file.name, percent: 0 }));
+
+    // Check file sizes before upload (2MB limit)
+    const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+    for (const file of files) {
+        if (file.size > maxSize) {
+            errors.value.push(`${file.name} è troppo grande (max 2MB)`);
+        }
+    }
+
+    // If there are size errors, don't proceed with upload
+    if (errors.value.length > 0) {
+        uploading.value = false;
+        uploadProgress.value = [];
+        if (fileInput.value) {
+            fileInput.value.value = '';
+        }
+        return;
+    }
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -105,13 +175,28 @@ const handleFileSelect = async (event) => {
                 emit('uploaded', response.data.image);
             }
         } catch (error) {
-            errors.value.push(`Impossibile caricare ${file.name}: ${error.response?.data?.message || error.message}`);
+            let errorMessage = `Impossibile caricare ${file.name}`;
+            
+            // Handle specific error cases
+            if (error.response?.status === 413 || error.response?.status === 400) {
+                errorMessage += ': File troppo grande. Dimensione massima: 2MB';
+            } else if (error.response?.status === 422) {
+                errorMessage += ': ' + (error.response?.data?.message || 'Formato non supportato');
+            } else if (error.response?.data?.message) {
+                errorMessage += ': ' + error.response.data.message;
+            } else if (error.message) {
+                errorMessage += ': ' + error.message;
+            }
+            
+            errors.value.push(errorMessage);
         }
     }
 
     uploading.value = false;
     uploadProgress.value = [];
-    fileInput.value.value = '';
+    if (fileInput.value) {
+        fileInput.value.value = '';
+    }
 };
 </script>
 
