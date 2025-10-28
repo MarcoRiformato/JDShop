@@ -24,7 +24,8 @@ class ImageService
      */
     public function uploadProductImage(UploadedFile $file): string
     {
-        $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        // Always save as WebP for better compression
+        $filename = time() . '_' . uniqid() . '.webp';
 
         // Read the uploaded image
         $image = $this->imageManager->read($file);
@@ -37,16 +38,16 @@ class ImageService
         $thumbnail = clone $image;
         $thumbnail->scale(width: 300);
 
-        // Save full-size image
+        // Save full-size image (WebP format with optimized quality)
         Storage::disk('public')->put(
             'products/' . $filename,
-            (string) $fullSize->toJpeg(quality: 85)
+            (string) $fullSize->toWebp(quality: 80)
         );
 
-        // Save thumbnail
+        // Save thumbnail (WebP format with optimized quality)
         Storage::disk('public')->put(
             'products/thumbnails/' . $filename,
-            (string) $thumbnail->toJpeg(quality: 80)
+            (string) $thumbnail->toWebp(quality: 75)
         );
 
         return $filename;

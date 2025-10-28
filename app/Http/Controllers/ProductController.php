@@ -122,12 +122,12 @@ class ProductController extends Controller
     {
         try {
             $request->validate([
-                'image' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+                'image' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:10240'],
             ], [
                 'image.required' => 'Seleziona un file immagine.',
                 'image.image' => 'Il file deve essere un\'immagine.',
                 'image.mimes' => 'Formato non supportato. Usa: JPEG, PNG, JPG, o WebP.',
-                'image.max' => 'Il file è troppo grande. Dimensione massima: 2MB (2048 KB).',
+                'image.max' => 'Il file è troppo grande. Dimensione massima: 10MB.',
             ]);
 
             $filename = $this->imageService->uploadProductImage($request->file('image'));

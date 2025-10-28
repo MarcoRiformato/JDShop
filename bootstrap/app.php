@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($exception->getStatusCode() === 413 && $request->is('admin/products/*/images')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Il file è troppo grande. Dimensione massima consentita: 2MB.',
+                    'message' => 'Il file è troppo grande. Dimensione massima consentita: 10MB.',
                     'error' => 'File too large'
                 ], 413);
             }
