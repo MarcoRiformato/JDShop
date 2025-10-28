@@ -152,9 +152,15 @@ class ShopController extends Controller
             // Send email to marco.riformato@gmail.com
             Mail::to('marco.riformato@gmail.com')->send(new ContactInquiry($validated));
             
-            Log::info('Contact email sent successfully');
+            Log::info('Contact email sent successfully to marco.riformato@gmail.com', [
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+            ]);
         } catch (\Exception $e) {
-            Log::error('Failed to send contact email: ' . $e->getMessage());
+            Log::error('Failed to send contact email', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             // Don't throw the error to the user, just log it
         }
 

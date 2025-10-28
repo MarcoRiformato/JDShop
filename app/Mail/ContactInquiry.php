@@ -35,15 +35,24 @@ class ContactInquiry extends Mailable
      */
     public function build()
     {
+        $html = '<!DOCTYPE html><html><head><title>JDOutlet - Richiesta Informazioni</title></head><body>';
+        $html .= '<h1>Nuova Richiesta Informazioni</h1>';
+        $html .= '<h2>Dati Cliente</h2>';
+        $html .= '<p><strong>Nome:</strong> ' . htmlspecialchars($this->name) . '</p>';
+        $html .= '<p><strong>Email:</strong> ' . htmlspecialchars($this->email) . '</p>';
+        if ($this->phone) {
+            $html .= '<p><strong>Telefono:</strong> ' . htmlspecialchars($this->phone) . '</p>';
+        }
+        $html .= '<h2>Prodotto di Interesse</h2>';
+        $html .= '<p><strong>Prodotto:</strong> ' . htmlspecialchars($this->productTitle) . '</p>';
+        $html .= '<p><strong>Prezzo:</strong> €' . number_format($this->productPrice, 2, ',', '.') . '</p>';
+        $html .= '<h2>Messaggio</h2>';
+        $html .= '<p>' . nl2br(htmlspecialchars($this->message)) . '</p>';
+        $html .= '<hr><p><em>Questa email è stata inviata dal form di contatto del sito web.</em></p>';
+        $html .= '<p><em>Data: ' . date('d/m/Y H:i') . '</em></p>';
+        $html .= '</body></html>';
+        
         return $this->subject('Richiesta Informazioni - ' . $this->productTitle)
-                    ->view('emails.contact-inquiry')
-                    ->with([
-                        'name' => $this->name,
-                        'email' => $this->email,
-                        'phone' => $this->phone,
-                        'message' => $this->message,
-                        'productTitle' => $this->productTitle,
-                        'productPrice' => $this->productPrice,
-                    ]);
+                    ->html($html);
     }
 }
