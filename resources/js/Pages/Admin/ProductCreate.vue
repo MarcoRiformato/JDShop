@@ -176,7 +176,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
                                     <p class="text-sm text-gray-600 mt-2">Clicca o trascina le immagini qui</p>
-                                    <p class="text-xs text-gray-400 mt-1">Dimensione massima: 2MB per immagine</p>
+                                    <p class="text-xs text-gray-400 mt-1">Dimensione massima: 10MB per immagine</p>
                                     <p v-if="isDragOver" class="text-sm text-blue-600 font-medium mt-2">Rilascia qui</p>
                                 </div>
                                 
@@ -321,11 +321,11 @@ const handleFileSelect = (event) => {
 };
 
 const addImages = (files) => {
-    const maxSize = 2 * 1024 * 1024; // 2MB
+    const maxSize = 10 * 1024 * 1024; // 10MB
     
     files.forEach(file => {
         if (file.size > maxSize) {
-            alert(`${file.name} è troppo grande. Dimensione massima: 2MB`);
+            alert(`${file.name} è troppo grande. Dimensione massima: 10MB`);
             return;
         }
         

@@ -35,7 +35,7 @@
                 Oppure trascina e rilascia le immagini qui
             </p>
             <p class="text-xs text-gray-400 mt-1">
-                Dimensione massima: 2MB per immagine
+                Dimensione massima: 10MB per immagine
             </p>
             <p v-if="isDragOver" class="text-sm text-blue-600 font-medium mt-2">
                 Rilascia qui per caricare
@@ -134,11 +134,11 @@ const processFiles = async (files) => {
     uploading.value = true;
     uploadProgress.value = files.map(file => ({ name: file.name, percent: 0 }));
 
-    // Check file sizes before upload (2MB limit)
-    const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+    // Check file sizes before upload (10MB limit)
+    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
     for (const file of files) {
         if (file.size > maxSize) {
-            errors.value.push(`${file.name} è troppo grande (max 2MB)`);
+            errors.value.push(`${file.name} è troppo grande (max 10MB)`);
         }
     }
 
@@ -179,7 +179,7 @@ const processFiles = async (files) => {
             
             // Handle specific error cases
             if (error.response?.status === 413 || error.response?.status === 400) {
-                errorMessage += ': File troppo grande. Dimensione massima: 2MB';
+                errorMessage += ': File troppo grande. Dimensione massima: 10MB';
             } else if (error.response?.status === 422) {
                 errorMessage += ': ' + (error.response?.data?.message || 'Formato non supportato');
             } else if (error.response?.data?.message) {
