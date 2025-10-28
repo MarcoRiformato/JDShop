@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactInquiry;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -147,10 +148,15 @@ class ShopController extends Controller
             'message' => $validated['message'],
         ]);
 
-        // TODO: Send actual email when mail is configured
-        // For now, we just log it and return success
-        // In production, you would use:
-        // Mail::to('info@jdoutlet.com')->send(new ContactInquiry($validated));
+        try {
+            // Send email to marco.riformato@gmail.com
+            Mail::to('marco.riformato@gmail.com')->send(new ContactInquiry($validated));
+            
+            Log::info('Contact email sent successfully');
+        } catch (\Exception $e) {
+            Log::error('Failed to send contact email: ' . $e->getMessage());
+            // Don't throw the error to the user, just log it
+        }
 
         return back()->with('success', 'Messaggio inviato con successo!');
     }
