@@ -35,6 +35,18 @@ class ProductController extends Controller
                     'sold_out' => $product->sold_out,
                     'cover_image_url' => $product->cover_image_url,
                     'images_count' => $product->images->count(),
+                    'images' => $product->images->take(2)->map(fn($image) => [
+                        'id' => $image->id,
+                        'url' => $image->url,
+                        'thumbnail_url' => $image->thumbnail_url,
+                        'is_cover' => $image->is_cover,
+                    ]),
+                    'discount_percentage' => $product->discount_percentage,
+                    'discount_start_date' => $product->discount_start_date,
+                    'discount_end_date' => $product->discount_end_date,
+                    'original_price' => $product->original_price,
+                    'has_active_discount' => $product->has_active_discount,
+                    'discounted_price' => $product->discounted_price,
                 ];
             });
 
@@ -78,6 +90,12 @@ class ProductController extends Controller
                 'tags' => $product->tags,
                 'price' => $product->price,
                 'sold_out' => $product->sold_out,
+                'discount_percentage' => $product->discount_percentage,
+                'discount_start_date' => $product->discount_start_date,
+                'discount_end_date' => $product->discount_end_date,
+                'original_price' => $product->original_price,
+                'has_active_discount' => $product->has_active_discount,
+                'discounted_price' => $product->discounted_price,
                 'images' => $product->images->map(fn($image) => [
                     'id' => $image->id,
                     'url' => $image->url,
@@ -93,7 +111,17 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update($request->validated());
+        $validated = $request->validated();
+        
+        // If price is being manually updated, clear discount fields to avoid confusion
+        if (isset($validated['price']) && $validated['price'] != $product->price) {
+            $validated['discount_percentage'] = null;
+            $validated['discount_start_date'] = null;
+            $validated['discount_end_date'] = null;
+            $validated['original_price'] = null;
+        }
+        
+        $product->update($validated);
 
         return redirect()->route('products.edit', $product)
             ->with('success', 'Prodotto aggiornato con successo!');
@@ -209,6 +237,12 @@ class ProductController extends Controller
                 'tags' => $product->tags,
                 'price' => $product->price,
                 'sold_out' => $product->sold_out,
+                'discount_percentage' => $product->discount_percentage,
+                'discount_start_date' => $product->discount_start_date,
+                'discount_end_date' => $product->discount_end_date,
+                'original_price' => $product->original_price,
+                'has_active_discount' => $product->has_active_discount,
+                'discounted_price' => $product->discounted_price,
                 'images' => $product->images->map(fn($image) => [
                     'id' => $image->id,
                     'url' => $image->url,

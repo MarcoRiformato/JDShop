@@ -1,0 +1,343 @@
+<template>
+    <Teleport to="body">
+        <div v-if="show" class="fixed inset-0 z-50 overflow-y-auto">
+            <!-- Backdrop - clickable to close -->
+            <div class="fixed inset-0 bg-black bg-opacity-20" @click="$emit('close')"></div>
+            
+            <!-- Modal container -->
+            <div class="flex min-h-full items-center justify-center p-1 sm:p-4 pointer-events-none">
+                <div class="relative bg-white rounded-lg sm:rounded-2xl shadow-2xl w-full max-w-[calc(100vw-0.5rem)] sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden pointer-events-auto" @click.stop>
+                    <!-- Header with icon -->
+                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 px-3 sm:px-8 py-3 sm:py-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="bg-white bg-opacity-20 rounded-full p-1 sm:p-2 mr-2 sm:mr-4">
+                                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="text-lg sm:text-2xl font-bold text-white">Gestisci Sconti</h2>
+                                    <p class="text-orange-100 text-xs sm:text-sm mt-0.5">Applica sconti ai prodotti selezionati</p>
+                                </div>
+                            </div>
+                            <button 
+                                @click="$emit('close')"
+                                class="text-white hover:text-orange-200 transition-colors p-1.5 sm:p-2 hover:bg-white hover:bg-opacity-20 rounded-full"
+                            >
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Content -->
+                    <div class="overflow-y-auto max-h-[calc(95vh-200px)] sm:max-h-[calc(90vh-180px)]">
+                        <div class="p-2 sm:p-8 space-y-2 sm:space-y-6">
+                            <!-- Selected Products Info -->
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-3 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="bg-blue-100 rounded-full p-2 sm:p-3 mr-2 sm:mr-4 flex-shrink-0">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="min-w-0">
+                                        <h3 class="text-sm sm:text-lg font-semibold text-blue-900">
+                                            {{ selectedProducts.length }} {{ selectedProducts.length === 1 ? 'prodotto selezionato' : 'prodotti selezionati' }}
+                                        </h3>
+                                        <p class="text-blue-700 text-xs sm:text-sm mt-0.5">I prezzi verranno aggiornati automaticamente</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Discount Percentage -->
+                            <div>
+                                <label class="block text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4">Percentuale di Sconto</label>
+                                
+                                <!-- Predefined buttons and custom input on same row -->
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2 sm:mb-4">
+                                    <button
+                                        v-for="percentage in predefinedPercentages"
+                                        :key="percentage"
+                                        @click="selectPercentage(percentage)"
+                                        :class="[
+                                            'px-2 sm:px-4 py-2 sm:py-3 rounded-lg border-2 font-semibold transition-all transform hover:scale-105 text-center',
+                                            selectedPercentage === percentage
+                                                ? 'border-orange-500 bg-orange-50 text-orange-700 shadow-lg'
+                                                : 'border-gray-200 hover:border-gray-300 text-gray-700 hover:bg-gray-50'
+                                        ]"
+                                    >
+                                        <div class="text-sm sm:text-xl font-bold">-{{ percentage }}%</div>
+                                    </button>
+                                    
+                                    <!-- Custom percentage input -->
+                                    <div class="relative">
+                                        <input
+                                            v-model.number="customPercentage"
+                                            @input="selectCustomPercentage"
+                                            type="number"
+                                            min="0"
+                                            max="100"
+                                            step="0.01"
+                                            placeholder="Altro"
+                                            class="w-full h-full px-3 sm:px-4 py-2.5 sm:py-3 text-center border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all font-semibold text-sm sm:text-base"
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date Range -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
+                                <!-- Start Date -->
+                                <div>
+                                    <label class="block text-sm sm:text-lg font-semibold text-gray-900 mb-2">Data Inizio</label>
+                                    <input
+                                        v-model="startDate"
+                                        type="date"
+                                        class="w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all"
+                                        @click="$event.target.showPicker()"
+                                    >
+                                    <p class="mt-1 text-xs sm:text-sm text-gray-500">Se non specificata, lo sconto inizia subito</p>
+                                </div>
+
+                                <!-- End Date -->
+                                <div>
+                                    <label class="block text-sm sm:text-lg font-semibold text-gray-900 mb-2">Data Fine</label>
+                                    <div class="space-y-2">
+                                        <input
+                                            v-model="endDate"
+                                            :disabled="neverExpires"
+                                            type="date"
+                                            :class="[
+                                                'w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all',
+                                                neverExpires ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed' : 'border-gray-300 cursor-pointer'
+                                            ]"
+                                            @click="!neverExpires && $event.target.showPicker()"
+                                        >
+                                        <label class="flex items-center">
+                                            <input
+                                                v-model="neverExpires"
+                                                type="checkbox"
+                                                class="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                                            >
+                                            <span class="ml-2 sm:ml-3 text-xs sm:text-sm text-gray-700 font-medium">Non scade mai</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Price Preview - Always visible when products selected -->
+                            <div v-if="selectedProducts.length > 0" class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg sm:rounded-xl p-3 sm:p-6">
+                                <h3 class="text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4 flex items-center">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                    Anteprima Prezzi
+                                </h3>
+                                <p class="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-4">
+                                    <strong>Nota:</strong> I prezzi vengono arrotondati per difetto (es. €112.50 → €112). 
+                                    <span v-if="!selectedPercentage" class="text-orange-600 font-medium">Seleziona una percentuale per vedere i prezzi aggiornati.</span>
+                                </p>
+                                <div class="space-y-3 max-h-48 overflow-y-auto">
+                                    <div 
+                                        v-for="product in selectedProducts.slice(0, 10)" 
+                                        :key="product.id"
+                                        class="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-200"
+                                    >
+                                        <span class="text-gray-800 font-medium truncate">{{ product.title }}</span>
+                                        <div class="flex items-center space-x-3">
+                                            <span class="text-gray-500 line-through">€{{ product.price }}</span>
+                                            <span class="font-bold text-orange-600 text-lg">
+                                                €{{ selectedPercentage ? calculateDiscountedPrice(product.price) : product.price }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div v-if="selectedProducts.length > 10" class="text-center text-sm text-gray-500 py-2">
+                                        ... e altri {{ selectedProducts.length - 10 }} prodotti
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Error Messages -->
+                            <div v-if="error" class="bg-red-50 border-2 border-red-200 text-red-700 px-6 py-4 rounded-xl">
+                                <div class="flex items-start">
+                                    <svg class="w-6 h-6 mr-3 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold mb-2">Errore nell'applicazione dello sconto</h4>
+                                        <pre class="text-sm whitespace-pre-wrap font-mono bg-red-100 p-3 rounded border overflow-x-auto">{{ error }}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="bg-gray-50 px-2 sm:px-8 py-2 sm:py-6 flex flex-row items-center justify-between gap-2">
+                        <button
+                            @click="$emit('close')"
+                            class="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-gray-700 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm font-semibold"
+                        >
+                            Annulla
+                        </button>
+                        <button
+                            @click="applyDiscount"
+                            :disabled="!selectedPercentage || selectedProducts.length === 0 || loading"
+                            :class="[
+                                'flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all',
+                                selectedPercentage && selectedProducts.length > 0 && !loading
+                                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl'
+                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            ]"
+                        >
+                            <span v-if="loading" class="flex items-center justify-center">
+                                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Salva
+                            </span>
+                            <span v-else class="flex items-center justify-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                                Salva
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Teleport>
+</template>
+
+<script setup>
+import { ref, watch } from 'vue';
+
+const props = defineProps({
+    show: {
+        type: Boolean,
+        default: false,
+    },
+    selectedProducts: {
+        type: Array,
+        default: () => [],
+    },
+});
+
+const emit = defineEmits(['close', 'applied']);
+
+const predefinedPercentages = [10, 20, 50];
+const selectedPercentage = ref(null);
+const customPercentage = ref('');
+const startDate = ref('');
+const endDate = ref('');
+const neverExpires = ref(false);
+const loading = ref(false);
+const error = ref('');
+
+// Set default start date to now
+watch(() => props.show, (show) => {
+    if (show) {
+        const now = new Date();
+        startDate.value = now.toISOString().split('T')[0]; // Only date part
+        endDate.value = '';
+        neverExpires.value = true; // Default to never expires
+        selectedPercentage.value = null;
+        customPercentage.value = '';
+        error.value = '';
+    }
+});
+
+const selectPercentage = (percentage) => {
+    selectedPercentage.value = percentage;
+    customPercentage.value = '';
+};
+
+const selectCustomPercentage = () => {
+    if (customPercentage.value !== '') {
+        selectedPercentage.value = parseFloat(customPercentage.value);
+    }
+};
+
+const calculateDiscountedPrice = (originalPrice) => {
+    if (!selectedPercentage.value) return originalPrice;
+    return Math.floor(originalPrice * (1 - (selectedPercentage.value / 100)));
+};
+
+const applyDiscount = async () => {
+    if (!selectedPercentage.value || props.selectedProducts.length === 0) {
+        error.value = 'Seleziona una percentuale di sconto e almeno un prodotto.';
+        return;
+    }
+
+    loading.value = true;
+    error.value = '';
+
+    try {
+        const data = {
+            product_ids: props.selectedProducts.map(p => p.id),
+            discount_percentage: selectedPercentage.value,
+            start_date: startDate.value || null,
+            end_date: neverExpires.value ? null : (endDate.value || null),
+        };
+
+        console.log('Sending discount data:', data);
+        console.log('Selected products:', props.selectedProducts);
+
+        // Get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+        console.log('CSRF token:', csrfToken ? 'Found' : 'Not found');
+        
+        const response = await fetch('/admin/discounts/apply', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify(data),
+        });
+
+        console.log('Response status:', response.status);
+        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error response body:', errorText);
+            throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+        }
+
+        const result = await response.json();
+        console.log('Response result:', result);
+
+        if (result.success) {
+            emit('applied', result);
+            emit('close');
+            // Reload the page to show updated prices
+            window.location.reload();
+        } else {
+            let errorMessage = result.message || 'Errore durante l\'applicazione dello sconto.';
+            
+            // Add detailed error information if available
+            if (result.error_details) {
+                errorMessage += `\n\nDettagli errore:\nFile: ${result.error_details.file}\nLinea: ${result.error_details.line}\nTipo: ${result.error_details.type}`;
+            }
+            
+            if (result.errors && Array.isArray(result.errors)) {
+                errorMessage += `\n\nErrori specifici:\n${result.errors.join('\n')}`;
+            }
+            
+            error.value = errorMessage;
+        }
+    } catch (err) {
+        console.error('Error applying discount:', err);
+        error.value = 'Errore di connessione. Riprova. ' + err.message;
+    } finally {
+        loading.value = false;
+    }
+};
+</script>

@@ -32,4 +32,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('products/{product}/images', [ProductController::class, 'uploadImage'])->name('products.images.upload');
     Route::delete('images/{image}', [ProductController::class, 'deleteImage'])->name('images.delete');
     Route::patch('images/{image}/set-cover', [ProductController::class, 'setCoverImage'])->name('images.set-cover');
+        Route::post('discounts/apply', [\App\Http\Controllers\Admin\DiscountController::class, 'applyDiscount'])->name('discounts.apply');
+        Route::post('discounts/remove/{product}', [\App\Http\Controllers\Admin\DiscountController::class, 'removeDiscount'])->name('discounts.remove');
+        Route::post('discounts/extend/{product}', [\App\Http\Controllers\Admin\DiscountController::class, 'extendDiscount'])->name('discounts.extend');
+        Route::post('discounts/modify/{product}', [\App\Http\Controllers\Admin\DiscountController::class, 'modifyDiscount'])->name('discounts.modify');
 });

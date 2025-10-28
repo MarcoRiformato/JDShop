@@ -9,7 +9,7 @@
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Prodotti</h1>
                     <p class="text-gray-600 mt-1">Gestisci l'inventario del catalogo</p>
                 </div>
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full max-w-full overflow-hidden">
                     <!-- View Mode Toggle -->
                     <div class="hidden md:flex bg-white rounded-lg shadow-sm border border-gray-200 p-1">
                         <button
@@ -60,13 +60,28 @@
                     </div>
                     <Link 
                         :href="route('products.create')" 
-                        class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg transform hover:scale-105 font-semibold whitespace-nowrap"
+                        class="flex-shrink w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg transform hover:scale-105 font-semibold whitespace-nowrap"
                     >
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
                         Nuovo Prodotto
                     </Link>
+                    <button
+                        @click="discountModeActive && selectedProducts.length > 0 ? showDiscountModal = true : enterDiscountMode()"
+                        :disabled="discountModeActive && selectedProducts.length === 0"
+                        :class="[
+                            'w-full sm:w-auto flex-shrink inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg text-center font-semibold transition-all shadow-md hover:shadow-lg transform hover:scale-105 whitespace-nowrap',
+                            discountModeActive && selectedProducts.length > 0
+                                ? 'bg-red-400 text-white hover:bg-red-500'
+                                : 'bg-red-400 text-white hover:bg-red-500'
+                        ]"
+                    >
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                        </svg>
+                        <span>{{ discountModeActive && selectedProducts.length > 0 ? 'Applica Sconto' : 'Gestisci Sconti' }}</span>
+                    </button>
                 </div>
             </div>
 
@@ -78,21 +93,64 @@
                 {{ $page.props.flash.success }}
             </div>
 
-            <!-- Info banner -->
-            <div v-if="products.length > 0" class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start">
-                <svg class="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <div class="text-sm text-blue-900">
-                    <p class="font-semibold mb-1">Clicca su un prodotto per modificarlo</p>
-                    <p class="text-blue-700">Puoi eliminare i prodotti usando il pulsante elimina</p>
+            <!-- Discount Selection Info -->
+            <div v-if="discountModeActive && products.length > 0" class="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center">
+                            <input
+                                :id="selectAllId"
+                                :checked="isAllSelected"
+                                :indeterminate="isIndeterminate"
+                                @change="toggleSelectAll"
+                                type="checkbox"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                            >
+                            <label :for="selectAllId" class="ml-2 text-sm font-medium text-gray-700">
+                                Seleziona Tutto
+                            </label>
+                        </div>
+                        <div v-if="selectedProducts.length > 0" class="text-sm text-gray-600">
+                            {{ selectedProducts.length }} {{ selectedProducts.length === 1 ? 'prodotto selezionato' : 'prodotti selezionati' }}
+                        </div>
+                    </div>
+                    <button
+                        @click="exitDiscountMode"
+                        class="inline-flex items-center px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                    >
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Annulla
+                    </button>
                 </div>
             </div>
+
 
             <!-- Products table/cards -->
             <ProductTable 
                 :products="products"
                 :view-mode="viewMode"
+                :selected-products="selectedProducts"
+                :discount-mode-active="discountModeActive"
+                @selection-change="handleSelectionChange"
+                @remove-discount="handleEditDiscount"
+            />
+
+            <!-- Discount Modal -->
+            <DiscountModal
+                :show="showDiscountModal"
+                :selected-products="selectedProducts"
+                @close="showDiscountModal = false"
+                @applied="handleDiscountApplied"
+            />
+
+            <!-- Remove Discount Modal -->
+            <RemoveDiscountModal
+                :show="showRemoveDiscountModal"
+                :product="selectedProductForRemoval"
+                @close="showRemoveDiscountModal = false"
+                @confirm="handleDiscountRemoved"
             />
 
             <!-- Empty state -->
@@ -119,13 +177,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { router, Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import ProductTable from '@/Components/Admin/ProductTable.vue';
+import DiscountModal from '@/Components/Admin/DiscountModal.vue';
+import RemoveDiscountModal from '@/Components/Admin/RemoveDiscountModal.vue';
 
-defineProps({
+const props = defineProps({
     products: {
         type: Array,
         required: true,
@@ -133,6 +193,62 @@ defineProps({
 });
 
 const viewMode = ref('list');
+const selectedProducts = ref([]);
+const showDiscountModal = ref(false);
+const discountModeActive = ref(false);
+const showRemoveDiscountModal = ref(false);
+const selectedProductForRemoval = ref(null);
+
+// Computed properties for select all functionality
+const isAllSelected = computed(() => {
+    return props.products.length > 0 && selectedProducts.value.length === props.products.length;
+});
+
+const isIndeterminate = computed(() => {
+    return selectedProducts.value.length > 0 && selectedProducts.value.length < props.products.length;
+});
+
+const selectAllId = 'select-all-products';
+
+// Methods
+const toggleSelectAll = () => {
+    if (isAllSelected.value) {
+        selectedProducts.value = [];
+    } else {
+        selectedProducts.value = [...props.products];
+    }
+};
+
+const handleSelectionChange = (newSelection) => {
+    selectedProducts.value = newSelection;
+};
+
+const handleDiscountApplied = (result) => {
+    // Show success message or handle the result
+    console.log('Discount applied:', result);
+    exitDiscountMode();
+};
+
+const handleEditDiscount = (product) => {
+    selectedProductForRemoval.value = product;
+    showRemoveDiscountModal.value = true;
+};
+
+const handleDiscountRemoved = (result) => {
+    console.log('Discount removed:', result);
+    showRemoveDiscountModal.value = false;
+    selectedProductForRemoval.value = null;
+};
+
+const enterDiscountMode = () => {
+    discountModeActive.value = true;
+};
+
+const exitDiscountMode = () => {
+    discountModeActive.value = false;
+    selectedProducts.value = [];
+    showDiscountModal.value = false;
+};
 
 // Load view mode from localStorage
 onMounted(() => {

@@ -43,6 +43,10 @@ class ShopController extends Controller
                 'description' => $product->description,
                 'tags' => $product->tags ? explode(',', $product->tags) : [],
                 'price' => $product->price,
+                'original_price' => $product->original_price,
+                'discount_percentage' => $product->discount_percentage,
+                'has_active_discount' => $product->has_active_discount,
+                'discounted_price' => $product->discounted_price,
                 'cover_image_url' => $product->cover_image_url,
             ];
         });
@@ -99,6 +103,10 @@ class ShopController extends Controller
                         'id' => $p->id,
                         'title' => $p->title,
                         'price' => $p->price,
+                        'original_price' => $p->original_price,
+                        'discount_percentage' => $p->discount_percentage,
+                        'has_active_discount' => $p->has_active_discount,
+                        'discounted_price' => $p->discounted_price,
                         'cover_image_url' => $p->cover_image_url,
                     ];
                 })
@@ -112,6 +120,12 @@ class ShopController extends Controller
                 'description' => $product->description,
                 'tags' => $product->tags ? explode(',', $product->tags) : [],
                 'price' => $product->price,
+                'original_price' => $product->original_price,
+                'discount_percentage' => $product->discount_percentage,
+                'discount_start_date' => $product->discount_start_date,
+                'discount_end_date' => $product->discount_end_date,
+                'has_active_discount' => $product->has_active_discount,
+                'discounted_price' => $product->discounted_price,
                 'sold_out' => $product->sold_out,
                 'images' => $product->images->map(fn($image) => [
                     'id' => $image->id,

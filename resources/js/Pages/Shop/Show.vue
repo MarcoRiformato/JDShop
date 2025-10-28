@@ -45,22 +45,47 @@
                         </h1>
 
                         <!-- Price and status -->
-                        <div class="flex items-center space-x-4 mb-6">
-                            <span class="text-4xl font-bold text-gray-900">
-                                €{{ product.price }}
-                            </span>
-                            <span 
-                                v-if="product.sold_out"
-                                class="px-4 py-2 bg-red-100 text-red-800 text-sm font-semibold rounded-full"
-                            >
-                                Venduto
-                            </span>
-                            <span 
-                                v-else
-                                class="px-4 py-2 bg-green-100 text-green-800 text-sm font-semibold rounded-full"
-                            >
-                                Disponibile
-                            </span>
+                        <div class="mb-6">
+                            <!-- Discount Badge -->
+                            <div v-if="product.has_active_discount" class="mb-4">
+                                <span class="inline-flex items-center px-4 py-2 bg-orange-100 text-orange-800 text-lg font-bold rounded-full">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                    </svg>
+                                    SCONTO {{ product.discount_percentage }}%
+                                </span>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center gap-3">
+                                    <span v-if="product.has_active_discount" class="text-2xl text-gray-500 line-through">
+                                        €{{ product.original_price }}
+                                    </span>
+                                    <span class="text-4xl font-bold text-gray-900">
+                                        €{{ product.price }}
+                                    </span>
+                                </div>
+                                <span 
+                                    v-if="product.sold_out"
+                                    class="px-4 py-2 bg-red-100 text-red-800 text-sm font-semibold rounded-full"
+                                >
+                                    Venduto
+                                </span>
+                                <span 
+                                    v-else
+                                    class="px-4 py-2 bg-green-100 text-green-800 text-sm font-semibold rounded-full"
+                                >
+                                    Disponibile
+                                </span>
+                            </div>
+
+                            <!-- Discount expiry info -->
+                            <div v-if="product.has_active_discount && product.discount_end_date" class="mt-2 text-sm text-gray-600">
+                                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Offerta valida fino al {{ formatDate(product.discount_end_date) }}
+                            </div>
                         </div>
 
                         <!-- Description -->
@@ -135,13 +160,18 @@
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                             >
                         </div>
-                        <div class="p-4">
+                        <div class="p-4 min-w-0">
                             <h3 class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
                                 {{ related.title }}
                             </h3>
-                            <p class="text-lg font-bold text-gray-900">
-                                €{{ related.price }}
-                            </p>
+                            <div class="flex items-center gap-2">
+                                <span v-if="related.has_active_discount" class="text-sm text-gray-500 line-through">
+                                    €{{ related.original_price }}
+                                </span>
+                                <span class="text-lg font-bold text-gray-900">
+                                    €{{ related.price }}
+                                </span>
+                            </div>
                         </div>
                     </Link>
                 </div>
@@ -176,5 +206,14 @@ const props = defineProps({
 });
 
 const showContactModal = ref(false);
+
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('it-IT', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+};
 </script>
 
