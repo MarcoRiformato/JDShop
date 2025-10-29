@@ -276,6 +276,15 @@
             @close="closePreview"
         />
 
+        <!-- Remove Discount Modal -->
+        <RemoveDiscountModal
+            v-if="showRemoveDiscountModal"
+            :show="showRemoveDiscountModal"
+            :product="product"
+            @close="showRemoveDiscountModal = false"
+            @confirm="handleDiscountRemoved"
+        />
+
         <!-- Delete Confirmation Modal -->
         <div 
             v-if="showDeleteModal"
@@ -326,6 +335,7 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import ImageUploader from '@/Components/Admin/ImageUploader.vue';
 import ImagePreview from '@/Components/Admin/ImagePreview.vue';
 import ProductPreviewModal from '@/Components/Admin/ProductPreviewModal.vue';
+import RemoveDiscountModal from '@/Components/Admin/RemoveDiscountModal.vue';
 
 const props = defineProps({
     product: {
@@ -338,6 +348,7 @@ const images = ref([...props.product.images]);
 
 const showPreviewModal = ref(false);
 const showDeleteModal = ref(false);
+const showRemoveDiscountModal = ref(false);
 const previewProduct = ref({
     id: props.product.id,
     title: props.product.title,
@@ -437,27 +448,13 @@ const formatDate = (dateString) => {
     });
 };
 
-const removeDiscount = async () => {
-    if (!confirm('Sei sicuro di voler rimuovere lo sconto da questo prodotto?')) {
-        return;
-    }
-    
-    try {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-        const response = await axios.post(`/admin/discounts/remove/${props.product.id}`, {}, {
-            headers: {
-                'X-CSRF-TOKEN': csrfToken,
-            }
-        });
-        
-        if (response.data.success) {
-            router.reload({ only: ['product'] });
-        } else {
-            alert('Errore durante la rimozione dello sconto: ' + (response.data.message || 'Errore sconosciuto'));
-        }
-    } catch (error) {
-        alert('Errore durante la rimozione dello sconto: ' + (error.response?.data?.message || error.message));
-    }
+const removeDiscount = () => {
+    showRemoveDiscountModal.value = true;
+};
+
+const handleDiscountRemoved = () => {
+    showRemoveDiscountModal.value = false;
+    router.reload({ only: ['product'] });
 };
 </script>
 
