@@ -8,6 +8,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,6 +27,10 @@ class ProductController extends Controller
             ->orderBy('created_at', 'desc')
             ->get()
             ->map(function ($product) {
+                // Get images with cover image first, then at least 2 more if available (up to 3 total)
+                $imagesCollection = $product->images->sortByDesc('is_cover');
+                $imagesToShow = $imagesCollection->take($product->images->count() >= 3 ? 3 : $product->images->count());
+                
                 return [
                     'id' => $product->id,
                     'title' => $product->title,
@@ -35,7 +40,7 @@ class ProductController extends Controller
                     'sold_out' => $product->sold_out,
                     'cover_image_url' => $product->cover_image_url,
                     'images_count' => $product->images->count(),
-                    'images' => $product->images->take(2)->map(fn($image) => [
+                    'images' => $imagesToShow->map(fn($image) => [
                         'id' => $image->id,
                         'url' => $image->url,
                         'thumbnail_url' => $image->thumbnail_url,
@@ -184,6 +189,14 @@ class ProductController extends Controller
                 'errors' => $e->errors(),
             ], 422);
         } catch (\Exception $e) {
+            Log::error('Image upload failed', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+                'product_id' => $product->id,
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Errore durante il caricamento dell\'immagine: ' . $e->getMessage(),

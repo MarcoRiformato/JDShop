@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -24,33 +25,60 @@ class ImageService
      */
     public function uploadProductImage(UploadedFile $file): string
     {
-        // Always save as WebP for better compression
-        $filename = time() . '_' . uniqid() . '.webp';
+        try {
+            // Always save as WebP for better compression
+            $filename = time() . '_' . uniqid() . '.webp';
 
-        // Read the uploaded image
-        $image = $this->imageManager->read($file);
+            // Read the uploaded image
+            $image = $this->imageManager->read($file);
 
-        // Resize for full-size version (max 1200px width)
-        $fullSize = clone $image;
-        $fullSize->scale(width: 1200);
+            // Resize for full-size version (max 1200px width)
+            $fullSize = clone $image;
+            $fullSize->scale(width: 1200);
 
-        // Create thumbnail (300px width)
-        $thumbnail = clone $image;
-        $thumbnail->scale(width: 300);
+            // Save full-size image (WebP format with optimized quality)
+            $fullSizeContent = (string) $fullSize->toWebp(quality: 80);
+            unset($fullSize); // Free memory
+            $fullSizeSaved = Storage::disk('public')->put(
+                'products/' . $filename,
+                $fullSizeContent
+            );
+            unset($fullSizeContent); // Free memory
 
-        // Save full-size image (WebP format with optimized quality)
-        Storage::disk('public')->put(
-            'products/' . $filename,
-            (string) $fullSize->toWebp(quality: 80)
-        );
+            if (!$fullSizeSaved) {
+                throw new \RuntimeException('Failed to save full-size image to storage');
+            }
 
-        // Save thumbnail (WebP format with optimized quality)
-        Storage::disk('public')->put(
-            'products/thumbnails/' . $filename,
-            (string) $thumbnail->toWebp(quality: 75)
-        );
+            // Create thumbnail (300px width)
+            $thumbnail = clone $image;
+            $thumbnail->scale(width: 300);
+            unset($image); // Free memory
 
-        return $filename;
+            // Save thumbnail (WebP format with optimized quality)
+            $thumbnailContent = (string) $thumbnail->toWebp(quality: 75);
+            unset($thumbnail); // Free memory
+            $thumbnailSaved = Storage::disk('public')->put(
+                'products/thumbnails/' . $filename,
+                $thumbnailContent
+            );
+            unset($thumbnailContent); // Free memory
+
+            if (!$thumbnailSaved) {
+                // Clean up full-size image if thumbnail save fails
+                Storage::disk('public')->delete('products/' . $filename);
+                throw new \RuntimeException('Failed to save thumbnail image to storage');
+            }
+
+            return $filename;
+        } catch (\Exception $e) {
+            Log::error('ImageService upload failed', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            throw $e;
+        }
     }
 
     /**

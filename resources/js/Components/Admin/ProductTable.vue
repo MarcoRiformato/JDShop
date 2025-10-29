@@ -29,19 +29,133 @@
 
                 <!-- Image -->
                 <div class="flex-shrink-0 relative">
-                    <img
-                        v-if="product.cover_image_url"
-                        :src="product.cover_image_url"
-                        :alt="product.title"
-                        class="w-24 h-24 rounded-lg object-cover group-hover:scale-105 transition-transform"
-                    >
-                    <div v-else class="w-24 h-24 rounded-lg bg-gray-200 flex items-center justify-center">
-                        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
+                    <!-- Desktop: Show 3 images if available -->
+                    <div v-if="product.images && product.images.length >= 3" class="hidden sm:flex gap-1">
+                        <div class="relative">
+                            <img
+                                :src="product.images[0].thumbnail_url || product.images[0].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition-transform"
+                            >
+                            <div v-if="product.images[0].is_cover" class="absolute top-0.5 left-0.5 bg-blue-600 text-white text-[9px] font-bold px-1 py-0.5 rounded">
+                                Copertina
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <img
+                                :src="product.images[1].thumbnail_url || product.images[1].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition-transform"
+                            >
+                        </div>
+                        <div class="relative">
+                            <img
+                                :src="product.images[2].thumbnail_url || product.images[2].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition-transform"
+                            >
+                            <div v-if="product.images_count > 3" class="absolute -bottom-2 -right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                                +{{ product.images_count - 3 }}
+                            </div>
+                        </div>
                     </div>
-                    <div v-if="product.images_count > 0" class="absolute -bottom-2 -right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
-                        {{ product.images_count }}
+                    <!-- Desktop: Show 2 images if 2 available -->
+                    <div v-else-if="product.images && product.images.length === 2" class="hidden sm:flex gap-1">
+                        <div class="relative">
+                            <img
+                                :src="product.images[0].thumbnail_url || product.images[0].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition-transform"
+                            >
+                            <div v-if="product.images[0].is_cover" class="absolute top-0.5 left-0.5 bg-blue-600 text-white text-[9px] font-bold px-1 py-0.5 rounded">
+                                Copertina
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <img
+                                :src="product.images[1].thumbnail_url || product.images[1].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover group-hover:scale-105 transition-transform"
+                            >
+                        </div>
+                    </div>
+                    <!-- Desktop: Single image if only one exists -->
+                    <div v-else class="hidden sm:block">
+                        <img
+                            v-if="product.cover_image_url"
+                            :src="product.cover_image_url"
+                            :alt="product.title"
+                            class="w-24 h-24 rounded-lg object-cover group-hover:scale-105 transition-transform"
+                        >
+                        <div v-else class="w-24 h-24 rounded-lg bg-gray-200 flex items-center justify-center">
+                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Mobile: Show 3 images if available -->
+                    <div v-if="product.images && product.images.length >= 3" class="sm:hidden flex gap-1">
+                        <div class="relative">
+                            <img
+                                :src="product.images[0].thumbnail_url || product.images[0].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover"
+                            >
+                            <div v-if="product.images[0].is_cover" class="absolute top-0.5 left-0.5 bg-blue-600 text-white text-[9px] font-bold px-1 py-0.5 rounded">
+                                Copertina
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <img
+                                :src="product.images[1].thumbnail_url || product.images[1].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover"
+                            >
+                        </div>
+                        <div class="relative">
+                            <img
+                                :src="product.images[2].thumbnail_url || product.images[2].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover"
+                            >
+                            <div v-if="product.images_count > 3" class="absolute -bottom-2 -right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                                +{{ product.images_count - 3 }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile: Show 2 images if 2 available -->
+                    <div v-else-if="product.images && product.images.length === 2" class="sm:hidden flex gap-1.5">
+                        <div class="relative">
+                            <img
+                                :src="product.images[0].thumbnail_url || product.images[0].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover"
+                            >
+                            <div v-if="product.images[0].is_cover" class="absolute top-1 left-1 bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+                                Copertina
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <img
+                                :src="product.images[1].thumbnail_url || product.images[1].url"
+                                :alt="product.title"
+                                class="w-20 h-20 rounded-lg object-cover"
+                            >
+                        </div>
+                    </div>
+                    <!-- Mobile: Single image if only one exists -->
+                    <div v-else class="sm:hidden">
+                        <img
+                            v-if="product.cover_image_url"
+                            :src="product.cover_image_url"
+                            :alt="product.title"
+                            class="w-24 h-24 rounded-lg object-cover"
+                        >
+                        <div v-else class="w-24 h-24 rounded-lg bg-gray-200 flex items-center justify-center">
+                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
                     </div>
                     <!-- Discount Badge -->
                     <div v-if="product.has_active_discount" class="absolute -top-2 -left-2 transform -rotate-12">
