@@ -322,13 +322,20 @@ const handleImageUploaded = (image) => {
 };
 
 const handleImageDelete = async (imageId) => {
-    if (!confirm('Sei sicuro di voler eliminare questa immagine?')) return;
-
     try {
         await axios.delete(route('images.delete', imageId));
         images.value = images.value.filter(img => img.id !== imageId);
     } catch (error) {
-        alert('Impossibile eliminare l\'immagine: ' + (error.response?.data?.message || error.message));
+        if (error.response?.status === 404) {
+            // Image already deleted, just remove from UI
+            images.value = images.value.filter(img => img.id !== imageId);
+        } else if (error.response?.status === 403) {
+            alert('Non hai i permessi per eliminare questa immagine.');
+        } else if (error.response?.status >= 500) {
+            alert('Errore del server. Riprova più tardi.');
+        } else {
+            alert('Impossibile eliminare l\'immagine: ' + (error.response?.data?.message || error.message || 'Errore sconosciuto'));
+        }
     }
 };
 

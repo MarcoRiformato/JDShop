@@ -5,11 +5,12 @@
             <div
                 v-for="product in products"
                 :key="product.id"
-                @click="discountModeActive && !product.has_active_discount && toggleSelection(product.id)"
+                @click="handleProductClick(product, $event)"
                 :class="[
                     'bg-white rounded-lg shadow hover:shadow-md transition-all p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 group',
                     discountModeActive && isSelected(product.id) ? 'ring-4 ring-blue-500 ring-opacity-50' : '',
-                    discountModeActive && product.has_active_discount ? 'opacity-50 bg-gray-100 cursor-not-allowed pointer-events-none' : ''
+                    discountModeActive && product.has_active_discount ? 'opacity-50 bg-gray-100 cursor-not-allowed pointer-events-none' : '',
+                    !discountModeActive ? 'cursor-pointer md:cursor-default touch-manipulation' : ''
                 ]"
             >
                 <!-- Checkbox -->
@@ -158,7 +159,7 @@
                         </div>
                     </div>
                     <!-- Discount Badge -->
-                    <div v-if="product.has_active_discount" class="absolute -top-2 -left-2 transform -rotate-12">
+                    <div v-if="product.has_active_discount" class="absolute top-2 right-2 z-10">
                         <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-lg border border-orange-400">
                             <div class="flex items-center">
                                 <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -213,12 +214,9 @@
                         v-if="product.has_active_discount"
                         @click="$emit('remove-discount', product)"
                         class="flex-1 sm:flex-initial inline-flex items-center justify-center px-3 py-2 sm:px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium"
-                        title="Rimuovi Sconto"
+                        title="Rimuovi sconto"
                     >
-                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                        </svg>
-                        <span class="hidden sm:inline">Rimuovi Sconto</span>
+                        Rimuovi sconto
                     </button>
                 </div>
             </div>
@@ -229,7 +227,7 @@
             <div
                 v-for="product in products"
                 :key="product.id"
-                @click="discountModeActive && !product.has_active_discount && toggleSelection(product.id)"
+                @click="handleProductClick(product, $event)"
                 :class="[
                     'bg-white rounded-lg shadow hover:shadow-xl transition-all overflow-hidden group relative cursor-pointer',
                     discountModeActive && isSelected(product.id) ? 'ring-4 ring-blue-500 ring-opacity-50' : '',
@@ -264,11 +262,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <div v-if="product.images_count > 0" class="absolute top-4 right-4 bg-blue-600 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                    <div v-if="product.images_count > 0 && !product.has_active_discount" class="absolute top-4 right-4 bg-blue-600 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
                         {{ product.images_count }} {{ product.images_count === 1 ? 'immagine' : 'immagini' }}
                     </div>
                     <!-- Discount Badge -->
-                    <div v-if="product.has_active_discount" class="absolute bottom-4 right-4 transform rotate-12">
+                    <div v-if="product.has_active_discount" class="absolute top-4 right-4 z-10">
                         <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-bold px-3 py-1.5 rounded-lg shadow-lg border border-orange-400">
                             <div class="flex items-center justify-center">
                                 <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -319,12 +317,9 @@
                             v-if="product.has_active_discount"
                             @click="$emit('remove-discount', product)"
                             class="flex-1 min-w-[120px] flex items-center justify-center px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
-                            title="Rimuovi Sconto"
+                            title="Rimuovi sconto"
                         >
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                            </svg>
-                            Rimuovi Sconto
+                            Rimuovi sconto
                         </button>
                     </div>
                 </div>
@@ -336,7 +331,7 @@
             <div
                 v-for="product in products"
                 :key="product.id"
-                @click="discountModeActive && !product.has_active_discount && toggleSelection(product.id)"
+                @click="handleProductClick(product, $event)"
                 :class="[
                     'bg-white rounded-lg shadow hover:shadow-lg transition-all overflow-hidden group relative cursor-pointer w-full max-w-full',
                     discountModeActive && isSelected(product.id) ? 'ring-4 ring-blue-500 ring-opacity-50' : '',
@@ -386,13 +381,13 @@
                         </div>
                     </template>
                     
-                    <!-- Image count badge (only if more than 2 images) -->
-                    <div v-if="product.images_count > 2" class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                    <!-- Image count badge (only if more than 2 images and no discount badge) -->
+                    <div v-if="product.images_count > 2 && !product.has_active_discount" class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
                         {{ product.images_count }}
                     </div>
                     
                     <!-- Discount Badge -->
-                    <div v-if="product.has_active_discount" class="absolute bottom-2 right-2 transform rotate-12">
+                    <div v-if="product.has_active_discount" class="absolute top-2 right-2 z-10">
                         <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-lg border border-orange-400">
                             <div class="flex items-center">
                                 <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -438,11 +433,9 @@
                             v-if="product.has_active_discount"
                             @click="$emit('remove-discount', product)"
                             class="flex-1 flex items-center justify-center px-2 py-1.5 bg-red-500 text-white rounded text-xs font-medium hover:bg-red-600 transition-colors"
-                            title="Rimuovi Sconto"
+                            title="Rimuovi sconto"
                         >
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                            </svg>
+                            Rimuovi sconto
                         </button>
                     </div>
                 </div>
@@ -452,7 +445,7 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
     products: {
@@ -495,6 +488,41 @@ const toggleSelection = (productId) => {
 
     emit('selection-change', newSelection);
 };
+
+const handleProductClick = (product, event) => {
+    // Check if click was on a button, link, or checkbox
+    const target = event.target;
+    const isInteractive = target.closest('button') || 
+                          target.closest('a') || 
+                          target.closest('input[type="checkbox"]') ||
+                          target.tagName === 'BUTTON' ||
+                          target.tagName === 'A' ||
+                          target.tagName === 'INPUT';
+    
+    // If clicking on interactive element, let it handle the event
+    if (isInteractive) {
+        return;
+    }
+    
+    // In discount mode, handle selection
+    if (props.discountModeActive && !product.has_active_discount) {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleSelection(product.id);
+        return;
+    }
+    
+    // On mobile, if not in discount mode, open edit page
+    if (!props.discountModeActive) {
+        const isMobile = window.innerWidth < 768 || window.matchMedia('(max-width: 767px)').matches;
+        if (isMobile) {
+            event.preventDefault();
+            event.stopPropagation();
+            router.visit(route('products.edit', product.id));
+        }
+    }
+};
+
 </script>
 
 <style scoped>

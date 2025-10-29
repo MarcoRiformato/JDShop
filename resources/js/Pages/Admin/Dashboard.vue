@@ -4,10 +4,10 @@
     </Head>
     <AdminLayout>
         <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Prodotti</h1>
-                    <p class="text-gray-600 mt-1">Gestisci l'inventario del catalogo</p>
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Prodotti</h1>
+                    <p class="text-sm sm:text-base text-gray-600 mt-1">Gestisci l'inventario del catalogo</p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full max-w-full overflow-hidden">
                     <!-- View Mode Toggle -->

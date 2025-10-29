@@ -10,3 +10,76 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Mobile App-like Improvements */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Better touch targets for mobile */
+button, a, input, select, textarea {
+    touch-action: manipulation;
+}
+
+/* Minimum touch target size (44x44px recommended by Apple/Google) */
+button:not(.no-min-touch),
+a:not(.no-min-touch) {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+@media (min-width: 640px) {
+    button:not(.no-min-touch),
+    a:not(.no-min-touch) {
+        min-height: auto;
+        min-width: auto;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+    overscroll-behavior-y: contain;
+}
+
+/* Improve form input on mobile */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    font-size: 16px; /* Prevents zoom on iOS */
+}
+
+@media (min-width: 640px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="password"],
+    input[type="search"],
+    textarea,
+    select {
+        font-size: 14px;
+    }
+}
+
+/* Better active states for touch */
+button:active,
+a:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease-out;
+}
+
+/* Smooth transitions for app-like feel */
+.transition {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}

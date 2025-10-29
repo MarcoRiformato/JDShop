@@ -28,8 +28,20 @@ class ProductController extends Controller
             ->get()
             ->map(function ($product) {
                 // Get images with cover image first, then at least 2 more if available (up to 3 total)
-                $imagesCollection = $product->images->sortByDesc('is_cover');
-                $imagesToShow = $imagesCollection->take($product->images->count() >= 3 ? 3 : $product->images->count());
+                $coverImage = $product->images->firstWhere('is_cover', true);
+                $nonCoverImages = $product->images->where('is_cover', false)->sortBy('id')->values();
+                
+                $imagesToShow = collect();
+                
+                // Add cover image first if it exists
+                if ($coverImage) {
+                    $imagesToShow->push($coverImage);
+                    // Then add up to 2 more non-cover images (for a total of 3)
+                    $imagesToShow = $imagesToShow->merge($nonCoverImages->take(2));
+                } else {
+                    // If no cover image, just take the first 3 images sorted by ID
+                    $imagesToShow = $product->images->sortBy('id')->take(3);
+                }
                 
                 return [
                     'id' => $product->id,
@@ -209,13 +221,27 @@ class ProductController extends Controller
      */
     public function deleteImage(Image $image)
     {
-        $this->imageService->deleteProductImage($image->filename);
-        $image->delete();
+        try {
+            $this->imageService->deleteProductImage($image->filename);
+            $image->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Immagine eliminata con successo!',
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'Immagine eliminata con successo!',
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Image deletion failed', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'image_id' => $image->id,
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Errore durante l\'eliminazione dell\'immagine: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

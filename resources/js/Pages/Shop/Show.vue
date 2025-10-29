@@ -27,7 +27,13 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 <!-- Image gallery -->
                 <div>
-                    <ProductGallery v-if="product.images.length > 0" :images="product.images" />
+                    <ProductGallery 
+                        v-if="product.images.length > 0" 
+                        :images="product.images"
+                        :product-id="product.id"
+                        @image-deleted="handleImageDeleted"
+                        @cover-updated="handleCoverUpdated"
+                    />
                     <div v-else class="aspect-square bg-gray-200 rounded-xl overflow-hidden">
                         <img 
                             :src="`https://picsum.photos/seed/${product.id}/800/800`" 
@@ -189,7 +195,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Link, Head } from '@inertiajs/vue3';
+import { Link, Head, router } from '@inertiajs/vue3';
 import ShopLayout from '@/Layouts/ShopLayout.vue';
 import ProductGallery from '@/Components/Shop/ProductGallery.vue';
 import ContactModal from '@/Components/Shop/ContactModal.vue';
@@ -214,6 +220,16 @@ const formatDate = (dateString) => {
         month: '2-digit',
         year: 'numeric'
     });
+};
+
+const handleImageDeleted = (imageId) => {
+    // Reload the page to refresh product data
+    router.reload({ only: ['product'] });
+};
+
+const handleCoverUpdated = (image) => {
+    // Reload the page to refresh product data
+    router.reload({ only: ['product'] });
 };
 </script>
 
