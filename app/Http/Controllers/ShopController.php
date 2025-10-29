@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactInquiry;
 use App\Models\Product;
+use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -141,7 +142,7 @@ class ShopController extends Controller
     /**
      * Send contact email for a product inquiry.
      */
-    public function sendContactEmail(Request $request)
+    public function sendContactEmail(Request $request, CustomerService $customerService)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -151,6 +152,7 @@ class ShopController extends Controller
             'product_id' => 'required|exists:products,id',
             'product_title' => 'required|string',
             'product_price' => 'required|numeric',
+            'gdpr_consent' => 'sometimes|boolean',
         ]);
 
         // Log the contact request
@@ -160,15 +162,35 @@ class ShopController extends Controller
             'phone' => $validated['phone'],
             'product' => $validated['product_title'],
             'message' => $validated['message'],
+            'gdpr_consent' => $validated['gdpr_consent'],
         ]);
 
         try {
+            // Find or create customer (auto-merges on exact email match)
+            $customer = $customerService->findOrCreateCustomer(
+                $validated['email'],
+                $validated['name'],
+                $validated['phone'] ?? null,
+                (bool) ($validated['gdpr_consent'] ?? false)
+            );
+
+            // Create inquiry
+            $customerService->createInquiry($customer, [
+                'email' => $validated['email'],
+                'name' => $validated['name'],
+                'phone' => $validated['phone'] ?? null,
+                'product_id' => $validated['product_id'],
+                'product_title' => $validated['product_title'],
+                'message' => $validated['message'],
+            ]);
+
             // Send email to marco.riformato@gmail.com
             Mail::to('marco.riformato@gmail.com')->send(new ContactInquiry($validated));
             
             Log::info('Contact email sent successfully to marco.riformato@gmail.com', [
                 'name' => $validated['name'],
                 'email' => $validated['email'],
+                'customer_id' => $customer->id,
             ]);
         } catch (\Exception $e) {
             Log::error('Failed to send contact email', [

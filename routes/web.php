@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::post('discounts/remove/{product}', [\App\Http\Controllers\Admin\DiscountController::class, 'removeDiscount'])->name('discounts.remove');
         Route::post('discounts/extend/{product}', [\App\Http\Controllers\Admin\DiscountController::class, 'extendDiscount'])->name('discounts.extend');
         Route::post('discounts/modify/{product}', [\App\Http\Controllers\Admin\DiscountController::class, 'modifyDiscount'])->name('discounts.modify');
+    
+    // Customer routes
+    Route::resource('customers', CustomerController::class);
+    Route::get('customers/merge/show', [CustomerController::class, 'showMerge'])->name('customers.merge.show');
+    Route::post('customers/merge', [CustomerController::class, 'merge'])->name('customers.merge');
+    Route::get('customers/export/csv', [CustomerController::class, 'export'])->name('customers.export');
+    Route::post('inquiries/{inquiry}/update', [CustomerController::class, 'updateInquiry'])->name('inquiries.update');
 });

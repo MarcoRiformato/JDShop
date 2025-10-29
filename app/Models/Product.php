@@ -53,6 +53,14 @@ class Product extends Model
     }
 
     /**
+     * Get the inquiries for this product.
+     */
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(CustomerInquiry::class);
+    }
+
+    /**
      * Get the cover image for the product.
      */
     public function getCoverImage(): ?Image

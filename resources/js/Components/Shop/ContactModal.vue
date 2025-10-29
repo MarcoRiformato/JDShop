@@ -150,6 +150,24 @@
                                     </p>
                                 </div>
 
+                                <!-- GDPR Consent -->
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                    <label class="flex items-start cursor-pointer">
+                                        <input 
+                                            id="gdpr_consent"
+                                            type="checkbox" 
+                                            v-model="form.gdpr_consent"
+                                            class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                        >
+                                        <span class="text-sm text-gray-700">
+                                            Dichiaro di aver letto l'informativa sulla privacy e autorizzo il trattamento dei miei dati personali per rispondere alla mia richiesta.
+                                        </span>
+                                    </label>
+                                    <p v-if="form.errors.gdpr_consent" class="text-sm text-red-600 mt-1 ml-7">
+                                        {{ form.errors.gdpr_consent }}
+                                    </p>
+                                </div>
+
                                 <!-- Error message -->
                                 <div v-if="form.errors.general" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
                                     {{ form.errors.general }}
@@ -234,6 +252,7 @@ const form = useForm({
     product_id: props.product.id,
     product_title: props.product.title,
     product_price: props.product.price,
+    gdpr_consent: false,
 });
 
 const closeModal = () => {
