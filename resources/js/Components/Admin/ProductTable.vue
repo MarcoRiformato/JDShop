@@ -9,7 +9,7 @@
                 :class="[
                     'bg-white rounded-lg shadow hover:shadow-md transition-all p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 group',
                     discountModeActive && isSelected(product.id) ? 'ring-4 ring-blue-500 ring-opacity-50' : '',
-                    discountModeActive && product.has_active_discount ? 'opacity-50 bg-gray-100 cursor-not-allowed pointer-events-none' : '',
+                    discountModeActive && hasAnyDiscount(product) ? 'opacity-50 bg-gray-100 cursor-not-allowed pointer-events-none' : '',
                     !discountModeActive ? 'cursor-pointer md:cursor-default touch-manipulation' : ''
                 ]"
             >
@@ -18,12 +18,12 @@
                     <input
                         :id="`product-${product.id}`"
                         :checked="isSelected(product.id)"
-                        :disabled="product.has_active_discount"
-                        @change="!product.has_active_discount && toggleSelection(product.id)"
+                        :disabled="hasAnyDiscount(product)"
+                        @change="!hasAnyDiscount(product) && toggleSelection(product.id)"
                         type="checkbox"
                         :class="[
                             'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2',
-                            product.has_active_discount ? 'opacity-50 cursor-not-allowed' : ''
+                            hasAnyDiscount(product) ? 'opacity-50 cursor-not-allowed' : ''
                         ]"
                     >
                 </div>
@@ -158,7 +158,7 @@
                             </svg>
                         </div>
                     </div>
-                    <!-- Discount Badge -->
+                    <!-- Discount Badge - Active -->
                     <div v-if="product.has_active_discount" class="absolute top-2 right-2 z-10">
                         <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-lg border border-orange-400">
                             <div class="flex items-center">
@@ -166,6 +166,17 @@
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                 </svg>
                                 -{{ product.discount_percentage }}%
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Future Discount Badge -->
+                    <div v-if="product.has_future_discount && !product.has_active_discount" class="absolute top-2 right-2 z-10">
+                        <div class="bg-gradient-to-r from-yellow-500 to-amber-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-lg border border-yellow-400">
+                            <div class="flex items-center">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Dal {{ formatDate(product.discount_start_date) }}</span>
                             </div>
                         </div>
                     </div>
@@ -185,7 +196,8 @@
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <span v-if="product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price }}</span>
-                            <span class="text-2xl font-bold text-gray-900">€{{ product.price }}</span>
+                            <span v-if="product.has_future_discount && !product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price || product.price }}</span>
+                            <span class="text-2xl font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-600' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
                         </div>
                         <span
                             :class="[
@@ -211,7 +223,7 @@
                         <span class="hidden sm:inline">Modifica</span>
                     </Link>
                     <button
-                        v-if="product.has_active_discount"
+                        v-if="hasAnyDiscount(product)"
                         @click="$emit('remove-discount', product)"
                         class="flex-1 sm:flex-initial inline-flex items-center justify-center px-3 py-2 sm:px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium"
                         title="Rimuovi sconto"
@@ -239,12 +251,12 @@
                     <input
                         :id="`product-${product.id}`"
                         :checked="isSelected(product.id)"
-                        :disabled="product.has_active_discount"
-                        @change="!product.has_active_discount && toggleSelection(product.id)"
+                        :disabled="hasAnyDiscount(product)"
+                        @change="!hasAnyDiscount(product) && toggleSelection(product.id)"
                         type="checkbox"
                         :class="[
                             'w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 focus:ring-2 shadow-sm',
-                            product.has_active_discount ? 'opacity-50 cursor-not-allowed' : ''
+                            hasAnyDiscount(product) ? 'opacity-50 cursor-not-allowed' : ''
                         ]"
                     >
                 </div>
@@ -262,10 +274,10 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <div v-if="product.images_count > 0 && !product.has_active_discount" class="absolute top-4 right-4 bg-blue-600 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                    <div v-if="product.images_count > 0 && !hasAnyDiscount(product)" class="absolute top-4 right-4 bg-blue-600 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
                         {{ product.images_count }} {{ product.images_count === 1 ? 'immagine' : 'immagini' }}
                     </div>
-                    <!-- Discount Badge -->
+                    <!-- Discount Badge - Active -->
                     <div v-if="product.has_active_discount" class="absolute top-4 right-4 z-10">
                         <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-sm font-bold px-3 py-1.5 rounded-lg shadow-lg border border-orange-400">
                             <div class="flex items-center justify-center">
@@ -273,6 +285,17 @@
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                 </svg>
                                 <span class="text-center leading-none">-{{ product.discount_percentage }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Future Discount Badge -->
+                    <div v-if="product.has_future_discount && !product.has_active_discount" class="absolute top-4 right-4 z-10">
+                        <div class="bg-gradient-to-r from-yellow-500 to-amber-600 text-white text-sm font-bold px-3 py-1.5 rounded-lg shadow-lg border border-yellow-400">
+                            <div class="flex items-center justify-center">
+                                <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span class="text-center leading-none">Dal {{ formatDate(product.discount_start_date) }}</span>
                             </div>
                         </div>
                     </div>
@@ -289,7 +312,8 @@
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <span v-if="product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price }}</span>
-                            <span class="text-3xl font-bold text-gray-900">€{{ product.price }}</span>
+                            <span v-if="product.has_future_discount && !product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price || product.price }}</span>
+                            <span class="text-3xl font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-600' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
                         </div>
                         <span
                             :class="[
@@ -344,12 +368,12 @@
                     <input
                         :id="`product-${product.id}`"
                         :checked="isSelected(product.id)"
-                        :disabled="product.has_active_discount"
-                        @change="!product.has_active_discount && toggleSelection(product.id)"
+                        :disabled="hasAnyDiscount(product)"
+                        @change="!hasAnyDiscount(product) && toggleSelection(product.id)"
                         type="checkbox"
                         :class="[
                             'w-4 h-4 text-blue-600 bg-white border-gray-300 rounded focus:ring-blue-500 focus:ring-2 shadow-sm',
-                            product.has_active_discount ? 'opacity-50 cursor-not-allowed' : ''
+                            hasAnyDiscount(product) ? 'opacity-50 cursor-not-allowed' : ''
                         ]"
                     >
                 </div>
@@ -382,11 +406,11 @@
                     </template>
                     
                     <!-- Image count badge (only if more than 2 images and no discount badge) -->
-                    <div v-if="product.images_count > 2 && !product.has_active_discount" class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                    <div v-if="product.images_count > 2 && !hasAnyDiscount(product)" class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
                         {{ product.images_count }}
                     </div>
                     
-                    <!-- Discount Badge -->
+                    <!-- Discount Badge - Active -->
                     <div v-if="product.has_active_discount" class="absolute top-2 right-2 z-10">
                         <div class="bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-lg border border-orange-400">
                             <div class="flex items-center">
@@ -394,6 +418,17 @@
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                 </svg>
                                 -{{ product.discount_percentage }}%
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Future Discount Badge -->
+                    <div v-if="product.has_future_discount && !product.has_active_discount" class="absolute top-2 right-2 z-10">
+                        <div class="bg-gradient-to-r from-yellow-500 to-amber-600 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-lg border border-yellow-400">
+                            <div class="flex items-center">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Dal {{ formatDate(product.discount_start_date) }}</span>
                             </div>
                         </div>
                     </div>
@@ -407,7 +442,8 @@
                     <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center gap-1">
                             <span v-if="product.has_active_discount" class="text-sm text-gray-500 line-through">€{{ product.original_price }}</span>
-                            <span class="text-lg font-bold text-gray-900">€{{ product.price }}</span>
+                            <span v-if="product.has_future_discount && !product.has_active_discount" class="text-sm text-gray-500 line-through">€{{ product.original_price || product.price }}</span>
+                            <span class="text-lg font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-600' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
                         </div>
                         <span
                             :class="[
@@ -469,6 +505,32 @@ const props = defineProps({
 
 const emit = defineEmits(['selection-change', 'remove-discount']);
 
+// Format date helper - dd/mm/yy format
+const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(-2);
+    return `${day}/${month}/${year}`;
+};
+
+// Check if product has any discount (active or future)
+const hasAnyDiscount = (product) => {
+    return product.has_active_discount || product.has_future_discount;
+};
+
+// Calculate future discounted price
+const getFutureDiscountedPrice = (product) => {
+    if (!product.has_future_discount || !product.discount_percentage) {
+        return null;
+    }
+    
+    // Use original_price if available, otherwise use current price
+    const basePrice = product.original_price || product.price;
+    return Math.floor(basePrice * (1 - (product.discount_percentage / 100)));
+};
+
 const isSelected = (productId) => {
     return props.selectedProducts.some(p => p.id === productId);
 };
@@ -505,7 +567,7 @@ const handleProductClick = (product, event) => {
     }
     
     // In discount mode, handle selection
-    if (props.discountModeActive && !product.has_active_discount) {
+    if (props.discountModeActive && !hasAnyDiscount(product)) {
         event.preventDefault();
         event.stopPropagation();
         toggleSelection(product.id);

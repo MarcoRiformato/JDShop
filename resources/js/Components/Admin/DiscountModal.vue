@@ -57,7 +57,7 @@
                                 <label class="block text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4">Percentuale di Sconto</label>
                                 
                                 <!-- Predefined buttons and custom input on same row -->
-                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2 sm:mb-4">
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
                                     <button
                                         v-for="percentage in predefinedPercentages"
                                         :key="percentage"
@@ -82,10 +82,19 @@
                                             max="100"
                                             step="0.01"
                                             placeholder="Altro"
-                                            class="w-full h-full px-3 sm:px-4 py-2.5 sm:py-3 text-center border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all font-semibold text-sm sm:text-base"
+                                            :class="[
+                                                'w-full h-full px-3 sm:px-4 py-2.5 sm:py-3 text-center border-2 rounded-lg focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all font-semibold text-sm sm:text-base error-field',
+                                                errors.percentage ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                                            ]"
                                         >
                                     </div>
                                 </div>
+                                <p v-if="errors.percentage" class="text-xs sm:text-sm text-red-600 font-medium flex items-center mb-2 sm:mb-4">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    {{ errors.percentage }}
+                                </p>
                             </div>
 
                             <!-- Date Range -->
@@ -96,10 +105,21 @@
                                     <input
                                         v-model="startDate"
                                         type="date"
-                                        class="w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 border-gray-300 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all"
+                                        :min="minDate"
+                                        :class="[
+                                            'w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all error-field',
+                                            errors.startDate ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                                        ]"
+                                        @input="validateStartDate"
                                         @click="$event.target.showPicker()"
                                     >
-                                    <p class="mt-1 text-xs sm:text-sm text-gray-500">Se non specificata, lo sconto inizia subito</p>
+                                    <p v-if="!errors.startDate" class="mt-1 text-xs sm:text-sm text-gray-500">Se non specificata, lo sconto inizia subito</p>
+                                    <p v-if="errors.startDate" class="mt-1 text-xs sm:text-sm text-red-600 font-medium flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        {{ errors.startDate }}
+                                    </p>
                                 </div>
 
                                 <!-- End Date -->
@@ -110,10 +130,13 @@
                                             v-model="endDate"
                                             :disabled="neverExpires"
                                             type="date"
+                                            :min="startDate || minDate"
                                             :class="[
-                                                'w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all',
-                                                neverExpires ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed' : 'border-gray-300 cursor-pointer'
+                                                'w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all error-field',
+                                                neverExpires ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed' : 
+                                                errors.endDate ? 'border-red-500 bg-red-50' : 'border-gray-300 cursor-pointer'
                                             ]"
+                                            @input="validateEndDate"
                                             @click="!neverExpires && $event.target.showPicker()"
                                         >
                                         <label class="flex items-center">
@@ -121,9 +144,16 @@
                                                 v-model="neverExpires"
                                                 type="checkbox"
                                                 class="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                                                @change="validateEndDate"
                                             >
                                             <span class="ml-2 sm:ml-3 text-xs sm:text-sm text-gray-700 font-medium">Non scade mai</span>
                                         </label>
+                                        <p v-if="errors.endDate" class="text-xs sm:text-sm text-red-600 font-medium flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            {{ errors.endDate }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -160,15 +190,28 @@
                                 </div>
                             </div>
 
-                            <!-- Error Messages -->
-                            <div v-if="error" class="bg-red-50 border-2 border-red-200 text-red-700 px-6 py-4 rounded-xl">
+                            <!-- General Error Messages -->
+                            <div v-if="errors.general" class="bg-red-50 border-2 border-red-200 text-red-700 px-4 sm:px-6 py-3 sm:py-4 rounded-xl">
                                 <div class="flex items-start">
-                                    <svg class="w-6 h-6 mr-3 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                     <div class="flex-1">
-                                        <h4 class="font-semibold mb-2">Errore nell'applicazione dello sconto</h4>
-                                        <pre class="text-sm whitespace-pre-wrap font-mono bg-red-100 p-3 rounded border overflow-x-auto">{{ error }}</pre>
+                                        <h4 class="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">Errore di validazione</h4>
+                                        <p class="text-sm">{{ errors.general }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Server Error Messages -->
+                            <div v-if="error" class="bg-red-50 border-2 border-red-200 text-red-700 px-4 sm:px-6 py-3 sm:py-4 rounded-xl">
+                                <div class="flex items-start">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold mb-1 sm:mb-2 text-sm sm:text-base">Errore nell'applicazione dello sconto</h4>
+                                        <pre class="text-xs sm:text-sm whitespace-pre-wrap font-mono bg-red-100 p-2 sm:p-3 rounded border overflow-x-auto">{{ error }}</pre>
                                     </div>
                                 </div>
                             </div>
@@ -185,10 +228,10 @@
                         </button>
                         <button
                             @click="applyDiscount"
-                            :disabled="!selectedPercentage || selectedProducts.length === 0 || loading"
+                            :disabled="loading || hasErrors"
                             :class="[
                                 'flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all',
-                                selectedPercentage && selectedProducts.length > 0 && !loading
+                                !loading && !hasErrors
                                     ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl'
                                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                             ]"
@@ -215,7 +258,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 const props = defineProps({
     show: {
@@ -239,6 +282,23 @@ const neverExpires = ref(false);
 const loading = ref(false);
 const error = ref('');
 
+// Validation errors
+const errors = ref({
+    percentage: '',
+    startDate: '',
+    endDate: '',
+    general: ''
+});
+
+// Get today's date in YYYY-MM-DD format
+const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+};
+
+// Get minimum date for date inputs (today)
+const minDate = getTodayDate();
+
 // Set default start date to now
 watch(() => props.show, (show) => {
     if (show) {
@@ -249,7 +309,158 @@ watch(() => props.show, (show) => {
         selectedPercentage.value = null;
         customPercentage.value = '';
         error.value = '';
+        errors.value = {
+            percentage: '',
+            startDate: '',
+            endDate: '',
+            general: ''
+        };
     }
+});
+
+// Validate start date
+const validateStartDate = () => {
+    errors.value.startDate = '';
+    
+    if (!startDate.value) {
+        return true; // Start date is optional
+    }
+    
+    const selectedStartDate = new Date(startDate.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (selectedStartDate < today) {
+        errors.value.startDate = 'La data di inizio non può essere nel passato.';
+        return false;
+    }
+    
+    // Check if end date is before start date (only if end date is set)
+    if (endDate.value && !neverExpires.value) {
+        const selectedEndDate = new Date(endDate.value);
+        if (selectedEndDate < selectedStartDate) {
+            errors.value.endDate = 'La data di fine deve essere successiva alla data di inizio.';
+            return false;
+        }
+    }
+    
+    return true;
+};
+
+// Validate end date
+const validateEndDate = () => {
+    errors.value.endDate = '';
+    
+    if (neverExpires.value || !endDate.value) {
+        return true; // End date is optional or never expires
+    }
+    
+    const selectedEndDate = new Date(endDate.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (selectedEndDate < today) {
+        errors.value.endDate = 'La data di fine non può essere nel passato.';
+        return false;
+    }
+    
+    // Check if end date is before start date
+    if (startDate.value) {
+        const selectedStartDate = new Date(startDate.value);
+        if (selectedEndDate < selectedStartDate) {
+            errors.value.endDate = 'La data di fine deve essere successiva alla data di inizio.';
+            return false;
+        }
+    }
+    
+    return true;
+};
+
+// Validate percentage
+const validatePercentage = () => {
+    errors.value.percentage = '';
+    
+    if (!selectedPercentage.value) {
+        errors.value.percentage = 'Seleziona una percentuale di sconto.';
+        return false;
+    }
+    
+    const percentage = selectedPercentage.value;
+    
+    if (isNaN(percentage) || percentage < 0 || percentage > 100) {
+        errors.value.percentage = 'La percentuale deve essere compresa tra 0 e 100.';
+        return false;
+    }
+    
+    return true;
+};
+
+// Watch for date changes and validate
+watch(startDate, () => {
+    validateStartDate();
+    // Re-validate end date when start date changes
+    if (endDate.value && !neverExpires.value) {
+        validateEndDate();
+    }
+});
+
+watch(endDate, () => {
+    validateEndDate();
+});
+
+watch(neverExpires, (newVal) => {
+    if (newVal) {
+        errors.value.endDate = '';
+    } else if (endDate.value) {
+        validateEndDate();
+    }
+});
+
+watch([selectedPercentage, customPercentage], () => {
+    validatePercentage();
+});
+
+// Comprehensive validation before submission
+const validateForm = () => {
+    let isValid = true;
+    
+    // Clear all errors
+    errors.value = {
+        percentage: '',
+        startDate: '',
+        endDate: '',
+        general: ''
+    };
+    
+    // Validate percentage
+    if (!validatePercentage()) {
+        isValid = false;
+    }
+    
+    // Validate dates
+    if (!validateStartDate()) {
+        isValid = false;
+    }
+    
+    if (!validateEndDate()) {
+        isValid = false;
+    }
+    
+    // Check if products are selected
+    if (props.selectedProducts.length === 0) {
+        errors.value.general = 'Seleziona almeno un prodotto a cui applicare lo sconto.';
+        isValid = false;
+    }
+    
+    return isValid;
+};
+
+// Check if there are any validation errors
+const hasErrors = computed(() => {
+    return errors.value.percentage !== '' || 
+           errors.value.startDate !== '' || 
+           errors.value.endDate !== '' || 
+           errors.value.general !== '';
 });
 
 const selectPercentage = (percentage) => {
@@ -259,7 +470,18 @@ const selectPercentage = (percentage) => {
 
 const selectCustomPercentage = () => {
     if (customPercentage.value !== '') {
-        selectedPercentage.value = parseFloat(customPercentage.value);
+        const percentage = parseFloat(customPercentage.value);
+        
+        // Validate the percentage value
+        if (isNaN(percentage) || percentage < 0 || percentage > 100) {
+            errors.value.percentage = 'La percentuale deve essere compresa tra 0 e 100.';
+            return;
+        }
+        
+        selectedPercentage.value = percentage;
+        errors.value.percentage = '';
+    } else {
+        selectedPercentage.value = null;
     }
 };
 
@@ -269,13 +491,20 @@ const calculateDiscountedPrice = (originalPrice) => {
 };
 
 const applyDiscount = async () => {
-    if (!selectedPercentage.value || props.selectedProducts.length === 0) {
-        error.value = 'Seleziona una percentuale di sconto e almeno un prodotto.';
+    // Validate form before submission
+    if (!validateForm()) {
+        // Scroll to first error
+        const firstErrorField = document.querySelector('.error-field');
+        if (firstErrorField) {
+            firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstErrorField.focus();
+        }
         return;
     }
 
     loading.value = true;
     error.value = '';
+    errors.value.general = '';
 
     try {
         const data = {
@@ -306,9 +535,56 @@ const applyDiscount = async () => {
         console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Error response body:', errorText);
-            throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+            let errorData;
+            try {
+                errorData = await response.json();
+            } catch {
+                const errorText = await response.text();
+                throw new Error(`Errore HTTP ${response.status}: ${errorText}`);
+            }
+
+            // Handle validation errors from Laravel
+            if (errorData.errors) {
+                let errorMessages = [];
+                
+                // Collect all validation errors
+                Object.keys(errorData.errors).forEach(key => {
+                    const fieldErrors = Array.isArray(errorData.errors[key]) 
+                        ? errorData.errors[key] 
+                        : [errorData.errors[key]];
+                    
+                    fieldErrors.forEach(msg => {
+                        errorMessages.push(msg);
+                    });
+                });
+                
+                // Set appropriate error messages based on field
+                if (errorData.errors.start_date) {
+                    errors.value.startDate = Array.isArray(errorData.errors.start_date) 
+                        ? errorData.errors.start_date[0] 
+                        : errorData.errors.start_date;
+                }
+                
+                if (errorData.errors.end_date) {
+                    errors.value.endDate = Array.isArray(errorData.errors.end_date) 
+                        ? errorData.errors.end_date[0] 
+                        : errorData.errors.end_date;
+                }
+                
+                if (errorData.errors.discount_percentage) {
+                    errors.value.percentage = Array.isArray(errorData.errors.discount_percentage) 
+                        ? errorData.errors.discount_percentage[0] 
+                        : errorData.errors.discount_percentage;
+                }
+                
+                error.value = errorMessages.length > 0 
+                    ? 'Errori di validazione:\n' + errorMessages.join('\n') 
+                    : errorData.message || 'Errore durante l\'applicazione dello sconto.';
+                
+                return;
+            }
+            
+            throw new Error(errorData.message || `Errore HTTP ${response.status}`);
         }
 
         const result = await response.json();

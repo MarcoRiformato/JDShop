@@ -15,7 +15,6 @@
                 ref="fileInput"
                 type="file" 
                 accept="image/*"
-                capture
                 multiple
                 @change="handleFileSelect"
                 class="hidden"
@@ -35,7 +34,7 @@
                 Oppure trascina e rilascia le immagini qui
             </p>
             <p class="text-xs text-gray-400 mt-1">
-                Dimensione massima: 10MB per immagine
+                Dimensione massima: 20MB per immagine (verrà compressa automaticamente)
             </p>
             <p v-if="isDragOver" class="text-sm text-blue-600 font-medium mt-2">
                 Rilascia qui per caricare
@@ -129,20 +128,99 @@ const handleFileSelect = async (event) => {
     await processFiles(files);
 };
 
+// Compress image using canvas
+const compressImage = (file, maxWidth = 1920, quality = 0.85) => {
+    return new Promise((resolve, reject) => {
+        // Always compress images from mobile devices, or if file is larger than 1MB
+        // This ensures mobile photos are always compressed
+        if (!file.type.startsWith('image/')) {
+            resolve(file);
+            return;
+        }
+        
+        // For very small files (< 500KB), return as-is to avoid unnecessary processing
+        if (file.size < 500 * 1024) {
+            resolve(file);
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Calculate new dimensions
+                if (width > maxWidth) {
+                    height = (height / width) * maxWidth;
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob(
+                    (blob) => {
+                        if (blob) {
+                            // Create a new File object with original name
+                            const compressedFile = new File([blob], file.name, {
+                                type: 'image/jpeg',
+                                lastModified: Date.now(),
+                            });
+                            resolve(compressedFile);
+                        } else {
+                            resolve(file); // Fallback to original if compression fails
+                        }
+                    },
+                    'image/jpeg',
+                    quality
+                );
+            };
+            img.onerror = () => {
+                resolve(file); // Fallback to original if image load fails
+            };
+            img.src = e.target.result;
+        };
+        reader.onerror = () => {
+            resolve(file); // Fallback to original if read fails
+        };
+        reader.readAsDataURL(file);
+    });
+};
+
 const processFiles = async (files) => {
     errors.value = [];
     uploading.value = true;
     uploadProgress.value = files.map(file => ({ name: file.name, percent: 0 }));
 
-    // Check file sizes before upload (10MB limit)
-    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
-    for (const file of files) {
-        if (file.size > maxSize) {
-            errors.value.push(`${file.name} è troppo grande (max 10MB)`);
+    // Process and compress files BEFORE size check to ensure they fit
+    const compressedFiles = [];
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Update progress to show compression
+        uploadProgress.value[i].percent = 5;
+        
+        // Always compress images (especially important for mobile photos which are often large)
+        // Compress with lower quality and max width to ensure files are small enough
+        const processedFile = await compressImage(file, 1920, 0.80);
+        compressedFiles.push(processedFile);
+        
+        uploadProgress.value[i].percent = 10;
+        
+        // Check compressed file size (10MB limit for backend)
+        const maxSize = 10 * 1024 * 1024; // 10MB in bytes (matches backend validation)
+        if (processedFile.size > maxSize) {
+            errors.value.push(`${file.name} è ancora troppo grande dopo la compressione (max 10MB). Dimensione: ${(processedFile.size / 1024 / 1024).toFixed(2)}MB`);
         }
     }
 
-    // If there are size errors, don't proceed with upload
+    // If there are errors, don't proceed with upload
     if (errors.value.length > 0) {
         uploading.value = false;
         uploadProgress.value = [];
@@ -152,10 +230,13 @@ const processFiles = async (files) => {
         return;
     }
 
-    for (let i = 0; i < files.length; i++) {
+    // Upload compressed files
+    for (let i = 0; i < compressedFiles.length; i++) {
+        const processedFile = compressedFiles[i];
         const file = files[i];
+        
         const formData = new FormData();
-        formData.append('image', file);
+        formData.append('image', processedFile);
 
         try {
             const response = await axios.post(
@@ -164,8 +245,9 @@ const processFiles = async (files) => {
                 {
                     headers: { 'Content-Type': 'multipart/form-data' },
                     onUploadProgress: (progressEvent) => {
+                        // Scale progress from 10% to 100% (since compression was 10%)
                         uploadProgress.value[i].percent = Math.round(
-                            (progressEvent.loaded * 100) / progressEvent.total
+                            10 + (progressEvent.loaded * 90) / progressEvent.total
                         );
                     },
                 }
@@ -179,7 +261,7 @@ const processFiles = async (files) => {
             
             // Handle specific error cases
             if (error.response?.status === 413 || error.response?.status === 400) {
-                errorMessage += ': File troppo grande. Dimensione massima: 10MB';
+                errorMessage += ': File troppo grande. Dimensione massima: 20MB';
             } else if (error.response?.status === 422) {
                 errorMessage += ': ' + (error.response?.data?.message || 'Formato non supportato');
             } else if (error.response?.data?.message) {

@@ -154,7 +154,6 @@
                                     ref="fileInput"
                                     type="file" 
                                     accept="image/*"
-                                    capture
                                     multiple
                                     @change="handleFileSelect"
                                     class="hidden"
@@ -176,7 +175,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
                                     <p class="text-sm text-gray-600 mt-2">Clicca o trascina le immagini qui</p>
-                                    <p class="text-xs text-gray-400 mt-1">Dimensione massima: 10MB per immagine</p>
+                                    <p class="text-xs text-gray-400 mt-1">Dimensione massima: 20MB per immagine (verrà compressa automaticamente)</p>
                                     <p v-if="isDragOver" class="text-sm text-blue-600 font-medium mt-2">Rilascia qui</p>
                                 </div>
                                 
@@ -320,25 +319,92 @@ const handleFileSelect = (event) => {
     }
 };
 
-const addImages = (files) => {
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    
-    files.forEach(file => {
-        if (file.size > maxSize) {
-            alert(`${file.name} è troppo grande. Dimensione massima: 10MB`);
+// Compress image using canvas (for ProductCreate)
+const compressImage = (file, maxWidth = 1920, quality = 0.80) => {
+    return new Promise((resolve) => {
+        if (!file.type.startsWith('image/')) {
+            resolve(file);
             return;
         }
         
+        // For very small files (< 500KB), return as-is
+        if (file.size < 500 * 1024) {
+            resolve(file);
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                // Calculate new dimensions
+                if (width > maxWidth) {
+                    height = (height / width) * maxWidth;
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+
+                canvas.toBlob(
+                    (blob) => {
+                        if (blob) {
+                            const compressedFile = new File([blob], file.name, {
+                                type: 'image/jpeg',
+                                lastModified: Date.now(),
+                            });
+                            resolve(compressedFile);
+                        } else {
+                            resolve(file);
+                        }
+                    },
+                    'image/jpeg',
+                    quality
+                );
+            };
+            img.onerror = () => {
+                resolve(file);
+            };
+            img.src = e.target.result;
+        };
+        reader.onerror = () => {
+            resolve(file);
+        };
+        reader.readAsDataURL(file);
+    });
+};
+
+const addImages = async (files) => {
+    const maxSize = 10 * 1024 * 1024; // 10MB (matches backend)
+    
+    for (const file of files) {
+        // Compress image first (especially important for mobile photos)
+        const compressedFile = await compressImage(file, 1920, 0.80);
+        
+        // Check compressed size
+        if (compressedFile.size > maxSize) {
+            alert(`${file.name} è troppo grande anche dopo la compressione. Dimensione: ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB (max 10MB)`);
+            continue;
+        }
+        
+        // Create preview with original file for better preview quality
         const reader = new FileReader();
         reader.onload = (e) => {
             selectedImages.value.push({
-                file: file,
+                file: compressedFile, // Store compressed file for upload
                 name: file.name,
                 preview: e.target.result,
             });
         };
-        reader.readAsDataURL(file);
-    });
+        reader.readAsDataURL(file); // Use original for preview
+    }
 };
 
 const removeImage = (index) => {

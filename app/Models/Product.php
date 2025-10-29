@@ -101,6 +101,21 @@ class Product extends Model
     }
 
     /**
+     * Check if the product has a future discount (scheduled but not yet active).
+     */
+    public function getHasFutureDiscountAttribute(): bool
+    {
+        if (!$this->discount_percentage || !$this->discount_start_date) {
+            return false;
+        }
+
+        $now = now();
+        
+        // Check if discount is scheduled for the future
+        return $now->lt($this->discount_start_date);
+    }
+
+    /**
      * Calculate the discounted price (floored).
      */
     public function getDiscountedPriceAttribute(): ?float

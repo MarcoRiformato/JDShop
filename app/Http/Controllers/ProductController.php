@@ -63,6 +63,7 @@ class ProductController extends Controller
                     'discount_end_date' => $product->discount_end_date,
                     'original_price' => $product->original_price,
                     'has_active_discount' => $product->has_active_discount,
+                    'has_future_discount' => $product->has_future_discount,
                     'discounted_price' => $product->discounted_price,
                 ];
             });
@@ -112,6 +113,7 @@ class ProductController extends Controller
                 'discount_end_date' => $product->discount_end_date,
                 'original_price' => $product->original_price,
                 'has_active_discount' => $product->has_active_discount,
+                'has_future_discount' => $product->has_future_discount,
                 'discounted_price' => $product->discounted_price,
                 'images' => $product->images->map(fn($image) => [
                     'id' => $image->id,
@@ -167,12 +169,12 @@ class ProductController extends Controller
     {
         try {
             $request->validate([
-                'image' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:10240'],
+                'image' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:12288'],
             ], [
                 'image.required' => 'Seleziona un file immagine.',
                 'image.image' => 'Il file deve essere un\'immagine.',
                 'image.mimes' => 'Formato non supportato. Usa: JPEG, PNG, JPG, o WebP.',
-                'image.max' => 'Il file è troppo grande. Dimensione massima: 10MB.',
+                'image.max' => 'Il file è troppo grande. Dimensione massima: 12MB.',
             ]);
 
             $filename = $this->imageService->uploadProductImage($request->file('image'));

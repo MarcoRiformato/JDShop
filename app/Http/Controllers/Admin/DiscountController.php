@@ -26,8 +26,53 @@ class DiscountController extends Controller
                 'product_ids' => 'required|array|min:1',
                 'product_ids.*' => 'exists:products,id',
                 'discount_percentage' => 'required|numeric|min:0|max:100',
-                'start_date' => 'nullable|date',
-                'end_date' => 'nullable|date|after:start_date',
+                'start_date' => [
+                    'nullable',
+                    'date',
+                    function ($attribute, $value, $fail) {
+                        if ($value) {
+                            $startDate = \Carbon\Carbon::parse($value)->startOfDay();
+                            $today = now()->startOfDay();
+                            
+                            if ($startDate < $today) {
+                                $fail('La data di inizio non può essere nel passato.');
+                            }
+                        }
+                    },
+                ],
+                'end_date' => [
+                    'nullable',
+                    'date',
+                    'after:start_date',
+                    function ($attribute, $value, $fail) use ($request) {
+                        if ($value) {
+                            $endDate = \Carbon\Carbon::parse($value)->startOfDay();
+                            $today = now()->startOfDay();
+                            
+                            if ($endDate < $today) {
+                                $fail('La data di fine non può essere nel passato.');
+                            }
+                            
+                            // Check if end date is after start date
+                            if ($request->has('start_date') && $request->start_date) {
+                                $startDate = \Carbon\Carbon::parse($request->start_date)->startOfDay();
+                                if ($endDate <= $startDate) {
+                                    $fail('La data di fine deve essere successiva alla data di inizio.');
+                                }
+                            }
+                        }
+                    },
+                ],
+            ], [
+                'product_ids.required' => 'Seleziona almeno un prodotto.',
+                'product_ids.min' => 'Seleziona almeno un prodotto.',
+                'discount_percentage.required' => 'La percentuale di sconto è obbligatoria.',
+                'discount_percentage.numeric' => 'La percentuale di sconto deve essere un numero.',
+                'discount_percentage.min' => 'La percentuale di sconto deve essere almeno 0.',
+                'discount_percentage.max' => 'La percentuale di sconto non può superare 100.',
+                'start_date.date' => 'La data di inizio non è valida.',
+                'end_date.date' => 'La data di fine non è valida.',
+                'end_date.after' => 'La data di fine deve essere successiva alla data di inizio.',
             ]);
 
             Log::info('Request validated successfully', ['validated' => $validated]);

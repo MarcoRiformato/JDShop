@@ -62,6 +62,49 @@
                 </div>
             </div>
 
+            <!-- Discount Information -->
+            <div v-if="product.has_active_discount || product.has_future_discount" class="mb-6 bg-white rounded-lg shadow-md p-4 sm:p-6 border-l-4" :class="product.has_active_discount ? 'border-orange-500' : 'border-yellow-500'">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3">
+                            <span v-if="product.has_active_discount">Sconto Attivo</span>
+                            <span v-else>Sconto Programmato</span>
+                        </h3>
+                        <div class="space-y-2 sm:space-y-3">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-xs sm:text-sm font-medium text-gray-700">Percentuale:</span>
+                                <span class="px-2 sm:px-3 py-1 bg-orange-100 text-orange-700 rounded-lg font-bold text-xs sm:text-sm">-{{ product.discount_percentage }}%</span>
+                            </div>
+                            <div v-if="product.original_price" class="flex flex-wrap items-center gap-2">
+                                <span class="text-xs sm:text-sm font-medium text-gray-700">Prezzo originale:</span>
+                                <span class="text-gray-500 line-through text-sm sm:text-base">€{{ product.original_price }}</span>
+                                <span class="text-base sm:text-lg font-bold text-orange-600">€{{ product.price }}</span>
+                            </div>
+                            <div v-if="product.discount_start_date" class="flex flex-wrap items-center gap-2">
+                                <span class="text-xs sm:text-sm font-medium text-gray-700">Data inizio:</span>
+                                <span class="text-xs sm:text-sm text-gray-900">{{ formatDate(product.discount_start_date) }}</span>
+                            </div>
+                            <div v-if="product.discount_end_date" class="flex flex-wrap items-center gap-2">
+                                <span class="text-xs sm:text-sm font-medium text-gray-700">Data fine:</span>
+                                <span class="text-xs sm:text-sm text-gray-900">{{ formatDate(product.discount_end_date) }}</span>
+                            </div>
+                            <div v-else-if="product.has_active_discount" class="text-xs sm:text-sm text-gray-600">
+                                <span class="font-medium">Sconto permanente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                        @click="removeDiscount"
+                        class="w-full sm:w-auto sm:ml-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium flex items-center justify-center gap-2 flex-shrink-0"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Rimuovi sconto
+                    </button>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Product form -->
                 <div class="bg-white rounded-lg shadow-md p-6">
@@ -303,6 +346,11 @@ const previewProduct = ref({
     price: props.product.price,
     sold_out: props.product.sold_out,
     images: images.value,
+    has_active_discount: props.product.has_active_discount,
+    has_future_discount: props.product.has_future_discount,
+    discount_percentage: props.product.discount_percentage,
+    original_price: props.product.original_price,
+    discount_end_date: props.product.discount_end_date,
 });
 
 const form = useForm({
@@ -361,6 +409,11 @@ const showPreview = () => {
         price: form.price,
         sold_out: form.sold_out,
         images: images.value,
+        has_active_discount: props.product.has_active_discount,
+        has_future_discount: props.product.has_future_discount,
+        discount_percentage: props.product.discount_percentage,
+        original_price: props.product.original_price,
+        discount_end_date: props.product.discount_end_date,
     };
     showPreviewModal.value = true;
 };
@@ -372,6 +425,39 @@ const closePreview = () => {
 const deleteProduct = () => {
     showDeleteModal.value = false;
     router.delete(route('products.destroy', props.product.id));
+};
+
+const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('it-IT', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+};
+
+const removeDiscount = async () => {
+    if (!confirm('Sei sicuro di voler rimuovere lo sconto da questo prodotto?')) {
+        return;
+    }
+    
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+        const response = await axios.post(`/admin/discounts/remove/${props.product.id}`, {}, {
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+            }
+        });
+        
+        if (response.data.success) {
+            router.reload({ only: ['product'] });
+        } else {
+            alert('Errore durante la rimozione dello sconto: ' + (response.data.message || 'Errore sconosciuto'));
+        }
+    } catch (error) {
+        alert('Errore durante la rimozione dello sconto: ' + (error.response?.data?.message || error.message));
+    }
 };
 </script>
 

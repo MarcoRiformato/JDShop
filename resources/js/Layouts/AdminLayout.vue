@@ -2,11 +2,17 @@
     <div class="min-h-screen bg-gray-100">
         <!-- Mobile menu button -->
         <div class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-md safe-area-top">
-            <div class="flex items-center justify-between px-4 py-3 h-14">
-                <h1 class="text-lg font-bold text-gray-900">JDOutlet Admin</h1>
+            <div class="flex items-center justify-between px-3 sm:px-4 py-3 h-14">
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                    <h1 class="text-base sm:text-lg font-bold text-gray-900 truncate">JDOutlet Admin</h1>
+                    <!-- Version Badge on Mobile -->
+                    <div class="text-xs text-gray-500 font-mono bg-gray-50 px-2 py-1 rounded border flex-shrink-0">
+                        v{{ $page.props.app_version || '0.2' }}
+                    </div>
+                </div>
                 <button 
                     @click="mobileMenuOpen = !mobileMenuOpen" 
-                    class="p-2 rounded-md text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors touch-manipulation"
+                    class="p-2 rounded-md text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors touch-manipulation flex-shrink-0"
                     aria-label="Menu"
                 >
                     <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
