@@ -2,9 +2,17 @@
     <Link 
         :href="route('shop.show', product.id)" 
         class="product-card flex flex-col group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative"
+        :class="{ 'opacity-90': product.sold_out }"
     >
+        <!-- Sold Out Badge -->
+        <div v-if="product.sold_out" class="absolute top-2 left-2 z-10">
+            <div class="bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg font-bold text-sm">
+                VENDUTO
+            </div>
+        </div>
+
         <!-- Discount Badge -->
-        <div v-if="product.has_active_discount" class="absolute top-2 right-2 z-10 transform rotate-12">
+        <div v-if="product.has_active_discount && !product.sold_out" class="absolute top-2 right-2 z-10 transform rotate-12">
             <div class="discount-badge shadow-lg">
                 <div class="flex items-center">
                     <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -15,11 +23,12 @@
             </div>
         </div>
 
-        <div class="aspect-square overflow-hidden bg-gray-200">
+        <div class="aspect-square overflow-hidden bg-gray-200 relative">
             <img 
                 :src="product.cover_image_url" 
                 :alt="product.title"
                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                :class="{ 'filter grayscale opacity-60': product.sold_out }"
             >
         </div>
 

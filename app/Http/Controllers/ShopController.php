@@ -19,7 +19,6 @@ class ShopController extends Controller
     public function index(Request $request): Response
     {
         $query = Product::with('images')
-            ->where('sold_out', false)
             ->orderBy('created_at', 'desc');
 
         // Search functionality
@@ -49,6 +48,7 @@ class ShopController extends Controller
                 'has_active_discount' => $product->has_active_discount,
                 'discounted_price' => $product->discounted_price,
                 'cover_image_url' => $product->cover_image_url,
+                'sold_out' => $product->sold_out,
             ];
         });
 
@@ -86,7 +86,6 @@ class ShopController extends Controller
             
             // Find products that share at least one tag
             $relatedProducts = Product::where('id', '!=', $product->id)
-                ->where('sold_out', false)
                 ->get()
                 ->filter(function($p) use ($productTags) {
                     if (!$p->tags) return false;
@@ -109,6 +108,7 @@ class ShopController extends Controller
                         'has_active_discount' => $p->has_active_discount,
                         'discounted_price' => $p->discounted_price,
                         'cover_image_url' => $p->cover_image_url,
+                        'sold_out' => $p->sold_out,
                     ];
                 })
                 ->values();

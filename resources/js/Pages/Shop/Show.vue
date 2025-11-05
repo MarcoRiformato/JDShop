@@ -26,20 +26,29 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 <!-- Image gallery -->
-                <div>
-                    <ProductGallery 
-                        v-if="product.images.length > 0" 
-                        :images="product.images"
-                        :product-id="product.id"
-                        @image-deleted="handleImageDeleted"
-                        @cover-updated="handleCoverUpdated"
-                    />
-                    <div v-else class="aspect-square bg-gray-200 rounded-xl overflow-hidden">
-                        <img 
-                            :src="`https://picsum.photos/seed/${product.id}/800/800`" 
-                            :alt="product.title"
-                            class="w-full h-full object-cover"
-                        >
+                <div class="relative">
+                    <!-- Sold Out Badge Overlay -->
+                    <div v-if="product.sold_out" class="absolute top-4 left-4 z-20">
+                        <div class="bg-gray-800 text-white px-6 py-3 rounded-lg shadow-2xl font-bold text-lg">
+                            VENDUTO
+                        </div>
+                    </div>
+
+                    <div :class="{ 'filter grayscale opacity-70': product.sold_out }">
+                        <ProductGallery 
+                            v-if="product.images.length > 0" 
+                            :images="product.images"
+                            :product-id="product.id"
+                            @image-deleted="handleImageDeleted"
+                            @cover-updated="handleCoverUpdated"
+                        />
+                        <div v-else class="aspect-square bg-gray-200 rounded-xl overflow-hidden">
+                            <img 
+                                :src="`https://picsum.photos/seed/${product.id}/800/800`" 
+                                :alt="product.title"
+                                class="w-full h-full object-cover"
+                            >
+                        </div>
                     </div>
                 </div>
 
@@ -52,8 +61,15 @@
 
                         <!-- Price and status -->
                         <div class="mb-6">
+                            <!-- Sold Out Badge -->
+                            <div v-if="product.sold_out" class="mb-4">
+                                <span class="bg-gray-800 text-white inline-flex items-center px-6 py-3 text-lg rounded-lg font-bold shadow-lg">
+                                    VENDUTO
+                                </span>
+                            </div>
+
                             <!-- Discount Badge -->
-                            <div v-if="product.has_active_discount" class="mb-4">
+                            <div v-else-if="product.has_active_discount" class="mb-4">
                                 <span class="discount-badge inline-flex items-center px-4 py-2 text-lg rounded-full">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
@@ -64,25 +80,13 @@
 
                             <div class="flex items-center space-x-4">
                                 <div class="flex items-center gap-3">
-                                    <span v-if="product.has_active_discount" class="text-2xl text-gray-500 line-through">
+                                    <span v-if="product.has_active_discount && !product.sold_out" class="text-2xl text-gray-500 line-through">
                                         €{{ product.original_price }}
                                     </span>
-                                    <span class="text-4xl font-bold text-jd-title">
+                                    <span class="text-4xl font-bold text-jd-title" :class="{ 'opacity-60': product.sold_out }">
                                         €{{ product.price }}
                                     </span>
                                 </div>
-                                <span 
-                                    v-if="product.sold_out"
-                                    class="px-4 py-2 bg-red-100 text-red-800 text-sm font-semibold rounded-full"
-                                >
-                                    Venduto
-                                </span>
-                                <span 
-                                    v-else
-                                    class="px-4 py-2 bg-green-100 text-green-800 text-sm font-semibold rounded-full"
-                                >
-                                    Disponibile
-                                </span>
                             </div>
                         </div>
 
@@ -147,13 +151,29 @@
                         v-for="relatedProduct in relatedProducts" 
                         :key="relatedProduct.id"
                         :href="route('shop.show', relatedProduct.id)"
-                        class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                        class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative"
+                        :class="{ 'opacity-90': relatedProduct.sold_out }"
                     >
+                        <!-- Sold Out Badge -->
+                        <div v-if="relatedProduct.sold_out" class="absolute top-2 left-2 z-10">
+                            <div class="bg-gray-800 text-white px-3 py-1.5 rounded-lg shadow-lg font-bold text-xs">
+                                VENDUTO
+                            </div>
+                        </div>
+
+                        <!-- Discount Badge -->
+                        <div v-if="relatedProduct.has_active_discount && !relatedProduct.sold_out" class="absolute top-2 right-2 z-10 transform rotate-12">
+                            <div class="discount-badge shadow-lg text-xs px-2 py-1">
+                                -{{ relatedProduct.discount_percentage }}%
+                            </div>
+                        </div>
+
                         <div class="aspect-square overflow-hidden bg-gray-200">
                             <img 
                                 :src="relatedProduct.cover_image_url" 
                                 :alt="relatedProduct.title"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                :class="{ 'filter grayscale opacity-60': relatedProduct.sold_out }"
                             >
                         </div>
                         <div class="p-4">
@@ -161,7 +181,7 @@
                                 {{ relatedProduct.title }}
                             </h3>
                             <div class="flex items-center gap-2 mt-2">
-                                <span v-if="relatedProduct.has_active_discount" class="text-sm text-gray-500 line-through">
+                                <span v-if="relatedProduct.has_active_discount && !relatedProduct.sold_out" class="text-sm text-gray-500 line-through">
                                     €{{ relatedProduct.original_price }}
                                 </span>
                                 <span class="text-xl font-bold text-jd-title">
