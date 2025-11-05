@@ -89,19 +89,21 @@
         <!-- Information section -->
         <div class="bg-jd-section text-white py-16 -mb-px">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mb-6">
-                    <img 
-                        src="/images/logo.svg" 
-                        alt="JDOutlet" 
-                        class="h-20 sm:h-24 md:h-28 w-auto"
-                    />
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start mb-8">
+                    <div class="flex-shrink-0 bg-white px-6 py-4 rounded-lg">
+                        <img 
+                            src="/images/logo.svg" 
+                            alt="JDOutlet" 
+                            class="h-20 sm:h-24 md:h-28 w-auto"
+                        />
+                    </div>
+                    <p class="text-lg text-jd leading-relaxed flex-1">
+                        JDEvents azienda organizzatrice di eventi apre le porte con il suo primo outlet degli allestimenti. 
+                        Quante volte avete visto foto di eventi su una rivista o sui social e avete pensato: 'WOW! Che spettacolo!!!', 
+                        ecco un po' di quella piccola meraviglia potrebbe essere vostra. Tavoli, sedie, arredamenti di varia natura 
+                        e pezzi unici creati ad hoc per sfilate, fiere, meeting ed eventi in genere.
+                    </p>
                 </div>
-                <p class="text-lg text-jd mb-8 leading-relaxed">
-                    JDEvents azienda organizzatrice di eventi apre le porte con il suo primo outlet degli allestimenti. 
-                    Quante volte avete visto foto di eventi su una rivista o sui social e avete pensato: 'WOW! Che spettacolo!!!', 
-                    ecco un po' di quella piccola meraviglia potrebbe essere vostra. Tavoli, sedie, arredamenti di varia natura 
-                    e pezzi unici creati ad hoc per sfilate, fiere, meeting ed eventi in genere.
-                </p>
                 <ul class="space-y-4 text-jd">
                     <li class="flex items-start">
                         <svg class="w-6 h-6 mr-3 text-jd-list flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">

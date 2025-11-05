@@ -91,9 +91,8 @@
                 <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <p class="text-xs font-semibold text-gray-900 mb-2">Credenziali Demo:</p>
                     <p class="text-xs text-gray-700">
-                        <strong>Admin:</strong> admin@jdshop.com / password<br>
-                        <strong>Manager:</strong> manager@jdshop.com / password<br>
-                        <strong>Editor:</strong> editor@jdshop.com / password
+                        <strong>Email:</strong> admin@jdshop.com<br>
+                        <strong>Password:</strong> admin
                     </p>
                 </div>
             </div>

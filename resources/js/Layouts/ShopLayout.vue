@@ -16,7 +16,7 @@
                     <nav class="hidden md:flex items-center space-x-4">
                         <Link 
                             :href="route('shop.index')" 
-                            class="text-sm font-medium link-jd px-3 py-2 rounded-md"
+                            class="text-lg font-medium link-jd px-3 py-2 rounded-md"
                         >
                             Catalogo
                         </Link>
@@ -41,7 +41,7 @@
                         <template v-else>
                             <Link 
                                 :href="route('login')" 
-                                class="text-sm font-medium link-jd px-3 py-2 rounded-md active:scale-95"
+                                class="text-lg font-medium link-jd px-3 py-2 rounded-md active:scale-95"
                             >
                                 Accedi
                             </Link>
