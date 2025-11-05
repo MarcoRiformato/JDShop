@@ -30,7 +30,7 @@
                             class="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden"
                         >
                             <!-- Header -->
-                            <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 flex items-center justify-between">
+                            <div class="bg-gradient-jd-button px-6 py-4 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -54,13 +54,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                 </div>
-                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Messaggio Inviato!</h3>
-                                <p class="text-gray-600 mb-6">
+                                <h3 class="text-2xl font-bold text-jd-dark mb-2">Messaggio Inviato!</h3>
+                                <p class="text-jd-text mb-6">
                                     Grazie per il tuo interesse. Ti risponderemo il prima possibile.
                                 </p>
                                 <button
                                     @click="closeModal"
-                                    class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                                    class="btn-jd-primary px-6 py-3 rounded-lg font-semibold"
                                 >
                                     Chiudi
                                 </button>
@@ -69,15 +69,15 @@
                             <!-- Contact Form -->
                             <form v-else @submit.prevent="submitForm" class="p-6 space-y-4">
                                 <!-- Product Info -->
-                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                                    <p class="text-sm font-semibold text-blue-900 mb-1">Prodotto di Interesse:</p>
-                                    <p class="text-blue-800">{{ product.title }}</p>
-                                    <p class="text-blue-700 font-bold mt-1">€{{ product.price }}</p>
+                                <div class="bg-jd-title border border-jd-accent rounded-lg p-4 mb-4">
+                                    <p class="text-sm font-semibold text-jd-white mb-1">Prodotto di Interesse:</p>
+                                    <p class="text-jd-text">{{ product.title }}</p>
+                                    <p class="text-jd-accent font-bold mt-1">€{{ product.price }}</p>
                                 </div>
 
                                 <!-- Name -->
                                 <div>
-                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+                                    <label for="name" class="block text-sm font-medium text-gray-900 mb-1">
                                         Nome <span class="text-red-500">*</span>
                                     </label>
                                     <input 
@@ -85,7 +85,7 @@
                                         v-model="form.name" 
                                         type="text" 
                                         required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        class="input-jd w-full"
                                         :class="{ 'border-red-500': form.errors.name }"
                                         placeholder="Il tuo nome"
                                     >
@@ -96,7 +96,7 @@
 
                                 <!-- Email -->
                                 <div>
-                                    <label for="contact_email" class="block text-sm font-medium text-gray-700 mb-1">
+                                    <label for="contact_email" class="block text-sm font-medium text-gray-900 mb-1">
                                         Email <span class="text-red-500">*</span>
                                     </label>
                                     <input 
@@ -104,7 +104,7 @@
                                         v-model="form.email" 
                                         type="email" 
                                         required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        class="input-jd w-full"
                                         :class="{ 'border-red-500': form.errors.email }"
                                         placeholder="la.tua.email@esempio.it"
                                     >
@@ -115,14 +115,14 @@
 
                                 <!-- Phone (optional) -->
                                 <div>
-                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+                                    <label for="phone" class="block text-sm font-medium text-gray-900 mb-1">
                                         Telefono (opzionale)
                                     </label>
                                     <input 
                                         id="phone"
                                         v-model="form.phone" 
                                         type="tel" 
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        class="input-jd w-full"
                                         :class="{ 'border-red-500': form.errors.phone }"
                                         placeholder="+39 123 456 7890"
                                     >
@@ -133,7 +133,7 @@
 
                                 <!-- Message -->
                                 <div>
-                                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
+                                    <label for="message" class="block text-sm font-medium text-gray-900 mb-1">
                                         Messaggio <span class="text-red-500">*</span>
                                     </label>
                                     <textarea 
@@ -141,7 +141,7 @@
                                         v-model="form.message" 
                                         rows="5"
                                         required
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        class="input-jd w-full"
                                         :class="{ 'border-red-500': form.errors.message }"
                                         placeholder="Vorrei ricevere maggiori informazioni su questo prodotto..."
                                     ></textarea>
@@ -157,9 +157,9 @@
                                             id="gdpr_consent"
                                             type="checkbox" 
                                             v-model="form.gdpr_consent"
-                                            class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                            class="mt-1 mr-3 h-4 w-4 text-jd-accent focus:ring-jd-accent border-gray-300 rounded"
                                         >
-                                        <span class="text-sm text-gray-700">
+                                        <span class="text-sm text-gray-900">
                                             Dichiaro di aver letto l'informativa sulla privacy e autorizzo il trattamento dei miei dati personali per rispondere alla mia richiesta.
                                         </span>
                                     </label>
@@ -178,14 +178,14 @@
                                     <button
                                         type="button"
                                         @click="closeModal"
-                                        class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                                        class="flex-1 px-6 py-3 border border-gray-300 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors font-medium"
                                     >
                                         Annulla
                                     </button>
                                     <button 
                                         type="submit" 
                                         :disabled="form.processing"
-                                        class="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-lg"
+                                        class="btn-jd-primary flex-1 px-6 py-3 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-lg"
                                     >
                                         <span v-if="form.processing" class="flex items-center justify-center">
                                             <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">

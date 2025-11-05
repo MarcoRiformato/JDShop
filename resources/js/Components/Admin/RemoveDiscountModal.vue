@@ -7,12 +7,12 @@
 
                 <!-- Modal container -->
                 <div class="flex min-h-full items-center justify-center p-4">
-                    <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full" @click.stop>
+                    <div class="relative bg-jd-base-light rounded-2xl shadow-2xl max-w-md w-full" @click.stop>
                         <!-- Header -->
                         <div class="bg-gradient-to-r from-red-500 to-red-600 px-4 sm:px-8 py-4 sm:py-6 rounded-t-2xl">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
-                                    <div class="bg-white bg-opacity-20 rounded-full p-1.5 sm:p-2 mr-3 sm:mr-4">
+                                    <div class="bg-jd-base-light bg-opacity-20 rounded-full p-1.5 sm:p-2 mr-3 sm:mr-4">
                                         <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
                                         </svg>
@@ -24,7 +24,7 @@
                                 </div>
                                 <button
                                     @click="$emit('close')"
-                                    class="text-white hover:text-red-200 transition-colors p-1.5 sm:p-2 hover:bg-white hover:bg-opacity-20 rounded-full"
+                                    class="text-white hover:text-red-200 transition-colors p-1.5 sm:p-2 hover:bg-jd-base-light hover:bg-opacity-20 rounded-full"
                                 >
                                     <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -41,7 +41,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                     </svg>
                                 </div>
-                                <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-2">
+                                <h3 class="text-base sm:text-lg font-semibold text-jd-white mb-2">
                                     Rimuovere lo sconto da "{{ product?.title }}"?
                                 </h3>
                                 <p class="text-sm sm:text-base text-gray-600 mb-6">
@@ -78,7 +78,7 @@
                         <div class="bg-gray-50 px-4 sm:px-8 py-6 rounded-b-2xl flex items-center justify-end space-x-3 sm:space-x-4">
                             <button
                                 @click="$emit('close')"
-                                class="px-4 sm:px-6 py-3 text-gray-700 bg-white border-2 border-gray-300 rounded-xl hover:bg-gray-50 transition-colors text-sm sm:text-base font-semibold"
+                                class="px-4 sm:px-6 py-3 text-jd-text bg-jd-base-light border-2 border-jd rounded-xl hover:bg-jd-title transition-colors text-sm sm:text-base font-semibold"
                             >
                                 Annulla
                             </button>

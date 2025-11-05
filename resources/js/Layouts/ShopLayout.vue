@@ -5,7 +5,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-14 sm:h-16">
                     <Link :href="route('shop.index')" class="flex items-center flex-shrink-0">
-                        <h1 class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        <h1 class="text-xl sm:text-2xl font-bold logo-jd">
                             JDOutlet
                         </h1>
                     </Link>
@@ -14,8 +14,7 @@
                     <nav class="hidden md:flex items-center space-x-4">
                         <Link 
                             :href="route('shop.index')" 
-                            class="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md"
-                            :class="{ 'text-blue-600 bg-blue-50': route().current('shop.index') }"
+                            class="text-sm font-medium link-jd px-3 py-2 rounded-md"
                         >
                             Catalogo
                         </Link>
@@ -24,7 +23,7 @@
                             <Link 
                                 v-if="$page.props.auth.user.is_admin"
                                 :href="route('admin.dashboard')" 
-                                class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors active:scale-95"
+                                class="btn-jd-accent px-4 py-2 text-sm"
                             >
                                 Admin
                             </Link>
@@ -32,7 +31,7 @@
                                 :href="route('logout')" 
                                 method="post" 
                                 as="button"
-                                class="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors px-3 py-2 rounded-md active:scale-95"
+                                class="text-sm font-medium text-red-600 hover:text-red-700 transition-colors px-3 py-2 rounded-md active:scale-95"
                             >
                                 Esci
                             </Link>
@@ -40,7 +39,7 @@
                         <template v-else>
                             <Link 
                                 :href="route('login')" 
-                                class="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors px-3 py-2 rounded-md active:scale-95"
+                                class="text-sm font-medium link-jd px-3 py-2 rounded-md active:scale-95"
                             >
                                 Accedi
                             </Link>
@@ -50,7 +49,7 @@
                     <!-- Mobile menu button -->
                     <button 
                         @click="mobileMenuOpen = !mobileMenuOpen"
-                        class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors touch-manipulation"
+                        class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 transition-colors touch-manipulation"
                         aria-label="Menu"
                     >
                         <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,8 +71,7 @@
                     <Link 
                         :href="route('shop.index')" 
                         @click="mobileMenuOpen = false"
-                        class="block px-4 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors active:bg-blue-100 touch-manipulation"
-                        :class="{ 'bg-blue-50 text-blue-600': route().current('shop.index') }"
+                        class="block px-4 py-3 text-base font-medium link-jd rounded-lg hover:bg-gray-50 transition-colors touch-manipulation"
                     >
                         <div class="flex items-center">
                             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,7 +86,7 @@
                             v-if="$page.props.auth.user.is_admin"
                             :href="route('admin.dashboard')" 
                             @click="mobileMenuOpen = false"
-                            class="block px-4 py-3 text-base font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors active:bg-blue-800 touch-manipulation"
+                            class="block px-4 py-3 text-base font-medium btn-jd-accent rounded-lg touch-manipulation"
                         >
                             <div class="flex items-center">
                                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +114,7 @@
                         <Link 
                             :href="route('login')" 
                             @click="mobileMenuOpen = false"
-                            class="block px-4 py-3 text-base font-medium text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors active:bg-blue-100 touch-manipulation"
+                            class="block px-4 py-3 text-base font-medium link-jd rounded-lg hover:bg-gray-50 transition-colors touch-manipulation"
                         >
                             <div class="flex items-center">
                                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,7 +136,7 @@
         <!-- Footer -->
         <footer class="bg-white border-t border-gray-200 mt-12 safe-area-bottom">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-                <div class="text-center text-gray-500 text-xs sm:text-sm">
+                <div class="text-center text-jd text-xs sm:text-sm font-semibold">
                     <p>&copy; {{ new Date().getFullYear() }} JDOutlet. Tutti i diritti riservati.</p>
                 </div>
             </div>

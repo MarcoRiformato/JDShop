@@ -5,18 +5,18 @@
     <AdminLayout>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-6">
-                <Link :href="route('customers.index')" class="text-blue-600 hover:text-blue-700 flex items-center mb-4 text-sm">
+                <Link :href="route('customers.index')" class="link-jd flex items-center mb-4 text-sm">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     Torna ai Clienti
                 </Link>
                 <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Unisci Clienti</h1>
-                <p class="text-gray-600 mt-1 text-sm sm:text-base">Seleziona i dati corretti da mantenere</p>
+                <p class="text-gray-700 mt-1 text-sm sm:text-base">Seleziona i dati corretti da mantenere</p>
             </div>
 
             <!-- Validation Errors -->
-            <div v-if="Object.keys(form.errors).length > 0" class="mb-6 bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3 rounded-r-lg">
+            <div v-if="Object.keys(form.errors).length > 0" class="mb-6 bg-red-900 border-l-4 border-red-400 text-red-100 px-4 py-3 rounded-r-lg">
                 <div class="flex items-start">
                     <svg class="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -32,12 +32,12 @@
                 </div>
             </div>
 
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div class="bg-yellow-900 border border-yellow-700 rounded-lg p-4 mb-6">
                 <div class="flex items-start">
-                    <svg class="w-5 h-5 text-yellow-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-yellow-400 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                     </svg>
-                    <p class="text-sm text-yellow-800">
+                    <p class="text-sm text-yellow-100">
                         Verranno uniti <strong>{{ customers.length }}</strong> clienti. Tutti i dati verranno combinati e i clienti secondari saranno eliminati.
                     </p>
                 </div>
@@ -45,9 +45,9 @@
 
             <form @submit.prevent="submit" class="space-y-4 sm:space-y-6">
                 <!-- Primary Customer Selection -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-300 p-4 sm:p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-2 sm:mb-3">Cliente Principale</h2>
-                    <p class="text-sm text-gray-600 mb-4">
+                    <p class="text-sm text-gray-700 mb-4">
                         Seleziona quale cliente mantenere come principale
                     </p>
                     <div class="space-y-2">
@@ -55,26 +55,26 @@
                             v-for="customer in customers" 
                             :key="customer.id"
                             class="flex items-start p-3 sm:p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-                            :class="form.primary_customer_id == customer.id ? 'border-purple-500 bg-purple-50' : 'border-gray-200'"
+                            :class="form.primary_customer_id == customer.id ? 'border-jd-accent bg-blue-50' : 'border-gray-300'"
                         >
                             <input 
                                 type="radio"
                                 :value="customer.id"
                                 v-model="form.primary_customer_id"
-                                class="mt-1 mr-3 h-4 w-4 text-purple-600"
+                                class="mt-1 mr-3 h-4 w-4 text-jd-accent"
                             >
                             <div class="flex-1 min-w-0">
                                 <p class="font-semibold text-gray-900 truncate">{{ customer.name }}</p>
-                                <p class="text-sm text-gray-600 truncate">{{ customer.primary_email }}</p>
+                                <p class="text-sm text-gray-700 truncate">{{ customer.primary_email }}</p>
                                 <p v-if="customer.phone" class="text-sm text-gray-500 truncate">{{ customer.phone }}</p>
-                                <p class="text-xs text-gray-400 mt-1">{{ customer.total_inquiries }} richieste</p>
+                                <p class="text-xs text-gray-500 mt-1">{{ customer.total_inquiries }} richieste</p>
                             </div>
                         </label>
                     </div>
                 </div>
 
                 <!-- Final Data Selection -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-300 p-4 sm:p-6">
                     <h2 class="text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Dati Finali</h2>
                     
                     <div class="space-y-4">
@@ -87,7 +87,7 @@
                                 <select 
                                     v-if="!showManualName"
                                     v-model="form.final_data.name"
-                                    class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                                    class="input-jd w-full text-sm sm:text-base"
                                     required
                                     @change="form.final_data.name = form.final_data.name"
                                 >
@@ -101,13 +101,13 @@
                                         type="text"
                                         v-model="form.final_data.name"
                                         placeholder="Scrivi manualmente qui"
-                                        class="w-full px-3 sm:px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base bg-blue-50"
+                                        class="input-jd w-full text-sm sm:text-base bg-blue-50"
                                         required
                                     >
                                     <button
                                         @click.prevent="showManualName = false"
                                         type="button"
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                                     >
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -118,7 +118,7 @@
                                     v-if="!showManualName"
                                     @click.prevent="showManualName = true"
                                     type="button"
-                                    class="text-sm text-blue-600 hover:text-blue-700 flex items-center"
+                                    class="text-sm link-jd flex items-center"
                                 >
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
@@ -137,7 +137,7 @@
                                 <select 
                                     v-if="!showManualEmail"
                                     v-model="form.final_data.primary_email"
-                                    class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                                    class="input-jd w-full text-sm sm:text-base"
                                     required
                                     @change="form.final_data.primary_email = form.final_data.primary_email"
                                 >
@@ -151,13 +151,13 @@
                                         type="email"
                                         v-model="form.final_data.primary_email"
                                         placeholder="Scrivi manualmente qui"
-                                        class="w-full px-3 sm:px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base bg-blue-50"
+                                        class="input-jd w-full text-sm sm:text-base bg-blue-50"
                                         required
                                     >
                                     <button
                                         @click.prevent="showManualEmail = false"
                                         type="button"
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                                     >
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -168,7 +168,7 @@
                                     v-if="!showManualEmail"
                                     @click.prevent="showManualEmail = true"
                                     type="button"
-                                    class="text-sm text-blue-600 hover:text-blue-700 flex items-center"
+                                    class="text-sm link-jd flex items-center"
                                 >
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
@@ -187,7 +187,7 @@
                                 <select 
                                     v-if="!showManualPhone"
                                     v-model="form.final_data.phone"
-                                    class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                                    class="input-jd w-full text-sm sm:text-base"
                                     @change="form.final_data.phone = form.final_data.phone"
                                 >
                                     <option :value="null" disabled>Seleziona un telefono</option>
@@ -201,12 +201,12 @@
                                         type="tel"
                                         v-model="form.final_data.phone"
                                         placeholder="Scrivi manualmente qui"
-                                        class="w-full px-3 sm:px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base bg-blue-50"
+                                        class="input-jd w-full text-sm sm:text-base bg-blue-50"
                                     >
                                     <button
                                         @click.prevent="showManualPhone = false"
                                         type="button"
-                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                                     >
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -217,7 +217,7 @@
                                     v-if="!showManualPhone"
                                     @click.prevent="showManualPhone = true"
                                     type="button"
-                                    class="text-sm text-blue-600 hover:text-blue-700 flex items-center"
+                                    class="text-sm link-jd flex items-center"
                                 >
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
@@ -238,7 +238,7 @@
                                     <input 
                                         type="checkbox"
                                         v-model="form.final_data.gdpr_consent"
-                                        class="mr-2 h-4 w-4 text-blue-600"
+                                        class="mr-2 h-4 w-4 text-jd-accent"
                                     >
                                     <span class="text-sm text-gray-700">Cliente ha fornito consenso GDPR</span>
                                 </label>
@@ -246,7 +246,7 @@
                                     type="datetime-local"
                                     v-model="form.final_data.gdpr_consent_date"
                                     v-if="form.final_data.gdpr_consent"
-                                    class="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+                                    class="input-jd w-full text-sm sm:text-base"
                                 >
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                 <div class="flex flex-col sm:flex-row gap-3">
                     <Link 
                         :href="route('customers.index')"
-                        class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center order-2 sm:order-1"
+                        class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-whiteer transition-colors font-medium text-center order-2 sm:order-1"
                     >
                         Annulla
                     </Link>

@@ -6,7 +6,7 @@
         <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Back button -->
             <div class="mb-4">
-                <Link :href="route('customers.index')" class="text-blue-600 hover:text-blue-700 flex items-center">
+                <Link :href="route('customers.index')" class="link-jd hover:link-jd-dark flex items-center">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -15,7 +15,7 @@
             </div>
 
             <!-- Success message -->
-            <div v-if="$page.props.flash?.success" class="mb-6 bg-green-50 border-l-4 border-green-400 text-green-700 px-4 py-3 rounded-r-lg flex items-center shadow-sm">
+            <div v-if="$page.props.flash?.success" class="mb-6 bg-green-900 border-l-4 border-green-400 text-green-100 px-4 py-3 rounded-r-lg flex items-center shadow-sm">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
@@ -25,10 +25,10 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Main Content -->
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-300 p-6 mb-6">
                         <div class="mb-6">
                             <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">{{ customer.name }}</h1>
-                            <p class="text-gray-600 mt-1">{{ customer.primary_email }}</p>
+                            <p class="text-gray-700 mt-1">{{ customer.primary_email }}</p>
                         </div>
 
                         <!-- Customer Info -->
@@ -69,7 +69,7 @@
                                 <span 
                                     v-for="alias in customer.email_aliases" 
                                     :key="alias"
-                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-50 text-gray-700"
                                 >
                                     {{ alias }}
                                 </span>
@@ -78,7 +78,7 @@
                     </div>
 
                     <!-- Timeline -->
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-300 p-6">
                         <h2 class="text-xl font-bold text-gray-900 mb-6">Cronologia Richieste</h2>
                         <CustomerTimeline :inquiries="inquiries" :current-customer-email="customer.primary_email" />
                     </div>
@@ -87,12 +87,12 @@
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
                     <div class="space-y-6">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 sticky top-4">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-300 p-6 sticky top-4">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Azioni Rapide</h3>
                             <div class="space-y-3">
                                 <Link 
                                     :href="route('customers.edit', customer.id)"
-                                    class="flex items-center justify-center w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                                    class="btn-jd-accent w-full"
                                 >
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -112,9 +112,9 @@
                         </div>
 
                         <!-- Danger Zone -->
-                        <div class="bg-white rounded-lg shadow-sm border-2 border-red-200 p-6">
-                            <h3 class="text-lg font-semibold text-red-900 mb-2">Zona Pericolosa</h3>
-                            <p class="text-sm text-gray-600 mb-4">
+                        <div class="bg-white rounded-lg shadow-sm border-2 border-red-400 p-6">
+                            <h3 class="text-lg font-semibold text-red-400 mb-2">Zona Pericolosa</h3>
+                            <p class="text-sm text-gray-700 mb-4">
                                 Eliminare un cliente rimuoverà definitivamente tutti i dati associati. Questa azione non può essere annullata.
                             </p>
                             <button
@@ -153,7 +153,7 @@
                 <div class="flex justify-end gap-3">
                     <button
                         @click="showDeleteConfirm = false"
-                        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                        class="px-4 py-2 text-gray-700 bg-gray-50 rounded-lg hover:bg-whiteer transition-colors font-medium"
                     >
                         Annulla
                     </button>

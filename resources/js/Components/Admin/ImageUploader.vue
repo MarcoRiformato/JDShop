@@ -3,8 +3,8 @@
         <div 
             class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
             :class="{
-                'border-blue-500 bg-blue-50': isDragOver,
-                'border-gray-300 hover:border-blue-500': !isDragOver
+                'border-jd-accent bg-jd-title': isDragOver,
+                'border-jd hover:border-jd-accent': !isDragOver
             }"
             @dragover.prevent="handleDragOver"
             @dragenter.prevent="handleDragEnter"
@@ -34,7 +34,7 @@
                 <button 
                     @click="openFilePicker('gallery')"
                     type="button"
-                    class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+                    class="btn-jd-primary inline-flex items-center justify-center px-6 py-3 rounded-lg shadow-md"
                 >
                     <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -53,27 +53,27 @@
                     Scatta Foto
                 </button>
             </div>
-            <p class="text-sm text-gray-500 mt-2">
+            <p class="text-sm text-jd-muted mt-2">
                 Scegli una fonte oppure trascina e rilascia le immagini qui
             </p>
-            <p class="text-xs text-gray-400 mt-1">
+            <p class="text-xs text-jd-muted mt-1">
                 Dimensione massima: 20MB per immagine (verrà compressa automaticamente)
             </p>
-            <p v-if="isDragOver" class="text-sm text-blue-600 font-medium mt-2">
+            <p v-if="isDragOver" class="text-sm text-jd-accent font-medium mt-2">
                 Rilascia qui per caricare
             </p>
         </div>
 
         <!-- Upload progress -->
         <div v-if="uploading" class="space-y-2">
-            <div v-for="(progress, index) in uploadProgress" :key="index" class="bg-white rounded-lg shadow p-4">
+            <div v-for="(progress, index) in uploadProgress" :key="index" class="bg-jd-title rounded-lg shadow border border-jd p-4">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-sm text-gray-600">{{ progress.name }}</span>
-                    <span class="text-sm font-medium text-gray-900">{{ progress.percent }}%</span>
+                    <span class="text-sm text-jd-muted">{{ progress.name }}</span>
+                    <span class="text-sm font-medium text-jd-text">{{ progress.percent }}%</span>
                 </div>
-                <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="w-full bg-jd-base rounded-full h-2">
                     <div 
-                        class="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                        class="bg-jd-accent h-2 rounded-full transition-all duration-300"
                         :style="{ width: progress.percent + '%' }"
                     ></div>
                 </div>

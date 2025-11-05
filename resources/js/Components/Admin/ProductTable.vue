@@ -9,8 +9,8 @@
                 :class="[
                     'bg-white rounded-lg shadow hover:shadow-md transition-all p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 group',
                     discountModeActive && isSelected(product.id) ? 'ring-4 ring-blue-500 ring-opacity-50' : '',
-                    discountModeActive && hasAnyDiscount(product) ? 'opacity-50 bg-gray-100 cursor-not-allowed pointer-events-none' : '',
-                    !discountModeActive ? 'cursor-pointer md:cursor-default touch-manipulation' : ''
+                    discountModeActive && hasAnyDiscount(product) ? 'opacity-50 bg-gray-50 cursor-not-allowed pointer-events-none' : '',
+                    !discountModeActive ? 'cursor-pointer touch-manipulation' : ''
                 ]"
             >
                 <!-- Checkbox -->
@@ -22,7 +22,7 @@
                         @change="!hasAnyDiscount(product) && toggleSelection(product.id)"
                         type="checkbox"
                         :class="[
-                            'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2',
+                            'w-4 h-4 text-blue-600 bg-gray-50 border-gray-300 rounded focus:ring-blue-500 focus:ring-2',
                             hasAnyDiscount(product) ? 'opacity-50 cursor-not-allowed' : ''
                         ]"
                     >
@@ -184,7 +184,7 @@
 
                 <!-- Content -->
                 <div class="flex-1 min-w-0 overflow-hidden">
-                    <h3 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-1 line-clamp-2 overflow-hidden break-words">
+                    <h3 class="text-lg font-semibold text-gray-700 group-hover:text-jd-accent transition-colors mb-1 line-clamp-2 overflow-hidden break-words">
                         {{ product.title }}
                     </h3>
                     <p v-if="product.tags" class="text-sm text-gray-500 truncate mb-2 overflow-hidden">
@@ -197,7 +197,7 @@
                         <div class="flex items-center gap-2">
                             <span v-if="product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price }}</span>
                             <span v-if="product.has_future_discount && !product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price || product.price }}</span>
-                            <span class="text-2xl font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-600' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
+                            <span class="text-2xl font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-400' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
                         </div>
                         <span
                             :class="[
@@ -215,7 +215,7 @@
                 <div class="flex-shrink-0 w-full sm:w-auto flex gap-2 flex-wrap" @click.stop>
                     <Link
                         :href="route('products.edit', product.id)"
-                        class="flex-1 sm:flex-initial inline-flex items-center justify-center px-3 py-2 sm:px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                        class="btn-jd-primary flex-1 sm:flex-initial inline-flex items-center justify-center px-3 py-2 sm:px-4 rounded-lg text-sm font-medium"
                     >
                         <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -243,7 +243,7 @@
                 :class="[
                     'bg-white rounded-lg shadow hover:shadow-xl transition-all overflow-hidden group relative cursor-pointer',
                     discountModeActive && isSelected(product.id) ? 'ring-4 ring-blue-500 ring-opacity-50' : '',
-                    discountModeActive && product.has_active_discount ? 'opacity-50 bg-gray-100 cursor-not-allowed pointer-events-none' : ''
+                    discountModeActive && product.has_active_discount ? 'opacity-50 bg-gray-50 cursor-not-allowed pointer-events-none' : ''
                 ]"
             >
                 <!-- Checkbox -->
@@ -274,7 +274,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <div v-if="product.images_count > 0 && !hasAnyDiscount(product)" class="absolute top-4 right-4 bg-blue-600 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                    <div v-if="product.images_count > 0 && !hasAnyDiscount(product)" class="absolute top-4 right-4 bg-jd-accent text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
                         {{ product.images_count }} {{ product.images_count === 1 ? 'immagine' : 'immagini' }}
                     </div>
                     <!-- Discount Badge - Active -->
@@ -303,7 +303,7 @@
 
                 <!-- Content -->
                 <div class="p-6 min-w-0">
-                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2 overflow-hidden break-words">
+                    <h3 class="text-base sm:text-xl font-bold text-gray-700 mb-2 group-hover:text-jd-accent transition-colors line-clamp-2 overflow-hidden break-words">
                         {{ product.title }}
                     </h3>
                     <p v-if="product.tags" class="text-sm text-gray-500 mb-3 line-clamp-1 overflow-hidden">
@@ -313,7 +313,7 @@
                         <div class="flex items-center gap-2">
                             <span v-if="product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price }}</span>
                             <span v-if="product.has_future_discount && !product.has_active_discount" class="text-lg text-gray-500 line-through">€{{ product.original_price || product.price }}</span>
-                            <span class="text-3xl font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-600' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
+                            <span class="text-3xl font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-400' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
                         </div>
                         <span
                             :class="[
@@ -330,7 +330,7 @@
                     <div class="flex flex-wrap gap-3" @click.stop>
                         <Link
                             :href="route('products.edit', product.id)"
-                            class="flex-1 min-w-[120px] flex items-center justify-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                            class="btn-jd-primary flex-1 min-w-[120px] flex items-center justify-center px-4 py-2.5 rounded-lg font-medium"
                         >
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -359,7 +359,7 @@
                 :class="[
                     'bg-white rounded-lg shadow hover:shadow-lg transition-all overflow-hidden group relative cursor-pointer w-full max-w-full',
                     discountModeActive && isSelected(product.id) ? 'ring-4 ring-blue-500 ring-opacity-50' : '',
-                    discountModeActive && product.has_active_discount ? 'opacity-50 bg-gray-100 cursor-not-allowed pointer-events-none' : ''
+                    discountModeActive && product.has_active_discount ? 'opacity-50 bg-gray-50 cursor-not-allowed pointer-events-none' : ''
                 ]"
                 style="width: 100%; max-width: 100%; overflow: hidden;"
             >
@@ -406,7 +406,7 @@
                     </template>
                     
                     <!-- Image count badge (only if more than 2 images and no discount badge) -->
-                    <div v-if="product.images_count > 2 && !hasAnyDiscount(product)" class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full shadow">
+                    <div v-if="product.images_count > 2 && !hasAnyDiscount(product)" class="absolute top-2 right-2 bg-jd-accent text-white text-xs font-bold px-2 py-1 rounded-full shadow">
                         {{ product.images_count }}
                     </div>
                     
@@ -436,14 +436,14 @@
 
                 <!-- Content -->
                 <div class="p-4 min-w-0 overflow-hidden">
-                    <h3 class="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors line-clamp-2 text-sm overflow-hidden break-words" style="overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
+                    <h3 class="font-semibold text-gray-700 mb-1 group-hover:text-jd-accent transition-colors line-clamp-2 text-sm overflow-hidden break-words" style="overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                         {{ product.title }}
                     </h3>
                     <div class="flex items-center justify-between mb-3">
                         <div class="flex items-center gap-1">
                             <span v-if="product.has_active_discount" class="text-sm text-gray-500 line-through">€{{ product.original_price }}</span>
                             <span v-if="product.has_future_discount && !product.has_active_discount" class="text-sm text-gray-500 line-through">€{{ product.original_price || product.price }}</span>
-                            <span class="text-lg font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-600' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
+                            <span class="text-lg font-bold" :class="product.has_future_discount && !product.has_active_discount ? 'text-yellow-400' : 'text-gray-900'">€{{ product.has_future_discount && !product.has_active_discount ? getFutureDiscountedPrice(product) : product.price }}</span>
                         </div>
                         <span
                             :class="[
@@ -458,7 +458,7 @@
                     <div class="flex gap-2" @click.stop>
                         <Link
                             :href="route('products.edit', product.id)"
-                            class="flex-1 flex items-center justify-center px-2 py-1.5 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700 transition-colors"
+                            class="btn-jd-primary flex-1 flex items-center justify-center px-2 py-1.5 rounded text-xs font-medium"
                             title="Modifica"
                         >
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -574,14 +574,11 @@ const handleProductClick = (product, event) => {
         return;
     }
     
-    // On mobile, if not in discount mode, open edit page
+    // If not in discount mode, open edit page
     if (!props.discountModeActive) {
-        const isMobile = window.innerWidth < 768 || window.matchMedia('(max-width: 767px)').matches;
-        if (isMobile) {
-            event.preventDefault();
-            event.stopPropagation();
-            router.visit(route('products.edit', product.id));
-        }
+        event.preventDefault();
+        event.stopPropagation();
+        router.visit(route('products.edit', product.id));
     }
 };
 

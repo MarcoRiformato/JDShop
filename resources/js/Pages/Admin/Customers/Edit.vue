@@ -5,18 +5,18 @@
     <AdminLayout>
         <div class="max-w-2xl mx-auto">
             <div class="mb-6">
-                <Link :href="route('customers.show', customer.id)" class="text-blue-600 hover:text-blue-700 flex items-center">
+                <Link :href="route('customers.show', customer.id)" class="text-jd-accent hover:text-jd-accent-dark flex items-center">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     Torna al Cliente
                 </Link>
                 <h1 class="text-3xl font-bold text-gray-900 mt-4">Modifica Cliente</h1>
-                <p class="text-gray-600 mt-1">Modifica le informazioni del cliente</p>
+                <p class="text-gray-700 mt-1">Modifica le informazioni del cliente</p>
             </div>
 
             <!-- Validation Errors -->
-            <div v-if="Object.keys(form.errors).length > 0" class="mb-6 bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3 rounded-r-lg">
+            <div v-if="Object.keys(form.errors).length > 0" class="mb-6 bg-red-900 border-l-4 border-red-400 text-red-100 px-4 py-3 rounded-r-lg">
                 <div class="flex items-start">
                     <svg class="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-jd-base-light rounded-lg shadow-md p-6">
                 <form @submit.prevent="submit">
                     <div class="space-y-6">
                         <!-- Name -->
@@ -44,7 +44,7 @@
                                 id="name"
                                 v-model="form.name" 
                                 type="text" 
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="input-jd w-full"
                                 :class="{ 'border-red-500': form.errors.name }"
                                 required
                             >
@@ -61,7 +61,7 @@
                                 v-model="form.primary_email" 
                                 type="email" 
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="input-jd w-full"
                                 :class="{ 'border-red-500': form.errors.primary_email }"
                                 required
                             >
@@ -78,9 +78,9 @@
                                 v-model="form.phone" 
                                 type="tel" 
                                 pattern="[+]?[0-9\s\-\(\)]{0,20}"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="input-jd w-full"
                             >
-                            <p class="text-xs text-gray-500 mt-1">Formato: +39 123 456 7890</p>
+                            <p class="text-xs text-jd-muted mt-1">Formato: +39 123 456 7890</p>
                         </div>
 
                         <!-- Notes -->
@@ -92,18 +92,18 @@
                                 id="notes"
                                 v-model="form.notes" 
                                 rows="4"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="input-jd w-full"
                             ></textarea>
                         </div>
 
                         <!-- GDPR Consent -->
-                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div class="bg-gray-50 border border-gray-300 rounded-lg p-4">
                             <label class="flex items-start">
                                 <input 
                                     id="gdpr_consent"
                                     v-model="form.gdpr_consent"
                                     type="checkbox"
-                                    class="mt-1 mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    class="mt-1 mr-3 h-4 w-4 text-jd-accent focus:ring-blue-500 border-gray-300 rounded"
                                 >
                                 <span class="text-sm text-gray-700">
                                     Il cliente ha fornito il consenso GDPR
@@ -113,7 +113,7 @@
                         </div>
 
                         <!-- Submit buttons -->
-                        <div class="flex gap-3 pt-4 border-t border-gray-200">
+                        <div class="flex gap-3 pt-4 border-t border-gray-300">
                             <Link 
                                 :href="route('customers.show', customer.id)"
                                 class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center"

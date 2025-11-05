@@ -5,14 +5,14 @@
     <AdminLayout>
         <div class="max-w-2xl mx-auto">
             <div class="mb-6">
-                <Link :href="route('admin.dashboard')" class="text-blue-600 hover:text-blue-700 flex items-center">
+                <Link :href="route('admin.dashboard')" class="link-jd flex items-center font-medium">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
                     Torna alla Dashboard
                 </Link>
                 <h1 class="text-3xl font-bold text-gray-900 mt-4">Crea Prodotto</h1>
-                <p class="text-gray-600 mt-1">Aggiungi un nuovo prodotto al catalogo</p>
+                <p class="text-jd mt-1">Aggiungi un nuovo prodotto al catalogo</p>
             </div>
 
             <!-- Global Error Message -->
@@ -26,9 +26,9 @@
             </div>
 
             <!-- Uploading message -->
-            <div v-if="productCreated && uploadingImages" class="mb-6 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg">
+            <div v-if="productCreated && uploadingImages" class="mb-6 bg-blue-50 border border-blue-400 text-gray-700 px-4 py-3 rounded-lg">
                 <div class="flex items-center">
-                    <svg class="animate-spin h-5 w-5 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24">
+                    <svg class="animate-spin h-5 w-5 text-jd-accent mr-2" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
@@ -66,12 +66,12 @@
                                 v-model="form.title" 
                                 type="text" 
                                 maxlength="35"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="input-jd w-full"
                                 :class="{ 'border-red-500': form.errors.title }"
                                 required
                             >
                             <div class="flex justify-between mt-1">
-                                <p v-if="form.errors.title" class="text-sm text-red-600">{{ form.errors.title }}</p>
+                                <p v-if="form.errors.title" class="text-sm text-red-400">{{ form.errors.title }}</p>
                                 <p class="text-sm text-gray-500 ml-auto">{{ form.title.length }}/35</p>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                                 id="description"
                                 v-model="form.description" 
                                 rows="4"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="input-jd w-full"
                                 :class="{ 'border-red-500': form.errors.description }"
                             ></textarea>
                             <p v-if="form.errors.description" class="text-sm text-red-600 mt-1">{{ form.errors.description }}</p>
@@ -101,7 +101,7 @@
                                 v-model="form.tags" 
                                 type="text" 
                                 placeholder="es: arredamento,specchio,vintage"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                class="input-jd w-full"
                                 :class="{ 'border-red-500': form.errors.tags }"
                             >
                             <p class="text-sm text-gray-500 mt-1">Separa le categorie con virgole</p>
@@ -111,17 +111,17 @@
                         <!-- Price -->
                         <div>
                             <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
-                                Prezzo <span class="text-red-500">*</span>
+                                Prezzo <span class="text-red-400">*</span>
                             </label>
                             <div class="relative">
-                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">€</span>
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">€</span>
                                 <input 
                                     id="price"
                                     v-model="form.price" 
                                     type="number" 
                                     step="0.01"
                                     min="0"
-                                    class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    class="input-jd w-full pl-8"
                                     :class="{ 'border-red-500': form.errors.price }"
                                     required
                                 >
@@ -135,7 +135,7 @@
                                 id="sold_out"
                                 v-model="form.sold_out" 
                                 type="checkbox"
-                                class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                class="h-5 w-5 text-jd-accent focus:ring-jd-accent border-gray-300 rounded"
                             >
                             <label for="sold_out" class="ml-3 text-sm font-medium text-gray-700">
                                 Segna come venduto
@@ -172,7 +172,7 @@
                                 <div 
                                     class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
                                     :class="{
-                                        'border-blue-500 bg-blue-50': isDragOver,
+                                        'border-gray-300-accent bg-gray-50': isDragOver,
                                         'border-gray-300': !isDragOver
                                     }"
                                     @dragover.prevent="handleDragOver"
@@ -180,7 +180,7 @@
                                     @dragleave.prevent="handleDragLeave"
                                     @drop.prevent="handleDrop"
                                 >
-                                    <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-12 h-12 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
@@ -188,7 +188,7 @@
                                         <button 
                                             @click="openFilePicker('gallery')"
                                             type="button"
-                                            class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+                                            class="btn-jd-primary inline-flex items-center justify-center px-6 py-3 rounded-lg shadow-md"
                                         >
                                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -207,9 +207,9 @@
                                             Scatta Foto
                                         </button>
                                     </div>
-                                    <p class="text-sm text-gray-600 mt-4">Oppure trascina e rilascia le immagini qui</p>
-                                    <p class="text-xs text-gray-400 mt-1">Dimensione massima: 20MB per immagine (verrà compressa automaticamente)</p>
-                                    <p v-if="isDragOver" class="text-sm text-blue-600 font-medium mt-2">Rilascia qui</p>
+                                    <p class="text-sm text-gray-500 mt-4">Oppure trascina e rilascia le immagini qui</p>
+                                    <p class="text-xs text-gray-500 mt-1">Dimensione massima: 20MB per immagine (verrà compressa automaticamente)</p>
+                                    <p v-if="isDragOver" class="text-sm text-jd-accent font-medium mt-2">Rilascia qui</p>
                                 </div>
                                 
                                 <!-- Preview selected images -->
@@ -222,7 +222,7 @@
                                     >
                                         <div 
                                             class="relative overflow-hidden rounded-lg"
-                                            :class="selectedCoverIndex === index ? 'ring-4 ring-blue-500' : 'border-2 border-gray-200'"
+                                            :class="selectedCoverIndex === index ? 'ring-4 ring-jd-accent' : 'border-2 border-gray-300'"
                                         >
                                             <img 
                                                 :src="image.preview" 
@@ -240,28 +240,28 @@
                                             </button>
                                             
                                             <!-- Cover badge -->
-                                            <div v-if="selectedCoverIndex === index" class="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                            <div v-if="selectedCoverIndex === index" class="absolute top-2 left-2 bg-jd-accent text-white text-xs font-bold px-2 py-1 rounded">
                                                 Copertina
                                             </div>
                                         </div>
-                                        <p class="text-xs text-gray-500 mt-1 truncate">{{ image.name }}</p>
-                                    </div>
+                                <p class="text-xs text-gray-500 mt-1 truncate">{{ image.name }}</p>
                                 </div>
-                                <p v-if="selectedImages.length > 0" class="text-xs text-gray-500 mt-2">
+                            </div>
+                            <p v-if="selectedImages.length > 0" class="text-xs text-gray-500 mt-2">
                                     💡 Clicca su un'immagine per impostarla come copertina
                                 </p>
                             </div>
                             
                             <!-- Upload progress (shown during upload) -->
                             <div v-if="productCreated && uploadingImages" class="space-y-2">
-                                <div v-for="(progress, index) in uploadProgress" :key="index" class="bg-white rounded-lg border p-3">
+                                <div v-for="(progress, index) in uploadProgress" :key="index" class="bg-gray-50 rounded-lg border border-gray-300 p-3">
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-gray-600">{{ progress.name }}</span>
-                                        <span class="text-sm font-medium text-gray-900">{{ progress.percent }}%</span>
+                                        <span class="text-sm text-gray-500">{{ progress.name }}</span>
+                                        <span class="text-sm font-medium text-gray-700">{{ progress.percent }}%</span>
                                     </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="w-full bg-jd-base rounded-full h-2">
                                         <div 
-                                            class="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                                            class="bg-jd-accent h-2 rounded-full transition-all duration-300"
                                             :style="{ width: progress.percent + '%' }"
                                         ></div>
                                     </div>
@@ -270,7 +270,7 @@
                         </div>
 
                         <!-- Submit button -->
-                        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-300">
                             <Link 
                                 :href="route('admin.dashboard')" 
                                 class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
@@ -281,7 +281,7 @@
                                 v-if="!productCreated && !uploadingImages"
                                 type="submit" 
                                 :disabled="form.processing"
-                                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                class="btn-jd-primary px-6 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {{ form.processing ? 'Creazione...' : 'Crea Prodotto' + (selectedImages.length > 0 ? ` e Carica ${selectedImages.length} Immagine${selectedImages.length > 1 ? 'i' : ''}` : '') }}
                             </button>

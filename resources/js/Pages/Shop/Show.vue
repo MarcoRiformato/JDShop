@@ -13,10 +13,10 @@
         <meta name="twitter:image" :content="product.images.length > 0 ? product.images.find(img => img.is_cover)?.url || product.images[0].url : `https://picsum.photos/seed/${product.id}/1200/630`">
     </Head>
     <ShopLayout>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white rounded-lg my-6">
             <!-- Breadcrumb -->
             <nav class="mb-8">
-                <Link :href="route('shop.index')" class="text-blue-600 hover:text-blue-700 flex items-center">
+                <Link :href="route('shop.index')" class="link-jd flex items-center font-medium">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -46,7 +46,7 @@
                 <!-- Product details -->
                 <div class="flex flex-col">
                     <div>
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        <h1 class="text-3xl md:text-4xl font-bold text-jd-title mb-4">
                             {{ product.title }}
                         </h1>
 
@@ -54,7 +54,7 @@
                         <div class="mb-6">
                             <!-- Discount Badge -->
                             <div v-if="product.has_active_discount" class="mb-4">
-                                <span class="inline-flex items-center px-4 py-2 bg-orange-100 text-orange-800 text-lg font-bold rounded-full">
+                                <span class="discount-badge inline-flex items-center px-4 py-2 text-lg rounded-full">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                                     </svg>
@@ -67,7 +67,7 @@
                                     <span v-if="product.has_active_discount" class="text-2xl text-gray-500 line-through">
                                         €{{ product.original_price }}
                                     </span>
-                                    <span class="text-4xl font-bold text-gray-900">
+                                    <span class="text-4xl font-bold text-jd-title">
                                         €{{ product.price }}
                                     </span>
                                 </div>
@@ -84,33 +84,25 @@
                                     Disponibile
                                 </span>
                             </div>
-
-                            <!-- Discount expiry info -->
-                            <div v-if="product.has_active_discount && product.discount_end_date" class="mt-2 text-sm text-gray-600">
-                                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                Offerta valida fino al {{ formatDate(product.discount_end_date) }}
-                            </div>
                         </div>
 
                         <!-- Description -->
                         <div v-if="product.description" class="mb-6">
-                            <h2 class="text-lg font-semibold text-gray-900 mb-2">Descrizione</h2>
-                            <p class="text-gray-700 leading-relaxed whitespace-pre-line">
+                            <h2 class="text-xl font-semibold text-gray-900 mb-2">Descrizione</h2>
+                            <p class="text-jd leading-relaxed whitespace-pre-line">
                                 {{ product.description }}
                             </p>
                         </div>
 
-                        <!-- Tags -->
-                        <div v-if="product.tags && product.tags.length > 0" class="mb-8">
-                            <h2 class="text-lg font-semibold text-gray-900 mb-3">Categorie</h2>
+                        <!-- Category & Tags -->
+                        <div v-if="product.tags && product.tags.length > 0" class="mb-6">
+                            <h2 class="text-xl font-semibold text-gray-900 mb-3">Categoria</h2>
                             <div class="flex flex-wrap gap-2">
-                                <Link
-                                    v-for="tag in product.tags"
+                                <Link 
+                                    v-for="tag in product.tags" 
                                     :key="tag"
                                     :href="route('shop.index', { tag: tag })"
-                                    class="px-3 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-full text-sm font-medium transition-colors"
+                                    class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-jd-accent hover:text-white transition-colors cursor-pointer"
                                 >
                                     {{ tag }}
                                 </Link>
@@ -118,64 +110,62 @@
                         </div>
                     </div>
 
-                    <!-- Action buttons -->
-                    <div class="mt-auto pt-6 border-t border-gray-200 space-y-4">
-                        <button 
-                            @click="showContactModal = true"
-                            type="button"
-                            class="w-full flex items-center justify-center px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+                    <!-- Contact CTA -->
+                    <div class="mt-auto">
+                        <button
+                            v-if="!product.sold_out"
+                            @click="openContactModal"
+                            class="btn-jd-primary w-full py-4 text-lg"
                         >
                             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
-                            Chiedi maggiori informazioni
+                            Richiedi Informazioni
                         </button>
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                            <p class="text-sm text-blue-900">
-                                <svg class="inline w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                        <!-- Information box -->
+                        <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Clicca il pulsante sopra per inviarci una richiesta. Ti risponderemo il prima possibile!
-                            </p>
+                                <div class="text-sm text-gray-700">
+                                    <p class="font-medium text-gray-900 mb-1">Vuoi saperne di più?</p>
+                                    <p>Contattaci per ricevere ulteriori informazioni su questo prodotto, prezzi di spedizione e disponibilità per il ritiro.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Related products section -->
+            <!-- Related products -->
             <div v-if="relatedProducts.length > 0" class="mt-16">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Potrebbero interessarti anche</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <Link
-                        v-for="related in relatedProducts"
-                        :key="related.id"
-                        :href="route('shop.show', related.id)"
-                        class="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all"
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Prodotti Simili</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <Link 
+                        v-for="relatedProduct in relatedProducts" 
+                        :key="relatedProduct.id"
+                        :href="route('shop.show', relatedProduct.id)"
+                        class="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                     >
                         <div class="aspect-square overflow-hidden bg-gray-200">
                             <img 
-                                v-if="related.cover_image_url"
-                                :src="related.cover_image_url" 
-                                :alt="related.title"
-                                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                            >
-                            <img 
-                                v-else
-                                :src="`https://picsum.photos/seed/${related.id}/400/400`" 
-                                :alt="related.title"
+                                :src="relatedProduct.cover_image_url" 
+                                :alt="relatedProduct.title"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                             >
                         </div>
-                        <div class="p-4 min-w-0">
-                            <h3 class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
-                                {{ related.title }}
+                        <div class="p-4">
+                            <h3 class="font-semibold text-jd truncate group-hover:text-jd-accent transition-colors">
+                                {{ relatedProduct.title }}
                             </h3>
-                            <div class="flex items-center gap-2">
-                                <span v-if="related.has_active_discount" class="text-sm text-gray-500 line-through">
-                                    €{{ related.original_price }}
+                            <div class="flex items-center gap-2 mt-2">
+                                <span v-if="relatedProduct.has_active_discount" class="text-sm text-gray-500 line-through">
+                                    €{{ relatedProduct.original_price }}
                                 </span>
-                                <span class="text-lg font-bold text-gray-900">
-                                    €{{ related.price }}
+                                <span class="text-xl font-bold text-jd-title">
+                                    €{{ relatedProduct.price }}
                                 </span>
                             </div>
                         </div>
@@ -186,7 +176,7 @@
 
         <!-- Contact Modal -->
         <ContactModal 
-            :show="showContactModal" 
+            :show="showContactModal"
             :product="product"
             @close="showContactModal = false"
         />
@@ -213,23 +203,15 @@ const props = defineProps({
 
 const showContactModal = ref(false);
 
-const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('it-IT', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
+const openContactModal = () => {
+    showContactModal.value = true;
 };
 
 const handleImageDeleted = (imageId) => {
-    // Reload the page to refresh product data
     router.reload({ only: ['product'] });
 };
 
-const handleCoverUpdated = (image) => {
-    // Reload the page to refresh product data
+const handleCoverUpdated = (imageId) => {
     router.reload({ only: ['product'] });
 };
 </script>
-

@@ -11,11 +11,11 @@
             <div 
                 v-for="inquiry in inquiries" 
                 :key="inquiry.id"
-                class="relative pl-8 pb-8 border-l-2 border-gray-200 last:border-l-0 last:pb-0"
+                class="relative pl-8 pb-8 border-l-2 border-gray-300 last:border-l-0 last:pb-0"
             >
                 <!-- Timeline dot -->
                 <div class="absolute left-0 top-0 -translate-x-1/2">
-                    <div class="h-4 w-4 rounded-full bg-blue-600 border-2 border-white shadow-sm"></div>
+                    <div class="h-4 w-4 rounded-full bg-jd-accent border-2 border-white shadow-sm"></div>
                 </div>
 
                 <!-- Content -->
@@ -27,12 +27,12 @@
                                 <img 
                                     :src="inquiry.product_cover_image" 
                                     :alt="inquiry.product_title"
-                                    class="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                                    class="w-16 h-16 object-cover rounded-lg border border-gray-300"
                                 >
                             </div>
                             <div class="flex-1">
                                 <p class="text-sm font-medium text-gray-900">{{ inquiry.created_at }}</p>
-                                <p v-if="inquiry.product_title" class="text-sm text-blue-600 font-medium mt-1">
+                                <p v-if="inquiry.product_title" class="text-sm text-jd-accent font-medium mt-1">
                                     Prodotto: {{ inquiry.product_title }}
                                 </p>
                             </div>
@@ -60,8 +60,8 @@
                     </div>
 
                     <!-- Admin Notes -->
-                    <div v-if="inquiry.admin_notes" class="mt-3 pt-3 border-t border-gray-200">
-                        <p class="text-xs font-medium text-gray-600 mb-1">Note Amministratore:</p>
+                    <div v-if="inquiry.admin_notes" class="mt-3 pt-3 border-t border-gray-300">
+                        <p class="text-xs font-medium text-gray-700 mb-1">Note Amministratore:</p>
                         <p class="text-sm text-gray-700 whitespace-pre-wrap italic">{{ inquiry.admin_notes }}</p>
                     </div>
 
@@ -69,7 +69,7 @@
                     <div class="mt-4">
                         <button
                             @click="editNotes(inquiry)"
-                            class="px-3 py-1.5 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                            class="px-3 py-1.5 text-xs bg-jd-accent text-white rounded hover:bg-blue-700 transition-colors"
                         >
                             {{ inquiry.admin_notes ? 'Modifica Note' : 'Aggiungi Note' }}
                         </button>
@@ -89,19 +89,19 @@
                 <textarea
                     v-model="notesForm.admin_notes"
                     rows="4"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    class="input-jd w-full"
                     placeholder="Aggiungi note interne per questa richiesta..."
                 ></textarea>
                 <div class="mt-4 flex justify-end gap-2">
                     <button
                         @click="cancelEdit"
-                        class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+                        class="px-4 py-2 text-gray-700 bg-gray-50 rounded-lg hover:bg-whiteer transition-colors"
                     >
                         Annulla
                     </button>
                     <button
                         @click="saveNotes"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                        class="px-4 py-2 bg-jd-accent text-white rounded-lg hover:bg-blue-700 transition-colors"
                     >
                         Salva
                     </button>

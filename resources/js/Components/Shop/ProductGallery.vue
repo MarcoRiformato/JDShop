@@ -48,7 +48,7 @@
                 <!-- Close button -->
                 <button
                     @click="closeFullSize"
-                    class="absolute top-4 right-4 z-20 p-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full text-white transition-colors"
+                    class="absolute top-4 right-4 z-20 p-2 bg-jd-base-light bg-opacity-20 hover:bg-opacity-30 rounded-full text-white transition-colors"
                     aria-label="Chiudi"
                 >
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@
                     <button
                         @click="setAsCopertina"
                         :disabled="fullSizeImage.is_cover || isProcessing"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 touch-manipulation"
+                        class="px-4 py-2 bg-jd-accent text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 touch-manipulation"
                         :title="fullSizeImage.is_cover ? 'Già copertina' : 'Imposta come copertina'"
                     >
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +95,7 @@
                 <button
                     v-if="images.length > 1 && currentImageIndex > 0"
                     @click.stop="previousImage"
-                    class="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full text-white transition-colors touch-manipulation"
+                    class="absolute left-4 top-1/2 transform -translate-y-1/2 p-3 bg-jd-base-light bg-opacity-20 hover:bg-opacity-30 rounded-full text-white transition-colors touch-manipulation"
                     aria-label="Immagine precedente"
                 >
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,7 +105,7 @@
                 <button
                     v-if="images.length > 1 && currentImageIndex < images.length - 1"
                     @click.stop="nextImage"
-                    class="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full text-white transition-colors touch-manipulation"
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2 p-3 bg-jd-base-light bg-opacity-20 hover:bg-opacity-30 rounded-full text-white transition-colors touch-manipulation"
                     aria-label="Immagine successiva"
                 >
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

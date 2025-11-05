@@ -7,19 +7,19 @@
             <div class="mb-6">
                 <div class="flex items-center justify-between">
                     <div class="flex-1">
-                        <Link :href="route('admin.dashboard')" class="text-blue-600 hover:text-blue-700 flex items-center">
+                        <Link :href="route('admin.dashboard')" class="link-jd-accent flex items-center font-medium">
                             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                             </svg>
                             Torna alla Dashboard
                         </Link>
                         <h1 class="text-3xl font-bold text-gray-900 mt-4">Modifica Prodotto</h1>
-                        <p class="text-gray-600 mt-1">Aggiorna le informazioni del prodotto e gestisci le immagini</p>
+                        <p class="text-gray-700 mt-1">Aggiorna le informazioni del prodotto e gestisci le immagini</p>
                     </div>
                     <button
                         @click="showPreview"
                         type="button"
-                        class="ml-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-md flex items-center gap-2"
+                        class="ml-4 px-4 py-2 bg-jd-accent text-gray-900 rounded-lg hover:bg-jd-accent-dark transition-colors shadow-md flex items-center gap-2"
                     >
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -78,17 +78,17 @@
                             <div v-if="product.original_price" class="flex flex-wrap items-center gap-2">
                                 <span class="text-xs sm:text-sm font-medium text-gray-700">Prezzo originale:</span>
                                 <span class="text-gray-500 line-through text-sm sm:text-base">€{{ product.original_price }}</span>
-                                <span class="text-base sm:text-lg font-bold text-orange-600">€{{ product.price }}</span>
+                                <span class="text-base sm:text-lg font-bold text-jd-accent">€{{ product.price }}</span>
                             </div>
                             <div v-if="product.discount_start_date" class="flex flex-wrap items-center gap-2">
                                 <span class="text-xs sm:text-sm font-medium text-gray-700">Data inizio:</span>
-                                <span class="text-xs sm:text-sm text-gray-900">{{ formatDate(product.discount_start_date) }}</span>
+                                <span class="text-xs sm:text-sm text-gray-700">{{ formatDate(product.discount_start_date) }}</span>
                             </div>
                             <div v-if="product.discount_end_date" class="flex flex-wrap items-center gap-2">
                                 <span class="text-xs sm:text-sm font-medium text-gray-700">Data fine:</span>
-                                <span class="text-xs sm:text-sm text-gray-900">{{ formatDate(product.discount_end_date) }}</span>
+                                <span class="text-xs sm:text-sm text-gray-700">{{ formatDate(product.discount_end_date) }}</span>
                             </div>
-                            <div v-else-if="product.has_active_discount" class="text-xs sm:text-sm text-gray-600">
+                            <div v-else-if="product.has_active_discount" class="text-xs sm:text-sm text-gray-500">
                                 <span class="font-medium">Sconto permanente</span>
                             </div>
                         </div>
@@ -121,12 +121,12 @@
                                     v-model="form.title" 
                                     type="text" 
                                     maxlength="35"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    class="input-jd w-full"
                                     :class="{ 'border-red-500': form.errors.title }"
                                     required
                                 >
                                 <div class="flex justify-between mt-1">
-                                    <p v-if="form.errors.title" class="text-sm text-red-600">{{ form.errors.title }}</p>
+                                    <p v-if="form.errors.title" class="text-sm text-red-400">{{ form.errors.title }}</p>
                                     <p class="text-sm text-gray-500 ml-auto">{{ form.title.length }}/35</p>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                     id="description"
                                     v-model="form.description" 
                                     rows="4"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    class="input-jd w-full"
                                     :class="{ 'border-red-500': form.errors.description }"
                                 ></textarea>
                                 <p v-if="form.errors.description" class="text-sm text-red-600 mt-1">{{ form.errors.description }}</p>
@@ -156,7 +156,7 @@
                                     v-model="form.tags" 
                                     type="text" 
                                     placeholder="es: arredamento,specchio,vintage"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    class="input-jd w-full"
                                     :class="{ 'border-red-500': form.errors.tags }"
                                 >
                                 <p class="text-sm text-gray-500 mt-1">Separa le categorie con virgole</p>
@@ -166,17 +166,17 @@
                             <!-- Price -->
                             <div>
                                 <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Prezzo <span class="text-red-500">*</span>
+                                    Prezzo <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">€</span>
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">€</span>
                                     <input 
                                         id="price"
                                         v-model="form.price" 
                                         type="number" 
                                         step="0.01"
                                         min="0"
-                                        class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        class="input-jd w-full pl-8"
                                         :class="{ 'border-red-500': form.errors.price }"
                                         required
                                     >
@@ -190,7 +190,7 @@
                                     id="sold_out"
                                     v-model="form.sold_out" 
                                     type="checkbox"
-                                    class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    class="h-5 w-5 text-jd-accent focus:ring-jd-accent border-gray-300 rounded"
                                 >
                                 <label for="sold_out" class="ml-3 text-sm font-medium text-gray-700">
                                     Segna come venduto
@@ -198,11 +198,11 @@
                             </div>
 
                             <!-- Submit button -->
-                            <div class="pt-4 border-t border-gray-200">
+                            <div class="pt-4 border-t border-gray-300">
                                 <button 
                                     type="submit" 
                                     :disabled="form.processing"
-                                    class="w-full px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    class="btn-jd-primary w-full px-6 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {{ form.processing ? 'Aggiornamento...' : 'Aggiorna Prodotto' }}
                                 </button>
@@ -238,11 +238,11 @@
                     </div>
 
                     <div v-else class="mt-6 text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="mx-auto h-12 w-12 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                         <p class="mt-2 text-sm text-gray-500">Nessuna immagine ancora</p>
-                        <p class="text-xs text-gray-400">Carica delle immagini per iniziare</p>
+                        <p class="text-xs text-gray-500">Carica delle immagini per iniziare</p>
                     </div>
                 </div>
             </div>
@@ -255,7 +255,7 @@
                     </svg>
                     <h3 class="text-sm font-semibold text-red-900">Zona Pericolosa</h3>
                 </div>
-                <p class="text-sm text-gray-600 mb-4">Eliminando questo prodotto, sarà irrimediabilmente cancellato. Questa azione non può essere annullata.</p>
+                <p class="text-sm text-gray-500 mb-4">Eliminando questo prodotto, sarà irrimediabilmente cancellato. Questa azione non può essere annullata.</p>
                 <button 
                     @click="showDeleteModal = true"
                     type="button"
@@ -298,7 +298,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900">Conferma Eliminazione</h3>
+                    <h3 class="text-lg font-bold text-jd-title">Conferma Eliminazione</h3>
                 </div>
                 
                 <p class="text-gray-700 mb-6">

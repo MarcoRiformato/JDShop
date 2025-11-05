@@ -9,10 +9,10 @@
     </Head>
     <ShopLayout>
         <!-- Hero section -->
-        <div class="bg-gradient-to-br from-blue-600 to-purple-600 text-white">
+        <div class="bg-jd-section text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 leading-tight">Benvenuto su JDOutlet</h1>
-                <p class="text-base sm:text-lg md:text-xl text-blue-100 max-w-2xl leading-relaxed">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 leading-tight">Benvenuti su JDOutlet</h1>
+                <p class="text-base sm:text-lg md:text-xl text-jd max-w-2xl leading-relaxed">
                     Scopri la nostra collezione di materiali per eventi: audio, arredi, scenografie e molto altro
                 </p>
             </div>
@@ -30,7 +30,7 @@
                                 @input="handleSearch"
                                 type="text" 
                                 placeholder="Cerca prodotti..."
-                                class="w-full pl-10 pr-4 py-2.5 sm:py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 touch-manipulation"
+                                class="w-full pl-10 pr-4 py-2.5 sm:py-2 text-base bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-jd-accent focus:border-jd-accent touch-manipulation"
                             >
                             <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -43,7 +43,7 @@
                         <select 
                             v-model="selectedTag"
                             @change="handleTagFilter"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            class="w-full px-4 py-2.5 sm:py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-jd-accent focus:border-jd-accent"
                         >
                             <option value="">Tutte le Categorie</option>
                             <option v-for="tag in tags" :key="tag" :value="tag">
@@ -56,7 +56,7 @@
                     <button 
                         v-if="filters.search || filters.tag"
                         @click="clearFilters"
-                        class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                        class="px-4 py-2 text-sm link-jd hover:bg-gray-50 rounded-lg transition-colors"
                     >
                         Cancella Filtri
                     </button>
@@ -80,45 +80,45 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                 </svg>
                 <h3 class="mt-4 text-lg font-medium text-gray-900">Nessun prodotto trovato</h3>
-                <p class="mt-2 text-gray-500">
+                <p class="mt-2 text-jd">
                     {{ filters.search || filters.tag ? 'Prova a modificare i filtri' : 'Torna presto per nuovi articoli!' }}
                 </p>
             </div>
         </div>
 
         <!-- Information section -->
-        <div class="bg-gradient-to-br from-gray-800 to-gray-900 text-white py-16">
+        <div class="bg-jd-section text-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-4xl md:text-5xl font-bold mb-4">
-                    <span class="text-white">JD</span><span class="text-red-700">Outlet</span>
+                    <span>JD</span><span class="text-jd-accent">Outlet</span>
                 </h2>
-                <p class="text-lg text-gray-200 mb-8 max-w-3xl leading-relaxed">
+                <p class="text-lg text-jd mb-8 leading-relaxed">
                     JDEvents azienda organizzatrice di eventi apre le porte con il suo primo outlet degli allestimenti. 
                     Quante volte avete visto foto di eventi su una rivista o sui social e avete pensato: 'WOW! Che spettacolo!!!', 
                     ecco un po' di quella piccola meraviglia potrebbe essere vostra. Tavoli, sedie, arredamenti di varia natura 
                     e pezzi unici creati ad hoc per sfilate, fiere, meeting ed eventi in genere.
                 </p>
-                <ul class="space-y-4 text-gray-200">
+                <ul class="space-y-4 text-jd">
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 mr-3 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 mr-3 text-jd-list flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
                         <span>Il materiale viene venduto nello stato di fatto in cui si trova. Può essere visionato presso il nostro magazzino di Firenze.</span>
                     </li>
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 mr-3 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 mr-3 text-jd-list flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
                         <span>Il materiale viene aggiornato ed aumentato in base agli eventi realizzati. Salvati il sito e ogni tanto butta un occhio!</span>
                     </li>
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 mr-3 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 mr-3 text-jd-list flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
                         <span>Se hai trovato un pezzo che davvero ti piacerebbe avere ma in formato diverso chiedici se possiamo modificarlo. (la modifica avrà un costo aggiuntivo)</span>
                     </li>
                     <li class="flex items-start">
-                        <svg class="w-6 h-6 mr-3 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-6 h-6 mr-3 text-jd-list flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                         </svg>
                         <span>Tutti i prodotti possono essere ritirati presso i nostri magazzini eventuale spese di spedizione sono a carico dell'acquirente.</span>

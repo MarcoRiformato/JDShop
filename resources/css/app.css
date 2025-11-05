@@ -1,85 +1,170 @@
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-@source '../**/*.vue';
-
+/* JDOutlet Brand Colors - Light Theme with Accents */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Core Brand Colors */
+    --color-jd-text: #a6a6a6;              /* Main text color */
+    --color-jd-section-bg: #092133;         /* Background for specific sections */
+    --color-jd-title: #334756;              /* Product prices and titles */
+    --color-jd-accent: #ff4d2a;             /* Links, lines, discounts, interactive elements */
+    --color-jd-button: #082032;             /* Main buttons background */
+    --color-jd-list: #ff4c29;               /* Homepage unordered list */
 }
 
-/* Mobile App-like Improvements */
-* {
-    -webkit-tap-highlight-color: transparent;
+/* Text Colors */
+.text-jd {
+    color: #a6a6a6;
 }
 
-/* Better touch targets for mobile */
-button, a, input, select, textarea {
-    touch-action: manipulation;
+.text-jd-title {
+    color: #334756;
 }
 
-/* Minimum touch target size (44x44px recommended by Apple/Google) */
-button:not(.no-min-touch),
-a:not(.no-min-touch) {
-    min-height: 44px;
-    min-width: 44px;
+.text-jd-accent {
+    color: #ff4d2a;
 }
 
-@media (min-width: 640px) {
-    button:not(.no-min-touch),
-    a:not(.no-min-touch) {
-        min-height: auto;
-        min-width: auto;
-    }
+.text-jd-list {
+    color: #ff4c29;
 }
 
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
+/* Background Colors */
+.bg-jd-section {
+    background-color: #092133;
 }
 
-/* Prevent pull-to-refresh on mobile */
-body {
-    overscroll-behavior-y: contain;
+.bg-jd-button {
+    background-color: #082032;
 }
 
-/* Improve form input on mobile */
-input[type="text"],
-input[type="email"],
-input[type="number"],
-input[type="password"],
-input[type="search"],
-textarea,
-select {
-    font-size: 16px; /* Prevents zoom on iOS */
+.bg-jd-accent {
+    background-color: #ff4d2a;
 }
 
-@media (min-width: 640px) {
-    input[type="text"],
-    input[type="email"],
-    input[type="number"],
-    input[type="password"],
-    input[type="search"],
-    textarea,
-    select {
-        font-size: 14px;
-    }
+/* Border Colors */
+.border-jd-accent {
+    border-color: #ff4d2a;
 }
 
-/* Better active states for touch */
-button:active,
-a:active {
-    transform: scale(0.98);
-    transition: transform 0.1s ease-out;
+/* Hover States */
+.hover\:text-jd-accent:hover {
+    color: #ff4d2a;
 }
 
-/* Smooth transitions for app-like feel */
-.transition {
-    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
+.hover\:bg-jd-button:hover {
+    background-color: #082032;
+}
+
+.hover\:bg-jd-accent:hover {
+    background-color: #ff4d2a;
+}
+
+/* Button Styles */
+.btn-jd-primary {
+    background-color: #082032;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-jd-primary:hover {
+    background-color: #0a2a42;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-jd-accent {
+    background-color: #ff4d2a;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-jd-accent:hover {
+    background-color: #e63f1f;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Link Styles */
+.link-jd {
+    color: #ff4d2a;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.link-jd:hover {
+    color: #e63f1f;
+    text-decoration: underline;
+}
+
+/* Logo */
+.logo-jd {
+    background: linear-gradient(135deg, #082032 0%, #ff4d2a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+/* Discount Badge */
+.discount-badge {
+    background-color: #ff4d2a;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* Input field with improved visibility */
+.input-jd {
+    background-color: #f9fafb;
+    color: #1f2937;
+    border: 2px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.625rem 1rem;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.input-jd:hover {
+    border-color: #9ca3af;
+    background-color: #ffffff;
+}
+
+.input-jd:focus {
+    outline: none;
+    border-color: #ff4d2a;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 77, 41, 0.1);
+}
+
+.input-jd::placeholder {
+    color: #9ca3af;
+}
+
+/* Textarea specific */
+textarea.input-jd {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* List Marker Color for Homepage */
+.list-jd ul li::marker {
+    color: #ff4c29;
+}
+
+.list-jd ul li {
+    color: #a6a6a6;
 }

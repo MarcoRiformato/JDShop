@@ -7,7 +7,7 @@
             <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
                 <div>
                     <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Prodotti</h1>
-                    <p class="text-sm sm:text-base text-gray-600 mt-1">Gestisci l'inventario del catalogo</p>
+                    <p class="text-sm sm:text-base text-jd mt-1">Gestisci l'inventario del catalogo</p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full max-w-full overflow-hidden">
                     <!-- View Mode Toggle -->
@@ -17,8 +17,8 @@
                             :class="[
                                 'flex items-center px-3 py-2 rounded-md transition-all text-sm font-medium',
                                 viewMode === 'list' 
-                                    ? 'bg-blue-600 text-white shadow-sm' 
-                                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                                    ? 'bg-jd-accent text-white shadow-sm' 
+                                    : 'text-gray-700 hover:text-jd-accent hover:bg-gray-100'
                             ]"
                             title="Vista Lista"
                         >
@@ -32,8 +32,8 @@
                             :class="[
                                 'flex items-center px-3 py-2 rounded-md transition-all text-sm font-medium',
                                 viewMode === 'grid-2' 
-                                    ? 'bg-blue-600 text-white shadow-sm' 
-                                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                                    ? 'bg-jd-accent text-white shadow-sm' 
+                                    : 'text-gray-700 hover:text-jd-accent hover:bg-gray-100'
                             ]"
                             title="Griglia 2x2"
                         >
@@ -47,8 +47,8 @@
                             :class="[
                                 'flex items-center px-3 py-2 rounded-md transition-all text-sm font-medium',
                                 viewMode === 'grid-4' 
-                                    ? 'bg-blue-600 text-white shadow-sm' 
-                                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                                    ? 'bg-jd-accent text-white shadow-sm' 
+                                    : 'text-gray-700 hover:text-jd-accent hover:bg-gray-100'
                             ]"
                             title="Griglia 4x4"
                         >
@@ -60,7 +60,7 @@
                     </div>
                     <Link 
                         :href="route('products.create')" 
-                        class="flex-shrink w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg transform hover:scale-105 font-semibold whitespace-nowrap"
+                        class="btn-jd-primary flex-shrink w-full sm:w-auto inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 font-semibold whitespace-nowrap"
                     >
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -104,19 +104,19 @@
                                 :indeterminate="isIndeterminate"
                                 @change="toggleSelectAll"
                                 type="checkbox"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                class="w-4 h-4 text-jd-accent bg-white border-gray-300 rounded focus:ring-jd-accent focus:ring-2"
                             >
                             <label :for="selectAllId" class="ml-2 text-sm font-medium text-gray-700">
                                 Seleziona Tutto
                             </label>
                         </div>
-                        <div v-if="selectedProducts.length > 0" class="text-sm text-gray-600">
+                        <div v-if="selectedProducts.length > 0" class="text-sm text-gray-700">
                             {{ selectedProducts.length }} {{ selectedProducts.length === 1 ? 'prodotto selezionato' : 'prodotti selezionati' }}
                         </div>
                     </div>
                     <button
                         @click="exitDiscountMode"
-                        class="inline-flex items-center px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                        class="inline-flex items-center px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium"
                     >
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -159,11 +159,11 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                 </svg>
                 <h3 class="mt-4 text-lg font-semibold text-gray-900">Nessun prodotto ancora</h3>
-                <p class="mt-2 text-gray-600">Inizia creando il tuo primo prodotto</p>
+                <p class="mt-2 text-jd">Inizia creando il tuo primo prodotto</p>
                 <div class="mt-6">
                     <Link 
                         :href="route('products.create')" 
-                        class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg transform hover:scale-105 font-semibold"
+                        class="btn-jd-primary inline-flex items-center px-6 py-3 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 font-semibold"
                     >
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
