@@ -12,7 +12,7 @@
         <meta name="twitter:description" :content="product.description || `${product.title} disponibile al prezzo di €${product.price}`">
         <meta name="twitter:image" :content="product.images.length > 0 ? product.images.find(img => img.is_cover)?.url || product.images[0].url : `https://picsum.photos/seed/${product.id}/1200/630`">
     </Head>
-    <ShopLayout>
+    <ShopLayout :tags="[]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white rounded-lg my-6">
             <!-- Breadcrumb -->
             <nav class="mb-8">

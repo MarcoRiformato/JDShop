@@ -7,9 +7,9 @@
         <meta name="twitter:title" content="JDOutlet - Catalogo Prodotti">
         <meta name="twitter:description" content="Scopri la nostra collezione di materiali per eventi: audio professionale, arredi vintage, scenografie e molto altro.">
     </Head>
-    <ShopLayout>
+    <ShopLayout :tags="tags">
         <!-- Hero section -->
-        <div class="bg-jd-section text-white">
+        <div class="bg-jd-section text-white -mt-px">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
                 <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 leading-tight">Benvenuti su JDOutlet</h1>
                 <p class="text-base sm:text-lg md:text-xl text-jd max-w-2xl leading-relaxed">
@@ -19,7 +19,7 @@
         </div>
 
         <!-- Search and filters -->
-        <div class="bg-white border-b border-gray-200 sticky top-14 sm:top-16 z-40 safe-area-top">
+        <div class="bg-white border-b border-gray-200 sticky top-20 sm:top-24 z-40 safe-area-top">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
                 <div class="flex flex-col md:flex-row gap-4">
                     <!-- Search -->
@@ -87,11 +87,15 @@
         </div>
 
         <!-- Information section -->
-        <div class="bg-jd-section text-white py-16">
+        <div class="bg-jd-section text-white py-16 -mb-px">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">
-                    <span>JD</span><span class="text-jd-accent">Outlet</span>
-                </h2>
+                <div class="mb-6">
+                    <img 
+                        src="/images/logo.svg" 
+                        alt="JDOutlet" 
+                        class="h-20 sm:h-24 md:h-28 w-auto"
+                    />
+                </div>
                 <p class="text-lg text-jd mb-8 leading-relaxed">
                     JDEvents azienda organizzatrice di eventi apre le porte con il suo primo outlet degli allestimenti. 
                     Quante volte avete visto foto di eventi su una rivista o sui social e avete pensato: 'WOW! Che spettacolo!!!', 

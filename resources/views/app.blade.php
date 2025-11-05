@@ -22,7 +22,9 @@
         <meta name="twitter:card" content="summary_large_image">
         
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+        <link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" href="/images/logo.svg">
 
         <!-- Scripts -->
         @routes
