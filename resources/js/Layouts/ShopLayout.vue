@@ -3,7 +3,7 @@
         <!-- Header -->
         <header class="bg-white shadow-sm sticky top-0 z-50 safe-area-top">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-24 sm:h-[120px]">
+                <div class="flex justify-between items-center h-14 sm:h-[70px]">
                     <Link :href="route('shop.index')" class="flex items-center flex-shrink-0">
                         <img 
                             src="/images/logo.svg" 
@@ -36,14 +36,6 @@
                                 class="text-sm font-medium text-red-600 hover:text-red-700 transition-colors px-3 py-2 rounded-md active:scale-95"
                             >
                                 Esci
-                            </Link>
-                        </template>
-                        <template v-else>
-                            <Link 
-                                :href="route('login')" 
-                                class="text-lg font-medium link-jd px-3 py-2 rounded-md active:scale-95"
-                            >
-                                Accedi
                             </Link>
                         </template>
                     </nav>
@@ -109,20 +101,6 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                                 </svg>
                                 Esci
-                            </div>
-                        </Link>
-                    </template>
-                    <template v-else>
-                        <Link 
-                            :href="route('login')" 
-                            @click="mobileMenuOpen = false"
-                            class="block px-4 py-3 text-base font-medium link-jd rounded-lg hover:bg-gray-50 transition-colors touch-manipulation"
-                        >
-                            <div class="flex items-center">
-                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                                </svg>
-                                Accedi
                             </div>
                         </Link>
                     </template>
@@ -238,6 +216,13 @@
                         <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-jd text-xs sm:text-sm">
                             <a href="#" class="hover:text-jd-accent transition-colors">Privacy Policy</a>
                             <a href="#" class="hover:text-jd-accent transition-colors">Termini e Condizioni</a>
+                            <Link 
+                                v-if="!$page.props.auth?.user"
+                                :href="route('login')" 
+                                class="hover:text-jd-accent transition-colors"
+                            >
+                                Accedi
+                            </Link>
                         </div>
                     </div>
                 </div>

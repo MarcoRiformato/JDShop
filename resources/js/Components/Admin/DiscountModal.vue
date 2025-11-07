@@ -514,12 +514,8 @@ const applyDiscount = async () => {
             end_date: neverExpires.value ? null : (endDate.value || null),
         };
 
-        console.log('Sending discount data:', data);
-        console.log('Selected products:', props.selectedProducts);
-
         // Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-        console.log('CSRF token:', csrfToken ? 'Found' : 'Not found');
         
         const response = await fetch('/admin/discounts/apply', {
             method: 'POST',
@@ -530,9 +526,6 @@ const applyDiscount = async () => {
             },
             body: JSON.stringify(data),
         });
-
-        console.log('Response status:', response.status);
-        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
         if (!response.ok) {
             let errorData;
@@ -588,7 +581,6 @@ const applyDiscount = async () => {
         }
 
         const result = await response.json();
-        console.log('Response result:', result);
 
         if (result.success) {
             emit('applied', result);
@@ -610,7 +602,6 @@ const applyDiscount = async () => {
             error.value = errorMessage;
         }
     } catch (err) {
-        console.error('Error applying discount:', err);
         error.value = 'Errore di connessione. Riprova. ' + err.message;
     } finally {
         loading.value = false;

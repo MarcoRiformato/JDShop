@@ -80,8 +80,8 @@ class Product extends Model
             return $coverImage->url;
         }
         
-        // Return placeholder image from Lorem Picsum if no image exists
-        return "https://picsum.photos/seed/{$this->id}/800/800";
+        // Return null if no image exists
+        return null;
     }
 
     /**

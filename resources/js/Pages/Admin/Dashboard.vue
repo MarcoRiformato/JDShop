@@ -224,8 +224,6 @@ const handleSelectionChange = (newSelection) => {
 };
 
 const handleDiscountApplied = (result) => {
-    // Show success message or handle the result
-    console.log('Discount applied:', result);
     exitDiscountMode();
 };
 
@@ -235,7 +233,6 @@ const handleEditDiscount = (product) => {
 };
 
 const handleDiscountRemoved = (result) => {
-    console.log('Discount removed:', result);
     showRemoveDiscountModal.value = false;
     selectedProductForRemoval.value = null;
 };

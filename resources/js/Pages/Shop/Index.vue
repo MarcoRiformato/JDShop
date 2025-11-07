@@ -9,7 +9,7 @@
     </Head>
     <ShopLayout :tags="tags">
         <!-- Search and filters -->
-        <div class="bg-white border-b border-gray-200 sticky top-20 sm:top-24 z-40 safe-area-top">
+        <div class="bg-white border-b border-gray-200 sticky top-14 sm:top-[70px] z-40 safe-area-top">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
                 <div class="flex flex-col md:flex-row gap-4">
                     <!-- Search -->
@@ -55,8 +55,8 @@
         </div>
 
         <!-- Products grid -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-            <div v-if="products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+            <div v-if="products.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
                 <ProductCard 
                     v-for="product in products" 
                     :key="product.id" 
@@ -77,7 +77,7 @@
         </div>
 
         <!-- Information section -->
-        <div class="bg-jd-section text-white py-16 -mb-px">
+        <div class="bg-jd-section text-white py-8 -mb-px">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start mb-8">
                     <div class="flex-shrink-0 bg-white px-6 py-4 rounded-lg">

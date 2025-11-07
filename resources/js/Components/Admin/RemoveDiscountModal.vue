@@ -172,7 +172,6 @@ const confirmRemoval = async () => {
             error.value = result.message || 'Errore sconosciuto durante la rimozione dello sconto';
         }
     } catch (err) {
-        console.error('Error removing discount:', err);
         error.value = err.message || 'Errore di connessione. Riprova.';
     } finally {
         loading.value = false;

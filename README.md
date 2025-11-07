@@ -109,21 +109,23 @@ npm run dev
 
 The application will be available at `http://localhost:8000`
 
-## Default Admin Credentials
+## Creating Admin Users
 
-After seeding, you can log in with these accounts:
+To create an admin user, set the following environment variables in your `.env` file before running the database seeder:
 
-- **Super Admin**
-  - Email: `admin@jdshop.com`
-  - Password: `password`
+```env
+ADMIN_EMAIL=your-admin@example.com
+ADMIN_PASSWORD=your_secure_password
+ADMIN_NAME=Admin Name
+```
 
-- **Manager**
-  - Email: `manager@jdshop.com`
-  - Password: `password`
+Then run:
 
-- **Editor**
-  - Email: `editor@jdshop.com`
-  - Password: `password`
+```bash
+php artisan db:seed
+```
+
+The UserSeeder will create an admin account with the credentials you specified.
 
 ## User Roles
 

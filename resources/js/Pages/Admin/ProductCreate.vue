@@ -511,7 +511,7 @@ const uploadImages = async (productId) => {
                 });
             }
         } catch (error) {
-            console.error(`Error uploading ${img.name}:`, error);
+            // Image upload failed - continue with other images
         }
     }
 
@@ -522,7 +522,7 @@ const uploadImages = async (productId) => {
             try {
                 await axios.patch(route('images.set-cover', coverImage.imageId));
             } catch (error) {
-                console.error('Error setting cover image:', error);
+                // Failed to set cover image - continue anyway
             }
         }
     }

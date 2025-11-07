@@ -331,36 +331,7 @@ watch(() => form.primary_customer_id, (newId) => {
 });
 
 const submit = () => {
-    console.log('========== STARTING MERGE ==========');
-    console.log('Primary customer ID:', form.primary_customer_id);
-    console.log('Secondary customer IDs:', form.secondary_customer_ids);
-    console.log('Final data:', JSON.stringify(form.final_data, null, 2));
-    
-    form.post(route('customers.merge'), {
-        onSuccess: (page) => {
-            console.log('========== MERGE SUCCESS ==========');
-            console.log('Page component:', page.component);
-            console.log('Page URL:', page.url);
-            console.log('Flash messages:', page.props?.flash);
-            console.log('Customers in response:', page.props?.customers?.length);
-            
-            if (page.props?.flash?.error) {
-                console.error('ERROR IN SUCCESS:', page.props.flash.error);
-            }
-            
-            if (page.props?.flash?.success) {
-                console.log('SUCCESS MESSAGE:', page.props.flash.success);
-            }
-        },
-        onError: (errors) => {
-            console.error('========== MERGE ERRORS ==========');
-            console.error('Errors object:', errors);
-            console.error('Errors keys:', Object.keys(errors));
-        },
-        onFinish: () => {
-            console.log('========== REQUEST FINISHED ==========');
-        }
-    });
+    form.post(route('customers.merge'));
 };
 </script>
 

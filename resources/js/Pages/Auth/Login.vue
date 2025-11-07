@@ -86,15 +86,6 @@
                         ← Torna al catalogo
                     </Link>
                 </div>
-
-                <!-- Demo credentials -->
-                <div class="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p class="text-xs font-semibold text-gray-900 mb-2">Credenziali Demo:</p>
-                    <p class="text-xs text-gray-700">
-                        <strong>Email:</strong> admin@jdshop.com<br>
-                        <strong>Password:</strong> admin
-                    </p>
-                </div>
             </div>
         </div>
     </div>

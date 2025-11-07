@@ -3,14 +3,14 @@
         <meta name="description" :content="product.description || `${product.title} - Disponibile su JDOutlet al prezzo di €${product.price}`">
         <meta property="og:title" :content="`${product.title} - JDOutlet`">
         <meta property="og:description" :content="product.description || `${product.title} disponibile al prezzo di €${product.price}`">
-        <meta property="og:image" :content="product.images.length > 0 ? product.images.find(img => img.is_cover)?.url || product.images[0].url : `https://picsum.photos/seed/${product.id}/1200/630`">
+        <meta v-if="product.images.length > 0" property="og:image" :content="product.images.find(img => img.is_cover)?.url || product.images[0].url">
         <meta property="og:url" :content="route('shop.show', product.id)">
         <meta property="og:type" content="product">
         <meta property="product:price:amount" :content="product.price">
         <meta property="product:price:currency" content="EUR">
         <meta name="twitter:title" :content="`${product.title} - JDOutlet`">
         <meta name="twitter:description" :content="product.description || `${product.title} disponibile al prezzo di €${product.price}`">
-        <meta name="twitter:image" :content="product.images.length > 0 ? product.images.find(img => img.is_cover)?.url || product.images[0].url : `https://picsum.photos/seed/${product.id}/1200/630`">
+        <meta v-if="product.images.length > 0" name="twitter:image" :content="product.images.find(img => img.is_cover)?.url || product.images[0].url">
     </Head>
     <ShopLayout :tags="[]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white rounded-lg my-6">
@@ -42,12 +42,13 @@
                             @image-deleted="handleImageDeleted"
                             @cover-updated="handleCoverUpdated"
                         />
-                        <div v-else class="aspect-square bg-gray-200 rounded-xl overflow-hidden">
-                            <img 
-                                :src="`https://picsum.photos/seed/${product.id}/800/800`" 
-                                :alt="product.title"
-                                class="w-full h-full object-cover"
-                            >
+                        <div v-else class="aspect-square bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <svg class="mx-auto h-24 w-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <p class="mt-4 text-gray-500 text-sm">Nessuna immagine disponibile</p>
+                            </div>
                         </div>
                     </div>
                 </div>
