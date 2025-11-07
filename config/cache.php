@@ -103,6 +103,6 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', Str::slug((string) env('JDShop')).'-cache-'),
+    'prefix' => env('CACHE_PREFIX', Str::slug((string) env('JDOutlet')).'-cache-'),
 
 ];

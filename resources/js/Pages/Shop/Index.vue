@@ -8,16 +8,6 @@
         <meta name="twitter:description" content="Scopri la nostra collezione di materiali per eventi: audio professionale, arredi vintage, scenografie e molto altro.">
     </Head>
     <ShopLayout :tags="tags">
-        <!-- Hero section -->
-        <div class="bg-jd-section text-white -mt-px">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 leading-tight">Benvenuti su JDOutlet</h1>
-                <p class="text-base sm:text-lg md:text-xl text-jd max-w-2xl leading-relaxed">
-                    Scopri la nostra collezione di materiali per eventi: audio, arredi, scenografie e molto altro
-                </p>
-            </div>
-        </div>
-
         <!-- Search and filters -->
         <div class="bg-white border-b border-gray-200 sticky top-20 sm:top-24 z-40 safe-area-top">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
