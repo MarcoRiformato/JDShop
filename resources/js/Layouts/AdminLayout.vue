@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-50">
+    <div class="min-h-screen bg-gray-50 flex flex-col">
         <!-- Mobile menu button -->
         <div class="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-md safe-area-top">
             <div class="flex items-center justify-between px-3 sm:px-4 py-3 h-14">
@@ -133,14 +133,14 @@
         ></div>
 
         <!-- Main content -->
-        <main class="lg:pl-64 pt-14 lg:pt-0">
+        <main class="lg:pl-64 pt-14 lg:pt-0 flex-grow">
             <div class="mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
                 <slot />
             </div>
         </main>
 
         <!-- Footer -->
-        <footer class="lg:pl-64 bg-jd-section text-white mt-8 safe-area-bottom">
+        <footer class="lg:pl-64 bg-jd-section text-white mt-8 safe-area-bottom flex-shrink-0">
             <div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
                     <p class="text-jd text-xs sm:text-sm">
