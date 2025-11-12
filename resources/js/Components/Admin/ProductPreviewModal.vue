@@ -27,7 +27,7 @@
                         <div 
                             v-if="show"
                             @click.stop
-                            class="relative w-full max-w-5xl bg-jd-base-light rounded-2xl shadow-2xl overflow-hidden"
+                            class="relative w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden"
                         >
                             <!-- Header -->
                             <div class="sticky top-0 z-10 bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 flex items-center justify-between">
@@ -93,9 +93,9 @@
                                     <!-- Product Details -->
                                     <div class="flex flex-col min-w-0">
                                         <div class="min-w-0">
-                                            <h1 class="text-3xl md:text-4xl font-bold text-jd-white mb-4 break-words">
-                                                {{ product.title }}
-                                            </h1>
+                            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 break-words">
+                                {{ product.title }}
+                            </h1>
 
                                             <!-- Price and status -->
                                             <div class="mb-6">
@@ -111,10 +111,10 @@
 
                                                 <div class="flex flex-wrap items-center gap-4">
                                                     <div class="flex items-center gap-3">
-                                                        <span v-if="product.has_active_discount" class="text-2xl text-jd-muted line-through">
+                                                        <span v-if="product.has_active_discount" class="text-2xl text-gray-500 line-through">
                                                             €{{ product.original_price }}
                                                         </span>
-                                                        <span class="text-4xl font-bold text-jd-white">
+                                                        <span class="text-4xl font-bold text-gray-900">
                                                             €{{ product.price }}
                                                         </span>
                                                     </div>
@@ -133,7 +133,7 @@
                                                 </div>
 
                                                 <!-- Discount expiry info -->
-                                                <div v-if="product.has_active_discount && product.discount_end_date" class="mt-2 text-sm text-jd-text">
+                                                <div v-if="product.has_active_discount && product.discount_end_date" class="mt-2 text-sm text-gray-600">
                                                     <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                     </svg>
@@ -143,15 +143,15 @@
 
                                             <!-- Description -->
                                             <div v-if="product.description" class="mb-6">
-                                                <h2 class="text-lg font-semibold text-jd-white mb-2">Descrizione</h2>
-                                                <p class="text-jd-text leading-relaxed whitespace-pre-line break-words overflow-wrap-anywhere">
+                                                <h2 class="text-lg font-semibold text-gray-900 mb-2">Descrizione</h2>
+                                                <p class="text-gray-700 leading-relaxed whitespace-pre-line break-words overflow-wrap-anywhere">
                                                     {{ product.description }}
                                                 </p>
                                             </div>
 
                                             <!-- Tags -->
                                             <div v-if="product.tags" class="mb-8">
-                                                <h2 class="text-lg font-semibold text-jd-white mb-3">Categorie</h2>
+                                                <h2 class="text-lg font-semibold text-gray-900 mb-3">Categorie</h2>
                                                 <div class="flex flex-wrap gap-2">
                                                     <span
                                                         v-for="tag in getTags(product.tags)"

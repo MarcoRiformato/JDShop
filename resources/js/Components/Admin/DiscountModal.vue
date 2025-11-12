@@ -522,28 +522,43 @@ const applyDiscount = async () => {
             end_date: neverExpires.value ? null : (endDate.value || null),
         };
 
-        // Get CSRF token
-        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+        // Use axios instead of fetch - it handles CSRF automatically
+        const axios = (await import('axios')).default;
         
-        const response = await fetch('/admin/discounts/apply', {
-            method: 'POST',
+        const response = await axios.post('/admin/discounts/apply', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'X-CSRF-TOKEN': csrfToken,
             },
-            body: JSON.stringify(data),
         });
 
-        if (!response.ok) {
-            let errorData;
-            try {
-                errorData = await response.json();
-            } catch {
-                const errorText = await response.text();
-                throw new Error(`Errore HTTP ${response.status}: ${errorText}`);
-            }
+        const result = response.data;
 
+        if (result.success) {
+            emit('applied', result);
+            emit('close');
+            // Reload the page to show updated prices
+            window.location.reload();
+        } else {
+            let errorMessage = result.message || 'Errore durante l\'applicazione dello sconto.';
+            
+            // Add detailed error information if available
+            if (result.error_details) {
+                errorMessage += `\n\nDettagli errore:\nFile: ${result.error_details.file}\nLinea: ${result.error_details.line}\nTipo: ${result.error_details.type}`;
+            }
+            
+            if (result.errors && Array.isArray(result.errors)) {
+                errorMessage += `\n\nErrori specifici:\n${result.errors.join('\n')}`;
+            }
+            
+            error.value = errorMessage;
+        }
+    } catch (err) {
+        // Handle axios errors
+        if (err.response) {
+            // Server responded with error status
+            const errorData = err.response.data;
+            
             // Handle validation errors from Laravel
             if (errorData.errors) {
                 let errorMessages = [];
@@ -581,36 +596,16 @@ const applyDiscount = async () => {
                 error.value = errorMessages.length > 0 
                     ? 'Errori di validazione:\n' + errorMessages.join('\n') 
                     : errorData.message || 'Errore durante l\'applicazione dello sconto.';
-                
-                return;
+            } else {
+                error.value = errorData.message || `Errore: ${err.response.status} - ${err.response.statusText}`;
             }
-            
-            throw new Error(errorData.message || `Errore HTTP ${response.status}`);
-        }
-
-        const result = await response.json();
-
-        if (result.success) {
-            emit('applied', result);
-            emit('close');
-            // Reload the page to show updated prices
-            window.location.reload();
+        } else if (err.request) {
+            // Request was made but no response received
+            error.value = 'Errore di connessione. Impossibile raggiungere il server. Verifica la tua connessione internet.';
         } else {
-            let errorMessage = result.message || 'Errore durante l\'applicazione dello sconto.';
-            
-            // Add detailed error information if available
-            if (result.error_details) {
-                errorMessage += `\n\nDettagli errore:\nFile: ${result.error_details.file}\nLinea: ${result.error_details.line}\nTipo: ${result.error_details.type}`;
-            }
-            
-            if (result.errors && Array.isArray(result.errors)) {
-                errorMessage += `\n\nErrori specifici:\n${result.errors.join('\n')}`;
-            }
-            
-            error.value = errorMessage;
+            // Something else happened
+            error.value = 'Errore: ' + err.message;
         }
-    } catch (err) {
-        error.value = 'Errore di connessione. Riprova. ' + err.message;
     } finally {
         loading.value = false;
     }
