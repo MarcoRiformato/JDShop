@@ -142,13 +142,23 @@ class DiscountController extends Controller
                             'discounted_price' => $discountedPrice
                         ]);
 
+                        // Check if discount should be active now or in the future
+                        $isDiscountActive = $startDate->lte(now());
+
                         // Update product with discount information
                         $updateData = [
                             'discount_percentage' => $discountPercentage,
                             'discount_start_date' => $startDate,
                             'discount_end_date' => $endDate,
-                            'price' => $discountedPrice,
                         ];
+
+                        // Only apply discounted price if discount is active now
+                        if ($isDiscountActive) {
+                            $updateData['price'] = $discountedPrice;
+                            Log::info('Discount is active now, applying discounted price');
+                        } else {
+                            Log::info('Discount is scheduled for future, keeping original price');
+                        }
 
                         Log::info('Updating product with data', $updateData);
                         
