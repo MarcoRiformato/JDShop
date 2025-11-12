@@ -26,8 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-// Admin routes (protected by auth and admin middleware)
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+// Admin routes (protected by auth, admin, and editor restrictions middleware)
+Route::middleware(['auth', 'admin', 'editor.restrictions'])->prefix('admin')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('admin.dashboard');
     Route::resource('products', ProductController::class);
     Route::post('products/{product}/images', [ProductController::class, 'uploadImage'])->name('products.images.upload');

@@ -69,14 +69,14 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role && in_array($this->role->slug, ['super_admin', 'admin', 'editor']);
+        return $this->role && in_array($this->role->slug, ['admin', 'editor']);
     }
 
     /**
-     * Check if user is a super admin.
+     * Check if user is a full admin (not just editor).
      */
-    public function isSuperAdmin(): bool
+    public function isFullAdmin(): bool
     {
-        return $this->hasRole('super_admin');
+        return $this->hasRole('admin');
     }
 }

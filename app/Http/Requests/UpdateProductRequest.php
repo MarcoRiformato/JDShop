@@ -43,5 +43,23 @@ class UpdateProductRequest extends FormRequest
             'price.min' => 'Il prezzo non può essere negativo.',
         ];
     }
+
+    /**
+     * Configure the validator instance.
+     */
+    public function withValidator($validator): void
+    {
+        $validator->after(function ($validator) {
+            // Prevent editors from changing sold_out status
+            if ($this->user() && $this->user()->hasRole('editor')) {
+                if ($this->has('sold_out')) {
+                    $validator->errors()->add(
+                        'sold_out',
+                        'Gli editor non possono modificare lo stato di venduto.'
+                    );
+                }
+            }
+        });
+    }
 }
 

@@ -5,7 +5,7 @@ A modern, mobile-first e-commerce platform built with Laravel, Vue 3, Inertia.js
 ## Features
 
 ### Admin Panel
-- 🔐 **Role-based Access Control** - Multiple admin roles (Super Admin, Admin, Editor, Viewer)
+- 🔐 **Role-based Access Control** - Admin (full access) and Editor (product management only)
 - 📦 **Product Management** - Full CRUD operations for products
 - 📸 **Mobile-Friendly Image Uploads** - Camera/gallery integration with automatic resizing
 - 🖼️ **Image Gallery Management** - Set cover images, delete, and organize product photos
@@ -129,10 +129,8 @@ The UserSeeder will create an admin account with the credentials you specified.
 
 ## User Roles
 
-- **Super Admin**: Full system access with all permissions
-- **Admin**: Administrative access to manage products and content
-- **Editor**: Can create and edit products
-- **Viewer**: Read-only access to admin panel (does not have admin access)
+- **Admin**: Full administrative access - manage products, customers, discounts, and all content
+- **Editor**: Product management only - can create and edit products (cannot manage customers, discounts, or mark products as sold)
 
 ## Project Structure
 

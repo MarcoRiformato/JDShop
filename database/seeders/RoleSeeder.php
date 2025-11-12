@@ -14,24 +14,14 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             [
-                'name' => 'Super Admin',
-                'slug' => 'super_admin',
-                'description' => 'Full system access with all permissions',
-            ],
-            [
                 'name' => 'Admin',
                 'slug' => 'admin',
-                'description' => 'Administrative access to manage products and content',
+                'description' => 'Full administrative access - manage products, customers, discounts, and all content',
             ],
             [
                 'name' => 'Editor',
                 'slug' => 'editor',
-                'description' => 'Can create and edit products',
-            ],
-            [
-                'name' => 'Viewer',
-                'slug' => 'viewer',
-                'description' => 'Read-only access to admin panel',
+                'description' => 'Can create and edit products only (no customer management, discounts, or sold_out status)',
             ],
         ];
 

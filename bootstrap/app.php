@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         
         $middleware->alias([
             'admin' => \App\Http\Middleware\CheckAdminRole::class,
+            'editor.restrictions' => \App\Http\Middleware\CheckEditorRestrictions::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

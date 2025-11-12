@@ -16,20 +16,8 @@ class AdminAccessTest extends TestCase
         parent::setUp();
 
         // Create roles
-        Role::create(['name' => 'Super Admin', 'slug' => 'super_admin', 'description' => 'Super admin role']);
         Role::create(['name' => 'Admin', 'slug' => 'admin', 'description' => 'Admin role']);
         Role::create(['name' => 'Editor', 'slug' => 'editor', 'description' => 'Editor role']);
-        Role::create(['name' => 'Viewer', 'slug' => 'viewer', 'description' => 'Viewer role']);
-    }
-
-    public function test_super_admin_has_admin_access(): void
-    {
-        $superAdminRole = Role::where('slug', 'super_admin')->first();
-        $user = User::factory()->create(['role_id' => $superAdminRole->id]);
-
-        $this->assertTrue($user->isSuperAdmin());
-        $this->assertTrue($user->isAdmin());
-        $this->assertTrue($user->hasRole('super_admin'));
     }
 
     public function test_admin_has_admin_access(): void
@@ -37,7 +25,7 @@ class AdminAccessTest extends TestCase
         $adminRole = Role::where('slug', 'admin')->first();
         $user = User::factory()->create(['role_id' => $adminRole->id]);
 
-        $this->assertFalse($user->isSuperAdmin());
+        $this->assertTrue($user->isFullAdmin());
         $this->assertTrue($user->isAdmin());
         $this->assertTrue($user->hasRole('admin'));
     }
@@ -47,26 +35,16 @@ class AdminAccessTest extends TestCase
         $editorRole = Role::where('slug', 'editor')->first();
         $user = User::factory()->create(['role_id' => $editorRole->id]);
 
-        $this->assertFalse($user->isSuperAdmin());
+        $this->assertFalse($user->isFullAdmin());
         $this->assertTrue($user->isAdmin());
         $this->assertTrue($user->hasRole('editor'));
-    }
-
-    public function test_viewer_does_not_have_admin_access(): void
-    {
-        $viewerRole = Role::where('slug', 'viewer')->first();
-        $user = User::factory()->create(['role_id' => $viewerRole->id]);
-
-        $this->assertFalse($user->isSuperAdmin());
-        $this->assertFalse($user->isAdmin());
-        $this->assertTrue($user->hasRole('viewer'));
     }
 
     public function test_user_without_role_does_not_have_admin_access(): void
     {
         $user = User::factory()->create(['role_id' => null]);
 
-        $this->assertFalse($user->isSuperAdmin());
+        $this->assertFalse($user->isFullAdmin());
         $this->assertFalse($user->isAdmin());
     }
 
@@ -83,10 +61,9 @@ class AdminAccessTest extends TestCase
 
     public function test_non_admin_cannot_access_admin_routes(): void
     {
-        $viewerRole = Role::where('slug', 'viewer')->first();
-        $viewer = User::factory()->create(['role_id' => $viewerRole->id]);
+        $user = User::factory()->create(['role_id' => null]);
 
-        $response = $this->actingAs($viewer)
+        $response = $this->actingAs($user)
             ->get(route('admin.dashboard'));
 
         $response->assertStatus(403);

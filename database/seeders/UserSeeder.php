@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $superAdminRole = Role::where('slug', 'super_admin')->first();
+        $adminRole = Role::where('slug', 'admin')->first();
         
         // Only create admin user if ADMIN_EMAIL and ADMIN_PASSWORD are set
         $adminEmail = env('ADMIN_EMAIL');
@@ -29,13 +29,13 @@ class UserSeeder extends Seeder
             return;
         }
 
-        // Create super admin user
+        // Create admin user
         $user = User::firstOrCreate(
             ['email' => $adminEmail],
             [
                 'name' => env('ADMIN_NAME', 'Admin'),
                 'password' => $adminPassword,
-                'role_id' => $superAdminRole?->id,
+                'role_id' => $adminRole?->id,
             ]
         );
         
