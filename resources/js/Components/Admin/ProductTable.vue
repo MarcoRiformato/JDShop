@@ -223,7 +223,7 @@
                         <span class="hidden sm:inline">Modifica</span>
                     </Link>
                     <button
-                        v-if="hasAnyDiscount(product)"
+                        v-if="hasAnyDiscount(product) && $page.props.auth.user.is_full_admin"
                         @click="$emit('remove-discount', product)"
                         class="flex-1 sm:flex-initial inline-flex items-center justify-center px-3 py-2 sm:px-4 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium"
                         title="Rimuovi sconto"
@@ -338,7 +338,7 @@
                             Modifica
                         </Link>
                         <button
-                            v-if="product.has_active_discount"
+                            v-if="product.has_active_discount && $page.props.auth.user.is_full_admin"
                             @click="$emit('remove-discount', product)"
                             class="flex-1 min-w-[120px] flex items-center justify-center px-4 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-medium"
                             title="Rimuovi sconto"
@@ -466,7 +466,7 @@
                             </svg>
                         </Link>
                         <button
-                            v-if="product.has_active_discount"
+                            v-if="product.has_active_discount && $page.props.auth.user.is_full_admin"
                             @click="$emit('remove-discount', product)"
                             class="flex-1 flex items-center justify-center px-2 py-1.5 bg-red-500 text-white rounded text-xs font-medium hover:bg-red-600 transition-colors"
                             title="Rimuovi sconto"

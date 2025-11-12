@@ -67,7 +67,9 @@
                         </svg>
                         Nuovo Prodotto
                     </Link>
+                    <!-- Only show discount management for full admins, not editors -->
                     <button
+                        v-if="$page.props.auth.user.is_full_admin"
                         @click="discountModeActive && selectedProducts.length > 0 ? showDiscountModal = true : enterDiscountMode()"
                         :disabled="discountModeActive && selectedProducts.length === 0"
                         :class="[

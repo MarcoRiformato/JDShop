@@ -129,8 +129,8 @@
                             <p v-if="form.errors.price" class="text-sm text-red-600 mt-1">{{ form.errors.price }}</p>
                         </div>
 
-                        <!-- Sold Out -->
-                        <div class="flex items-center">
+                        <!-- Sold Out - Only for full admins, not editors -->
+                        <div v-if="$page.props.auth.user.is_full_admin" class="flex items-center">
                             <input 
                                 id="sold_out"
                                 v-model="form.sold_out" 

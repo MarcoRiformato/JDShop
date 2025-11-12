@@ -68,7 +68,9 @@
                         <span class="text-sm lg:text-base">Nuovo Prodotto</span>
                     </Link>
 
+                    <!-- Only show Customers for full admins, not editors -->
                     <Link 
+                        v-if="$page.props.auth.user.is_full_admin"
                         :href="route('customers.index')" 
                         @click="mobileMenuOpen = false"
                         class="flex items-center px-3 lg:px-4 py-3 mb-2 rounded-lg hover:bg-gray-50 transition-colors touch-manipulation"
