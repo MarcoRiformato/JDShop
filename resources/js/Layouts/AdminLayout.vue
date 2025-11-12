@@ -56,18 +56,6 @@
                         <span class="text-sm lg:text-base">Dashboard</span>
                     </Link>
 
-                    <Link 
-                        :href="route('products.create')" 
-                        @click="mobileMenuOpen = false"
-                        class="flex items-center px-3 lg:px-4 py-3 mb-2 rounded-lg hover:bg-gray-50 transition-colors touch-manipulation"
-                        :class="route().current('products.create') ? 'bg-gray-100 link-jd font-medium' : 'text-gray-700'"
-                    >
-                        <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        <span class="text-sm lg:text-base">Nuovo Prodotto</span>
-                    </Link>
-
                     <!-- Only show Customers for full admins, not editors -->
                     <Link 
                         v-if="$page.props.auth.user.is_full_admin"
