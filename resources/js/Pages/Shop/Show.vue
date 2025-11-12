@@ -39,8 +39,6 @@
                             v-if="product.images.length > 0" 
                             :images="product.images"
                             :product-id="product.id"
-                            @image-deleted="handleImageDeleted"
-                            @cover-updated="handleCoverUpdated"
                         />
                         <div v-else class="aspect-square bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
                             <div class="text-center p-8">
@@ -206,7 +204,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { Link, Head, router } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import ShopLayout from '@/Layouts/ShopLayout.vue';
 import ProductGallery from '@/Components/Shop/ProductGallery.vue';
 import ContactModal from '@/Components/Shop/ContactModal.vue';
@@ -226,13 +224,5 @@ const showContactModal = ref(false);
 
 const openContactModal = () => {
     showContactModal.value = true;
-};
-
-const handleImageDeleted = (imageId) => {
-    router.reload({ only: ['product'] });
-};
-
-const handleCoverUpdated = (imageId) => {
-    router.reload({ only: ['product'] });
 };
 </script>
