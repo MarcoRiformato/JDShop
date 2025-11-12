@@ -6,24 +6,24 @@
             
             <!-- Modal container -->
             <div class="flex min-h-full items-center justify-center p-1 sm:p-4 pointer-events-none">
-                <div class="relative bg-jd-base-light rounded-lg sm:rounded-2xl shadow-2xl w-full max-w-[calc(100vw-0.5rem)] sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden pointer-events-auto" @click.stop>
+                <div class="relative bg-white rounded-lg sm:rounded-2xl shadow-2xl w-full max-w-[calc(100vw-0.5rem)] sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden pointer-events-auto" @click.stop>
                     <!-- Header with icon -->
-                    <div class="bg-gradient-jd-accent px-3 sm:px-8 py-3 sm:py-6">
+                    <div class="bg-jd-accent px-3 sm:px-8 py-3 sm:py-6">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <div class="bg-white bg-opacity-20 rounded-full p-1 sm:p-2 mr-2 sm:mr-4">
-                                    <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                <div class="bg-white rounded-full p-2 sm:p-3 mr-2 sm:mr-4 flex items-center justify-center">
+                                    <svg class="w-5 h-5 sm:w-7 sm:h-7 text-jd-accent" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
                                     </svg>
                                 </div>
                                 <div>
-                                    <h2 class="text-lg sm:text-2xl font-bold text-jd-white">Gestisci Sconti</h2>
-                                    <p class="text-jd-text text-xs sm:text-sm mt-0.5">Applica sconti ai prodotti selezionati</p>
+                                    <h2 class="text-lg sm:text-2xl font-bold text-white">Gestisci Sconti</h2>
+                                    <p class="text-white text-opacity-90 text-xs sm:text-sm mt-0.5">Applica sconti ai prodotti selezionati</p>
                                 </div>
                             </div>
                             <button 
                                 @click="$emit('close')"
-                                class="text-white hover:text-orange-200 transition-colors p-1.5 sm:p-2 hover:bg-white hover:bg-opacity-20 rounded-full"
+                                class="text-white hover:text-white hover:bg-white hover:bg-opacity-20 transition-colors p-1.5 sm:p-2 rounded-full"
                             >
                                 <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -36,25 +36,18 @@
                     <div class="overflow-y-auto max-h-[calc(95vh-200px)] sm:max-h-[calc(90vh-180px)]">
                         <div class="p-2 sm:p-8 space-y-2 sm:space-y-6">
                             <!-- Selected Products Info -->
-                            <div class="bg-jd-title border border-jd-accent rounded-xl p-3 sm:p-6">
-                                <div class="flex items-center">
-                                    <div class="bg-jd-accent bg-opacity-20 rounded-full p-2 sm:p-3 mr-2 sm:mr-4 flex-shrink-0">
-                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-jd-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="min-w-0">
-                                        <h3 class="text-sm sm:text-lg font-semibold text-jd-white">
-                                            {{ selectedProducts.length }} {{ selectedProducts.length === 1 ? 'prodotto selezionato' : 'prodotti selezionati' }}
-                                        </h3>
-                                        <p class="text-jd-text text-xs sm:text-sm mt-0.5">I prezzi verranno aggiornati automaticamente</p>
-                                    </div>
+                            <div class="bg-orange-50 border-l-4 border-jd-accent rounded-lg p-3 sm:p-6 shadow-sm">
+                                <div>
+                                    <h3 class="text-sm sm:text-lg font-semibold text-gray-900">
+                                        {{ selectedProducts.length }} {{ selectedProducts.length === 1 ? 'prodotto selezionato' : 'prodotti selezionati' }}
+                                    </h3>
+                                    <p class="text-gray-600 text-xs sm:text-sm mt-0.5">I prezzi verranno aggiornati automaticamente</p>
                                 </div>
                             </div>
 
                             <!-- Discount Percentage -->
                             <div>
-                                <label class="block text-sm sm:text-lg font-semibold text-jd-white mb-2 sm:mb-4">Percentuale di Sconto</label>
+                                <label class="block text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4">Percentuale di Sconto</label>
                                 
                                 <!-- Predefined buttons and custom input on same row -->
                                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
@@ -64,9 +57,9 @@
                                         @click="selectPercentage(percentage)"
                                         :class="[
                                             'px-2 sm:px-4 py-2 sm:py-3 rounded-lg border-2 font-semibold transition-all transform hover:scale-105 text-center',
-                                            selectedPercentage === percentage
-                                                ? 'border-jd-accent bg-jd-accent bg-opacity-20 text-jd-accent shadow-lg'
-                                                : 'border-jd hover:border-jd-accent text-jd-text hover:bg-jd-base-lighter'
+                                            selectedPercentage === percentage && !customPercentage
+                                                ? 'border-jd-accent bg-orange-50 text-jd-accent shadow-md'
+                                                : 'border-gray-300 hover:border-jd-accent text-gray-700 hover:bg-gray-50 bg-white'
                                         ]"
                                     >
                                         <div class="text-sm sm:text-xl font-bold">-{{ percentage }}%</div>
@@ -77,14 +70,16 @@
                                         <input
                                             v-model.number="customPercentage"
                                             @input="selectCustomPercentage"
+                                            @focus="selectCustomPercentage"
                                             type="number"
                                             min="0"
                                             max="100"
                                             step="0.01"
                                             placeholder="Altro"
                                             :class="[
-                                                'w-full h-full px-3 sm:px-4 py-2.5 sm:py-3 text-center border-2 rounded-lg focus:ring-2 focus:ring-jd-accent focus:border-jd-accent transition-all font-semibold text-sm sm:text-base error-field bg-white',
-                                                errors.percentage ? 'border-red-500 bg-red-50' : 'border-jd'
+                                                'w-full h-full px-3 sm:px-4 py-2.5 sm:py-3 text-center border-2 rounded-lg focus:ring-2 focus:ring-jd-accent focus:border-jd-accent transition-all font-semibold text-sm sm:text-base error-field input-jd',
+                                                errors.percentage ? 'border-red-500 bg-red-50' : '',
+                                                customPercentage && !errors.percentage ? 'border-jd-accent bg-orange-50 text-jd-accent' : ''
                                             ]"
                                         >
                                     </div>
@@ -101,19 +96,19 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
                                 <!-- Start Date -->
                                 <div>
-                                    <label class="block text-sm sm:text-lg font-semibold text-jd-white mb-2">Data Inizio</label>
+                                    <label class="block text-sm sm:text-lg font-semibold text-gray-900 mb-2">Data Inizio</label>
                                     <input
                                         v-model="startDate"
                                         type="date"
                                         :min="minDate"
                                         :class="[
-                                            'w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all error-field',
-                                            errors.startDate ? 'border-red-500 bg-red-50' : 'border-jd'
+                                            'input-jd w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg rounded-lg sm:rounded-xl error-field',
+                                            errors.startDate ? 'border-red-500 bg-red-50' : ''
                                         ]"
                                         @input="validateStartDate"
                                         @click="$event.target.showPicker()"
                                     >
-                                    <p v-if="!errors.startDate" class="mt-1 text-xs sm:text-sm text-jd-muted">Se non specificata, lo sconto inizia subito</p>
+                                    <p v-if="!errors.startDate" class="mt-1 text-xs sm:text-sm text-gray-500">Se non specificata, lo sconto inizia subito</p>
                                     <p v-if="errors.startDate" class="mt-1 text-xs sm:text-sm text-red-600 font-medium flex items-center">
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -124,7 +119,7 @@
 
                                 <!-- End Date -->
                                 <div>
-                                    <label class="block text-sm sm:text-lg font-semibold text-jd-white mb-2">Data Fine</label>
+                                    <label class="block text-sm sm:text-lg font-semibold text-gray-900 mb-2">Data Fine</label>
                                     <div class="space-y-2">
                                         <input
                                             v-model="endDate"
@@ -132,21 +127,21 @@
                                             type="date"
                                             :min="startDate || minDate"
                                             :class="[
-                                                'w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-500 transition-all error-field',
-                                                neverExpires ? 'border-jd bg-jd-title text-jd-muted cursor-not-allowed' : 
-                                                errors.endDate ? 'border-red-500 bg-red-50' : 'border-jd cursor-pointer'
+                                                'input-jd w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg rounded-lg sm:rounded-xl error-field',
+                                                neverExpires ? 'opacity-50 cursor-not-allowed' : '',
+                                                errors.endDate ? 'border-red-500 bg-red-50' : ''
                                             ]"
                                             @input="validateEndDate"
                                             @click="!neverExpires && $event.target.showPicker()"
                                         >
-                                        <label class="flex items-center">
+                                        <label class="flex items-center cursor-pointer">
                                             <input
                                                 v-model="neverExpires"
                                                 type="checkbox"
-                                                class="w-4 h-4 sm:w-5 sm:h-5 rounded border-jd text-jd-accent focus:ring-jd-accent"
+                                                class="w-4 h-4 sm:w-5 sm:h-5 rounded border-gray-300 text-jd-accent focus:ring-jd-accent"
                                                 @change="validateEndDate"
                                             >
-                                            <span class="ml-2 sm:ml-3 text-xs sm:text-sm text-jd-text font-medium">Non scade mai</span>
+                                            <span class="ml-2 sm:ml-3 text-xs sm:text-sm text-gray-700 font-medium">Non scade mai</span>
                                         </label>
                                         <p v-if="errors.endDate" class="text-xs sm:text-sm text-red-600 font-medium flex items-center">
                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -159,32 +154,32 @@
                             </div>
 
                             <!-- Price Preview - Always visible when products selected -->
-                            <div v-if="selectedProducts.length > 0" class="bg-jd-title rounded-lg sm:rounded-xl p-3 sm:p-6 border border-jd">
-                                <h3 class="text-sm sm:text-lg font-semibold text-jd-white mb-2 sm:mb-4 flex items-center">
-                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-jd-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div v-if="selectedProducts.length > 0" class="bg-gray-50 rounded-lg sm:rounded-xl p-3 sm:p-6 border border-gray-200 shadow-sm">
+                                <h3 class="text-sm sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-4 flex items-center">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                                     </svg>
                                     Anteprima Prezzi
                                 </h3>
-                                <p class="text-xs sm:text-sm text-jd-text mb-2 sm:mb-4">
+                                <p class="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-4">
                                     <strong>Nota:</strong> I prezzi vengono arrotondati per difetto (es. €112.50 → €112). 
-                                    <span v-if="!selectedPercentage" class="text-orange-600 font-medium">Seleziona una percentuale per vedere i prezzi aggiornati.</span>
+                                    <span v-if="!selectedPercentage" class="text-jd-accent font-medium">Seleziona una percentuale per vedere i prezzi aggiornati.</span>
                                 </p>
                                 <div class="space-y-3 max-h-48 overflow-y-auto">
                                     <div 
                                         v-for="product in selectedProducts.slice(0, 10)" 
                                         :key="product.id"
-                                        class="flex justify-between items-center p-3 bg-jd-base-lighter rounded-lg border border-jd"
+                                        class="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-200 shadow-sm"
                                     >
-                                        <span class="text-jd-text font-medium truncate">{{ product.title }}</span>
+                                        <span class="text-gray-800 font-medium truncate">{{ product.title }}</span>
                                         <div class="flex items-center space-x-3">
-                                            <span class="text-jd-muted line-through">€{{ product.price }}</span>
-                                            <span class="font-bold text-orange-600 text-lg">
+                                            <span class="text-gray-500 line-through">€{{ product.price }}</span>
+                                            <span class="font-bold text-jd-accent text-lg">
                                                 €{{ selectedPercentage ? calculateDiscountedPrice(product.price) : product.price }}
                                             </span>
                                         </div>
                                     </div>
-                                    <div v-if="selectedProducts.length > 10" class="text-center text-sm text-jd-muted py-2">
+                                    <div v-if="selectedProducts.length > 10" class="text-center text-sm text-gray-500 py-2">
                                         ... e altri {{ selectedProducts.length - 10 }} prodotti
                                     </div>
                                 </div>
@@ -219,21 +214,21 @@
                     </div>
 
                     <!-- Footer -->
-                    <div class="bg-jd-base-light px-2 sm:px-8 py-2 sm:py-6 flex flex-row items-center justify-between gap-2">
+                    <div class="bg-gray-50 px-2 sm:px-8 py-2 sm:py-6 flex flex-row items-center justify-between gap-2 border-t border-gray-200">
                         <button
                             @click="$emit('close')"
-                            class="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-jd-text bg-jd-title border-2 border-jd rounded-lg hover:bg-jd-base-lighter transition-colors text-xs sm:text-sm font-semibold"
+                            class="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-gray-700 bg-white border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm font-semibold"
                         >
                             Annulla
                         </button>
                         <button
                             @click="applyDiscount"
-                            :disabled="loading || hasErrors"
+                            :disabled="loading || hasErrors || !hasValidPercentage"
                             :class="[
                                 'flex-1 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all',
-                                !loading && !hasErrors
-                                    ? 'bg-gradient-jd-accent text-jd-white hover:bg-jd-accent-dark shadow-lg hover:shadow-xl'
-                                    : 'bg-jd-title text-jd-muted cursor-not-allowed'
+                                !loading && !hasErrors && hasValidPercentage
+                                    ? 'bg-jd-accent text-white hover:bg-jd-accent-dark shadow-md hover:shadow-lg'
+                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                             ]"
                         >
                             <span v-if="loading" class="flex items-center justify-center">
@@ -416,9 +411,8 @@ watch(neverExpires, (newVal) => {
     }
 });
 
-watch([selectedPercentage, customPercentage], () => {
-    validatePercentage();
-});
+// Don't validate percentage in real-time, only on form submission
+// This prevents showing error when user clicks "Altro" field
 
 // Comprehensive validation before submission
 const validateForm = () => {
@@ -463,12 +457,26 @@ const hasErrors = computed(() => {
            errors.value.general !== '';
 });
 
+// Check if a valid percentage is selected
+const hasValidPercentage = computed(() => {
+    return selectedPercentage.value !== null && 
+           selectedPercentage.value !== '' && 
+           !isNaN(selectedPercentage.value) &&
+           selectedPercentage.value >= 0 && 
+           selectedPercentage.value <= 100;
+});
+
 const selectPercentage = (percentage) => {
     selectedPercentage.value = percentage;
     customPercentage.value = '';
+    // Clear any percentage errors when selecting a preset
+    errors.value.percentage = '';
 };
 
 const selectCustomPercentage = () => {
+    // Clear the percentage error when user is typing in custom field
+    errors.value.percentage = '';
+    
     if (customPercentage.value !== '') {
         const percentage = parseFloat(customPercentage.value);
         

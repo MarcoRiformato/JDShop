@@ -213,15 +213,25 @@
 
                 <!-- Actions -->
                 <div class="flex-shrink-0 w-full sm:w-auto flex gap-2 flex-wrap" @click.stop>
-                    <Link
-                        :href="route('products.edit', product.id)"
-                        class="btn-jd-primary flex-1 sm:flex-initial inline-flex items-center justify-center px-3 py-2 sm:px-4 rounded-lg text-sm font-medium"
+                    <Transition
+                        enter-active-class="transition-all duration-300 ease-out"
+                        enter-from-class="opacity-0 scale-95 max-w-0"
+                        enter-to-class="opacity-100 scale-100 max-w-full"
+                        leave-active-class="transition-all duration-300 ease-in"
+                        leave-from-class="opacity-100 scale-100 max-w-full"
+                        leave-to-class="opacity-0 scale-95 max-w-0"
                     >
-                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                        </svg>
-                        <span class="hidden sm:inline">Modifica</span>
-                    </Link>
+                        <Link
+                            v-if="!discountModeActive"
+                            :href="route('products.edit', product.id)"
+                            class="btn-jd-primary flex-1 sm:flex-initial inline-flex items-center justify-center px-3 py-2 sm:px-4 rounded-lg text-sm font-medium overflow-hidden"
+                        >
+                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                            </svg>
+                            <span class="hidden sm:inline">Modifica</span>
+                        </Link>
+                    </Transition>
                     <button
                         v-if="hasAnyDiscount(product) && $page.props.auth.user.is_full_admin"
                         @click="$emit('remove-discount', product)"
@@ -328,15 +338,25 @@
 
                     <!-- Actions -->
                     <div class="flex flex-wrap gap-3" @click.stop>
-                        <Link
-                            :href="route('products.edit', product.id)"
-                            class="btn-jd-primary flex-1 min-w-[120px] flex items-center justify-center px-4 py-2.5 rounded-lg font-medium"
+                        <Transition
+                            enter-active-class="transition-all duration-300 ease-out"
+                            enter-from-class="opacity-0 scale-95"
+                            enter-to-class="opacity-100 scale-100"
+                            leave-active-class="transition-all duration-300 ease-in"
+                            leave-from-class="opacity-100 scale-100"
+                            leave-to-class="opacity-0 scale-95"
                         >
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                            Modifica
-                        </Link>
+                            <Link
+                                v-if="!discountModeActive"
+                                :href="route('products.edit', product.id)"
+                                class="btn-jd-primary flex-1 min-w-[120px] flex items-center justify-center px-4 py-2.5 rounded-lg font-medium"
+                            >
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                                Modifica
+                            </Link>
+                        </Transition>
                         <button
                             v-if="product.has_active_discount && $page.props.auth.user.is_full_admin"
                             @click="$emit('remove-discount', product)"
@@ -456,15 +476,25 @@
 
                     <!-- Actions -->
                     <div class="flex gap-2" @click.stop>
-                        <Link
-                            :href="route('products.edit', product.id)"
-                            class="btn-jd-primary flex-1 flex items-center justify-center px-2 py-1.5 rounded text-xs font-medium"
-                            title="Modifica"
+                        <Transition
+                            enter-active-class="transition-all duration-300 ease-out"
+                            enter-from-class="opacity-0 scale-90"
+                            enter-to-class="opacity-100 scale-100"
+                            leave-active-class="transition-all duration-300 ease-in"
+                            leave-from-class="opacity-100 scale-100"
+                            leave-to-class="opacity-0 scale-90"
                         >
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                            </svg>
-                        </Link>
+                            <Link
+                                v-if="!discountModeActive"
+                                :href="route('products.edit', product.id)"
+                                class="btn-jd-primary flex-1 flex items-center justify-center px-2 py-1.5 rounded text-xs font-medium"
+                                title="Modifica"
+                            >
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </Link>
+                        </Transition>
                         <button
                             v-if="product.has_active_discount && $page.props.auth.user.is_full_admin"
                             @click="$emit('remove-discount', product)"

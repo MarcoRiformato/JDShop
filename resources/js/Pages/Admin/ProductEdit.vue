@@ -168,16 +168,17 @@
                                 <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
                                     Prezzo <span class="text-red-400">*</span>
                                 </label>
-                                <div class="relative">
-                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600">€</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gray-600 text-base font-medium flex-shrink-0">€</span>
                                     <input 
                                         id="price"
                                         v-model="form.price" 
                                         type="number" 
                                         step="0.01"
                                         min="0"
-                                        class="input-jd w-full pl-8"
+                                        class="input-jd flex-1"
                                         :class="{ 'border-red-500': form.errors.price }"
+                                        placeholder="0.00"
                                         required
                                     >
                                 </div>
