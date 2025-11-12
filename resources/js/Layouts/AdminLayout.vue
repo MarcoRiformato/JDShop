@@ -150,7 +150,7 @@
                     </p>
                     <div class="flex space-x-4">
                         <a 
-                            href="https://www.facebook.com" 
+                            href="https://www.facebook.com/JDEventsrl" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             class="w-8 h-8 bg-white/10 hover:bg-jd-accent rounded-full flex items-center justify-center transition-colors"
@@ -161,7 +161,7 @@
                             </svg>
                         </a>
                         <a 
-                            href="https://www.instagram.com" 
+                            href="https://www.instagram.com/jdevents/" 
                             target="_blank" 
                             rel="noopener noreferrer"
                             class="w-8 h-8 bg-white/10 hover:bg-jd-accent rounded-full flex items-center justify-center transition-colors"
