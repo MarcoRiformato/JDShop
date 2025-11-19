@@ -13,6 +13,12 @@ Route::get('/', function () {
 
 // Public shop routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/filosofia', function () {
+    return inertia('Shop/Philosophy');
+})->name('shop.philosophy');
+Route::get('/contatti', function () {
+    return inertia('Shop/Contacts');
+})->name('shop.contacts');
 Route::get('/shop/{product}', [ShopController::class, 'show'])->name('shop.show');
 Route::post('/contact', [ShopController::class, 'sendContactEmail'])->name('contact.send');
 

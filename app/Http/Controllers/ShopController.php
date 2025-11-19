@@ -149,9 +149,9 @@ class ShopController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:50',
             'message' => 'required|string|max:2000',
-            'product_id' => 'required|exists:products,id',
-            'product_title' => 'required|string',
-            'product_price' => 'required|numeric',
+            'product_id' => 'nullable|exists:products,id',
+            'product_title' => 'nullable|string',
+            'product_price' => 'nullable|numeric',
             'gdpr_consent' => 'sometimes|boolean',
         ]);
 
@@ -160,9 +160,9 @@ class ShopController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'product' => $validated['product_title'],
+            'product' => $validated['product_title'] ?? 'Richiesta Generica',
             'message' => $validated['message'],
-            'gdpr_consent' => $validated['gdpr_consent'],
+            'gdpr_consent' => $validated['gdpr_consent'] ?? false,
         ]);
 
         try {
@@ -179,13 +179,22 @@ class ShopController extends Controller
                 'email' => $validated['email'],
                 'name' => $validated['name'],
                 'phone' => $validated['phone'] ?? null,
-                'product_id' => $validated['product_id'],
-                'product_title' => $validated['product_title'],
+                'product_id' => $validated['product_id'] ?? null,
+                'product_title' => $validated['product_title'] ?? 'Richiesta Generica',
                 'message' => $validated['message'],
             ]);
 
+            // Set defaults for email template if product info is missing
+            $emailData = $validated;
+            if (empty($emailData['product_title'])) {
+                $emailData['product_title'] = 'Richiesta Generica dal sito';
+            }
+            if (!isset($emailData['product_price'])) {
+                $emailData['product_price'] = 0;
+            }
+
             // Send email to marco.riformato@gmail.com
-            Mail::to('marco.riformato@gmail.com')->send(new ContactInquiry($validated));
+            Mail::to('marco.riformato@gmail.com')->send(new ContactInquiry($emailData));
             
             Log::info('Contact email sent successfully to marco.riformato@gmail.com', [
                 'name' => $validated['name'],
