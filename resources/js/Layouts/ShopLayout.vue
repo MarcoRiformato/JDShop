@@ -157,59 +157,59 @@
 
         <!-- Footer -->
         <footer class="bg-jd-accent text-white safe-area-bottom">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
                     <!-- Left Column -->
                     <div>
-                        <div class="mb-6">
+                        <div class="mb-8">
                             <img 
                                 src="/images/logo.svg" 
                                 alt="JDOutlet" 
-                                class="h-24 w-auto mb-6 brightness-0 invert opacity-90"
+                                class="h-16 sm:h-20 w-auto mb-6 brightness-0 invert"
                                 onerror="this.src='/images/logo.svg'" 
                             />
-                            <p class="text-white text-base sm:text-lg leading-relaxed mb-6 font-light opacity-90">
+                            <p class="text-lg sm:text-xl leading-snug mb-8 font-light max-w-2xl">
                                 JDEvents, azienda specializzata in allestimenti per eventi, apre le porte al suo primo outlet dedicato ai materiali usati.<br>
                                 Un luogo dove gli arredi non terminano il loro percorso, ma trovano una nuova occasione: qui puoi scoprire pezzi unici, pronti a ricominciare.
                             </p>
                         </div>
 
-                        <ul class="space-y-3 mb-8">
+                        <ul class="space-y-2 mb-8">
                             <li class="flex items-start group">
-                                <span class="flex-shrink-0 w-2 h-2 bg-white rounded-full mt-2.5 mr-4 group-hover:bg-jd-section transition-colors"></span>
-                                <span class="text-white text-base sm:text-lg font-light opacity-90">Materiale venduto "così com'è". Visionabile nel nostro magazzino a Firenze.</span>
+                                <span class="flex-shrink-0 w-3 h-3 bg-white rounded-full mt-2 mr-4"></span>
+                                <span class="text-white text-lg font-light leading-tight">Materiale venduto "così com'è". Visionabile nel nostro magazzino a Firenze.</span>
                             </li>
                             <li class="flex items-start group">
-                                <span class="flex-shrink-0 w-2 h-2 bg-white rounded-full mt-2.5 mr-4 group-hover:bg-jd-section transition-colors"></span>
-                                <span class="text-white text-base sm:text-lg font-light opacity-90">Shop in continuo aggiornamento. Aggiungi il sito ai preferiti!</span>
+                                <span class="flex-shrink-0 w-3 h-3 bg-white rounded-full mt-2 mr-4"></span>
+                                <span class="text-white text-lg font-light leading-tight">Shop in continuo aggiornamento. Aggiungi il sito ai preferiti!</span>
                             </li>
                             <li class="flex items-start group">
-                                <span class="flex-shrink-0 w-2 h-2 bg-white rounded-full mt-2.5 mr-4 group-hover:bg-jd-section transition-colors"></span>
-                                <span class="text-white text-base sm:text-lg font-light opacity-90">Modifiche disponibili su richiesta (con costo aggiuntivo).</span>
+                                <span class="flex-shrink-0 w-3 h-3 bg-white rounded-full mt-2 mr-4"></span>
+                                <span class="text-white text-lg font-light leading-tight">Modifiche disponibili su richiesta (con costo aggiuntivo).</span>
                             </li>
                             <li class="flex items-start group">
-                                <span class="flex-shrink-0 w-2 h-2 bg-white rounded-full mt-2.5 mr-4 group-hover:bg-jd-section transition-colors"></span>
-                                <span class="text-white text-base sm:text-lg font-light opacity-90">Ritiro in sede. Spedizioni a carico dell'acquirente.</span>
+                                <span class="flex-shrink-0 w-3 h-3 bg-white rounded-full mt-2 mr-4"></span>
+                                <span class="text-white text-lg font-light leading-tight">Ritiro in sede. Spedizioni a carico dell'acquirente.</span>
                             </li>
                         </ul>
 
                         <button 
                             @click="handleShopAction"
-                            class="bg-white text-jd-accent hover:bg-jd-section hover:text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 mb-8 w-full sm:w-auto"
+                            class="bg-[#0f172a] text-white hover:bg-gray-900 font-bold text-lg px-8 py-3 rounded-md shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 mb-8 w-full sm:w-auto"
                         >
-                            Scopri i prodotti disponibili
+                            Scopri gli arredi disponibili
                         </button>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 border-t border-white/20 pt-8">
                             <!-- Socials -->
                             <div>
-                                <h3 class="font-bold text-white text-xl mb-4">Seguici</h3>
+                                <h3 class="font-bold text-white text-lg mb-4">Seguici</h3>
                                 <div class="flex space-x-4">
                                     <a href="https://www.facebook.com/JDEventsrl" target="_blank" rel="noopener noreferrer" class="bg-white/10 hover:bg-white text-white hover:text-jd-accent rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                                     </a>
                                     <a href="https://www.instagram.com/jdevents/" target="_blank" rel="noopener noreferrer" class="bg-white/10 hover:bg-white text-white hover:text-jd-accent rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                                     </a>
                                     <a href="https://www.linkedin.com/company/jd-events-srl" target="_blank" rel="noopener noreferrer" class="bg-white/10 hover:bg-white text-white hover:text-jd-accent rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
@@ -218,7 +218,7 @@
                             </div>
                             <!-- Useful Links -->
                             <div>
-                                <h3 class="font-bold text-white text-xl mb-4">Collegamenti utili</h3>
+                                <h3 class="font-bold text-white text-lg mb-4">Collegamenti utili</h3>
                                 <div class="flex flex-col space-y-3">
                                     <a href="https://jdsetup.com/" target="_blank" class="flex items-center text-white/90 hover:text-white transition-colors group">
                                         <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center mr-3 group-hover:bg-white group-hover:text-jd-accent transition-all duration-300">
@@ -238,13 +238,13 @@
                     </div>
 
                     <!-- Right Column -->
-                    <div class="flex flex-col h-full">
-                        <div class="text-center sm:text-right mb-6">
-                            <h2 class="text-3xl font-bold text-white mb-2">Vieni a trovarci!</h2>
-                            <p class="text-lg text-white mb-2">Siamo operativi nel nostro magazzino di Firenze.<br>Ti aspettiamo!</p>
-                            <p class="text-lg text-white font-bold">Ecco dove siamo:</p>
+                    <div class="flex flex-col h-full relative">
+                        <div class="text-center mb-8">
+                            <h2 class="text-3xl sm:text-4xl font-bold text-[#1a1a1a] mb-2">Vieni a trovarci!</h2>
+                            <p class="text-lg sm:text-xl text-[#1a1a1a] mb-6 leading-relaxed">Siamo operativi nel nostro magazzino di Firenze.<br>Ti aspettiamo!</p>
+                            <p class="text-lg sm:text-xl text-[#1a1a1a] font-bold">Ecco dove siamo:</p>
                         </div>
-                        <div class="flex-1 rounded-lg overflow-hidden shadow-lg min-h-[300px] bg-white">
+                        <div class="flex-1 rounded-lg overflow-hidden shadow-lg min-h-[350px] bg-white mb-4">
                             <iframe 
                                 src="https://maps.google.com/maps?q=JD+Events+srl,+Via+di+Capalle,+46,+50041+Calenzano+FI&z=15&t=k&output=embed" 
                                 width="100%" 
@@ -254,6 +254,15 @@
                                 loading="lazy" 
                                 referrerpolicy="no-referrer-when-downgrade"
                             ></iframe>
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <Link 
+                                :href="route('login')" 
+                                class="text-white/80 hover:text-white text-xs font-medium transition-colors"
+                            >
+                                Accedi
+                            </Link>
                         </div>
                     </div>
                 </div>
