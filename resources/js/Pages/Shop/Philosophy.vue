@@ -48,38 +48,38 @@
         </div>
 
         <!-- Section 2: Un'occasione per te! -->
-        <div class="bg-[#092133] py-16 sm:py-24 border-t border-white/10">
+        <div class="bg-[#092133] py-10 sm:py-24 border-t border-white/10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center">
                     <div>
-                        <h2 class="text-3xl sm:text-4xl font-bold text-[#ff4400] mb-6">
+                        <h2 class="text-2xl sm:text-4xl font-bold text-[#ff4400] mb-4 sm:mb-6">
                             Un'occasione per te !
                         </h2>
                         
-                        <p class="text-lg text-white mb-6 leading-relaxed">
-                            Dare una seconda vita significa fare spazio a nuove<br>
-                            storie nei tuoi ambienti, nei tuoi progetti, nel tuo<br>
+                        <p class="text-base sm:text-lg text-white mb-4 sm:mb-6 leading-relaxed">
+                            Dare una seconda vita significa fare spazio a nuove<br class="hidden sm:block">
+                            storie nei tuoi ambienti, nei tuoi progetti, nel tuo<br class="hidden sm:block">
                             quotidiano.
                         </p>
 
-                        <p class="text-lg text-white mb-8 leading-relaxed">
-                            <span class="italic font-semibold">È una scelta consapevole</span> perché riusare non significa<br>
+                        <p class="text-base sm:text-lg text-white mb-6 sm:mb-8 leading-relaxed">
+                            <span class="italic font-semibold">È una scelta consapevole</span> perché riusare non significa<br class="hidden sm:block">
                             accontentarsi, <span class="italic font-semibold">significa scegliere meglio.</span>
                         </p>
                     </div>
 
                     <div>
-                        <ul class="space-y-6 mb-12">
-                            <li class="flex items-center text-white text-xl sm:text-2xl">
-                                <span class="text-[#ff4400] mr-4 text-2xl">→</span>
+                        <ul class="space-y-3 sm:space-y-6 mb-8 sm:mb-12">
+                            <li class="flex items-center text-white text-lg sm:text-2xl">
+                                <span class="text-[#ff4400] mr-3 sm:mr-4 text-xl sm:text-2xl">→</span>
                                 Prezzi più accessibili.
                             </li>
-                            <li class="flex items-center text-white text-xl sm:text-2xl">
-                                <span class="text-[#ff4400] mr-4 text-2xl">→</span>
+                            <li class="flex items-center text-white text-lg sm:text-2xl">
+                                <span class="text-[#ff4400] mr-3 sm:mr-4 text-xl sm:text-2xl">→</span>
                                 Qualità professionale e testata sul campo
                             </li>
-                            <li class="flex items-center text-white text-xl sm:text-2xl">
-                                <span class="text-[#ff4400] mr-4 text-2xl">→</span>
+                            <li class="flex items-center text-white text-lg sm:text-2xl">
+                                <span class="text-[#ff4400] mr-3 sm:mr-4 text-xl sm:text-2xl">→</span>
                                 Uno stile unico, con carattere e storia
                             </li>
                         </ul>
@@ -87,7 +87,7 @@
                         <div class="text-center lg:text-left">
                             <Link 
                                 :href="route('shop.index') + '#products'"
-                                class="inline-block bg-[#ff4400] hover:bg-[#ff4400]/90 text-white font-semibold px-8 py-4 rounded-md transition-all text-lg shadow-lg hover:shadow-xl"
+                                class="inline-block bg-[#ff4400] hover:bg-[#ff4400]/90 text-white font-semibold px-6 py-3 sm:px-8 sm:py-4 rounded-md transition-all text-base sm:text-lg shadow-lg hover:shadow-xl"
                             >
                                 Scopri i prodotti disponibili
                             </Link>
