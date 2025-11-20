@@ -13,9 +13,10 @@
         <meta v-if="product.images.length > 0" name="twitter:image" :content="product.images.find(img => img.is_cover)?.url || product.images[0].url">
     </Head>
     <ShopLayout :tags="[]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white rounded-lg my-6">
-            <!-- Breadcrumb -->
-            <nav class="mb-8">
+        <div class="py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-10">
+                <!-- Breadcrumb -->
+                <nav class="mb-8">
                 <Link :href="route('shop.index')" class="link-jd flex items-center font-medium">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -141,10 +142,11 @@
                     </div>
                 </div>
             </div>
+            </div>
 
             <!-- Related products -->
-            <div v-if="relatedProducts.length > 0" class="mt-16">
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Prodotti Simili</h2>
+            <div v-if="relatedProducts.length > 0" class="max-w-5xl mx-auto mt-16">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-8">Prodotti Simili</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <Link 
                         v-for="relatedProduct in relatedProducts" 
