@@ -72,6 +72,24 @@ class ShopController extends Controller
     }
 
     /**
+     * Format product for card display.
+     */
+    private function formatProductForCard(Product $p): array
+    {
+        return [
+            'id' => $p->id,
+            'title' => $p->title,
+            'price' => $p->price,
+            'original_price' => $p->original_price,
+            'discount_percentage' => $p->discount_percentage,
+            'has_active_discount' => $p->has_active_discount,
+            'discounted_price' => $p->discounted_price,
+            'cover_image_url' => $p->cover_image_url,
+            'sold_out' => $p->sold_out,
+        ];
+    }
+
+    /**
      * Display the specified product.
      */
     public function show(Product $product): Response
@@ -80,6 +98,7 @@ class ShopController extends Controller
 
         // Get related products based on similar tags
         $relatedProducts = collect();
+        
         if ($product->tags) {
             $productTags = explode(',', $product->tags);
             $productTags = array_map('trim', $productTags);
@@ -98,19 +117,17 @@ class ShopController extends Controller
                     return count(array_intersect($productTags, $pTags));
                 })
                 ->take(4)
-                ->map(function($p) {
-                    return [
-                        'id' => $p->id,
-                        'title' => $p->title,
-                        'price' => $p->price,
-                        'original_price' => $p->original_price,
-                        'discount_percentage' => $p->discount_percentage,
-                        'has_active_discount' => $p->has_active_discount,
-                        'discounted_price' => $p->discounted_price,
-                        'cover_image_url' => $p->cover_image_url,
-                        'sold_out' => $p->sold_out,
-                    ];
-                })
+                ->map(fn($p) => $this->formatProductForCard($p))
+                ->values();
+        }
+
+        // Fallback: if no related products found (or no tags), show random products
+        if ($relatedProducts->isEmpty()) {
+            $relatedProducts = Product::where('id', '!=', $product->id)
+                ->inRandomOrder()
+                ->take(4)
+                ->get()
+                ->map(fn($p) => $this->formatProductForCard($p))
                 ->values();
         }
 
@@ -135,7 +152,7 @@ class ShopController extends Controller
                     'is_cover' => $image->is_cover,
                 ]),
             ],
-            'relatedProducts' => $relatedProducts,
+            'relatedProducts' => $relatedProducts->toArray(),
         ]);
     }
 
