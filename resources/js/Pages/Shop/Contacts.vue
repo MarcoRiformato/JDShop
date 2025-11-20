@@ -38,13 +38,14 @@
                     </div>
                     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-white/20">
                         <iframe 
-                            src="https://maps.google.com/maps?q=JD+Events+srl,+Via+di+Capalle,+46,+50041+Calenzano+FI&z=15&t=k&output=embed" 
+                            src="https://maps.google.com/maps?q=JD+Events+srl,+Via+di+Capalle,+46,+50041+Calenzano+FI&hl=it&z=15&t=k&output=embed"
                             width="100%" 
                             height="320" 
                             style="border:0;" 
                             allowfullscreen="" 
                             loading="lazy" 
                             referrerpolicy="no-referrer-when-downgrade"
+                            title="JD Events srl - Via di Capalle, 46, 50041 Calenzano FI"
                         ></iframe>
                         <div class="p-6 bg-white">
                             <h3 class="text-xl font-semibold text-jd-section mb-2">JD Events srl</h3>
